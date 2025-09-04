@@ -1,6 +1,6 @@
 /* Honey Inbox — simple offline cache */
-const CACHE = 'honey-inbox-v2';
-const ASSETS = ['./','./index.html','./manifest.webmanifest'];
+const CACHE = 'honey-inbox-v3'; // bumped to force-refresh
+const ASSETS = ['/', '/index.html', '/manifest.webmanifest'];
 
 /* Install: pre-cache shell */
 self.addEventListener('install', (e) => {
@@ -21,11 +21,9 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('fetch', (e) => {
   const url = new URL(e.request.url);
   if (url.origin === location.origin) {
-    // Navigation requests → serve cached shell when offline
+    // Navigation → serve cached shell if offline
     if (e.request.mode === 'navigate') {
-      e.respondWith(
-        fetch(e.request).catch(()=>caches.match('./index.html'))
-      );
+      e.respondWith(fetch(e.request).catch(()=>caches.match('/index.html')));
       return;
     }
     // Static same-origin → cache-first
@@ -34,12 +32,10 @@ self.addEventListener('fetch', (e) => {
         const copy = r.clone();
         caches.open(CACHE).then(c=>c.put(e.request, copy));
         return r;
-      })).catch(()=>caches.match('./index.html'))
+      })).catch(()=>caches.match('/index.html'))
     );
     return;
   }
-  // Cross-origin: network-first, fallback to cache if present
-  e.respondWith(
-    fetch(e.request).catch(()=>caches.match(e.request))
-  );
+  // Cross-origin: network-first, fallback to cache
+  e.respondWith(fetch(e.request).catch(()=>caches.match(e.request)));
 });
