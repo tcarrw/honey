@@ -1,5 +1,5 @@
 /* Honey Inbox — simple offline cache */
-const CACHE = 'honey-inbox-v1';
+const CACHE = 'honey-inbox-v2';
 const ASSETS = ['./','./index.html','./manifest.webmanifest'];
 
 /* Install: pre-cache shell */
