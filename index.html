@@ -6,13 +6,15 @@
 <title>Honey Inbox — Ultimate+ (Illumina)</title>
 <meta name="description" content="Professional Honey Inbox with camera capture, ghost overlay, grid, logbook, slip/envelope, reminders — all local, PWA, offline."/>
 <meta name="theme-color" content="#0b0f19"/>
+
 <!-- PWA -->
-<link rel="manifest" href="manifest.webmanifest">
+<link rel="manifest" href="/manifest.webmanifest">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<!-- Fallback icon note: iOS will screenshot if no apple-touch-icon; manifest icons cover Android/desktop -->
+
 <style>
   :root{
+    /* plnt.earth night theme + amber/violet accents */
     --bg:#0b0f19; --panel:#0f1627; --ink:#e6e8ee; --muted:#a3acc2; --rule:#2a3348;
     --accent:#f59e0b; --accent2:#7c3aed; --ok:#22c55e; --warn:#eab308; --danger:#ef4444;
   }
@@ -23,10 +25,10 @@
   html,body{height:100%}
   body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial;overflow-x:hidden}
   .wrap{max-width:1040px;margin:0 auto;padding:22px 14px 96px;position:relative}
+
   /* MOON ORB 2.1 — responsive, high-contrast, graceful fallback */
   .orb{
     position:fixed;
-    /* Keep partially on-screen at all sizes */
     top:clamp(-120px,-10vw,-40px);
     right:clamp(-120px,-10vw,-40px);
     width:clamp(320px,38vw,640px);
@@ -36,7 +38,6 @@
     opacity:.60;
     will-change:transform,opacity;
     mix-blend-mode:screen;
-    /* Layered “moon” glow */
     background:
       radial-gradient(48% 58% at 30% 30%, rgba(124,58,237,.60) 0%, rgba(124,58,237,0) 68%),
       radial-gradient(52% 62% at 70% 65%, rgba(245,158,11,.60) 0%, rgba(245,158,11,0) 68%),
@@ -49,39 +50,29 @@
     50%  { transform:translateZ(0) rotate(180deg)  scale(1.04); opacity:.64; }
     100% { transform:translateZ(0) rotate(360deg)  scale(1.00); opacity:.58; }
   }
-  /* High-visibility in light mode */
   @media (prefers-color-scheme: light){
-    .orb{
-      opacity:.50;
-      filter:blur(20px) saturate(1.1);
-      /* screen on white can be subtle — keep it brighter */
-    }
+    .orb{ opacity:.50; filter:blur(20px) saturate(1.1); }
   }
-  /* Respect users who prefer less motion: keep it *visible* but still */
   @media (prefers-reduced-motion: reduce){
     .orb{ animation:none; opacity:.65; }
   }
-  /* If blend modes aren’t supported, fall back to normal compositing */
   @supports not (mix-blend-mode: screen){
     .orb{ mix-blend-mode:normal; opacity:.65; }
   }
-
-  @keyframes orbFloat{
-    0%{ transform: translate3d(0,0,0) rotate(0deg) scale(1); opacity:.50;}
-    100%{ transform: translate3d(0,22px,0) rotate(8deg) scale(1.06); opacity:.62;}
-  }
-  @media (prefers-reduced-motion: reduce){ .orb{animation:none} }
 
   header{position:relative; z-index:1; display:flex;gap:12px;justify-content:space-between;align-items:center;margin-bottom:12px}
   .brand{display:flex;align-items:center;gap:10px}
   .logo{font-weight:900;letter-spacing:.3px}
   .logo b{background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
   .meta{color:var(--muted);font-size:12px}
+
   .tabs{position:relative; z-index:1; display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 14px}
   .tab{border:1px solid var(--rule);background:var(--panel);color:var(--ink);padding:8px 12px;border-radius:12px;cursor:pointer}
   .tab.active{outline:2px solid var(--accent)}
+
   .card{position:relative; z-index:1; background:var(--panel);border:1px solid var(--rule);border-radius:12px;padding:14px 16px;margin:10px 0}
   .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+
   label,button,input,select,textarea{font:inherit}
   input[type=text],input[type=time],input[type=file],select,textarea{
     border:1px solid var(--rule);background:#0e1422;color:var(--ink);border-radius:10px;padding:8px 10px
@@ -98,6 +89,7 @@
   @media (max-width:980px){.grid{grid-template-columns:1fr}}
   .mono{font-family:ui-monospace,Menlo,Consolas,monospace}
   .hr{border-top:1px solid var(--rule);margin:10px 0}
+
   .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
   .thumb{background:#0e1422;border:1px solid var(--rule);border-radius:10px;overflow:hidden}
   .thumb img{width:100%;display:block;aspect-ratio:4/3;object-fit:cover}
@@ -105,7 +97,9 @@
   .cap .ts{color:#cbd5e1;font-size:12px}
   .cap .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
   .tag{font-size:11px;border:1px solid var(--rule);border-radius:999px;padding:0 6px;color:#cbd5e1}
+
   .footer-note{margin-top:10px;color:var(--muted);font-size:12px;text-align:center}
+
   /* capture panel */
   .stage{position:relative;border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:#0a0f1a;min-height:260px}
   video,canvas#photo{display:block;width:100%;height:auto}
@@ -118,161 +112,168 @@
   .controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
   .controls .slider{display:flex;align-items:center;gap:8px}
   input[type=range]{accent-color:var(--accent2)}
-  @media print{ body{background:#fff;color:#111} .card{background:#fff} .wrap{padding:10mm} .orb{display:none} }
+
+  @media print{
+    body{background:#fff;color:#111}
+    .card{background:#fff}
+    .wrap{padding:10mm}
+    .orb{display:none}
+  }
 </style>
 </head>
 <body>
-<div class="orb" aria-hidden="true"></div>
+  <!-- Put the orb FIRST inside <body> -->
+  <div class="orb" aria-hidden="true"></div>
 
-<div class="wrap">
-  <header>
-    <div class="brand">
-      <div class="logo">🍯 <b>Honey Inbox</b></div>
-      <div class="meta">Ultimate+ • PWA • offline • v1.0</div>
-    </div>
-    <div class="pill">honey.plnt.earth</div>
-  </header>
-
-  <div class="tabs">
-    <button class="tab active" data-panel="capture">Capture</button>
-    <button class="tab" data-panel="logbook">Logbook</button>
-    <button class="tab" data-panel="slip">Slip &amp; Envelope</button>
-    <button class="tab" data-panel="reminders">Reminders</button>
-    <button class="tab" data-panel="help">Rituals &amp; Help</button>
-    <button class="tab" data-panel="settings">Settings</button>
-  </div>
-
-  <!-- CAPTURE -->
-  <section id="capture" class="card">
-    <div class="grid">
-      <div>
-        <h3 style="margin:0 0 6px">Camera</h3>
-        <div class="stage" id="stage">
-          <video id="video" playsinline></video>
-          <img id="ghost" class="overlay-ghost" alt="" style="display:none"/>
-          <div id="grid" class="overlay-grid" style="display:none"></div>
-        </div>
-        <div class="controls">
-          <button id="startCam">Start camera</button>
-          <button id="stopCam" class="secondary" disabled>Stop</button>
-          <button id="shot" class="secondary" disabled>Take photo</button>
-          <label class="slider">Ghost <input id="ghostToggle" type="checkbox"/></label>
-          <label class="slider">Opacity <input id="ghostAlpha" type="range" min="0" max="100" value="35"/></label>
-          <label class="slider">Grid <input id="gridToggle" type="checkbox"/></label>
-        </div>
-        <div class="row" style="margin-top:6px">
-          <input id="filePick" type="file" accept="image/*" capture="environment"/>
-          <button id="loadFile" class="secondary">Use photo</button>
-          <span class="small">Tip: HTTPS is required for live camera on phones. Photo upload works anywhere.</span>
-        </div>
-        <canvas id="photo" style="display:none"></canvas>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">🍯 <b>Honey Inbox</b></div>
+        <div class="meta">Ultimate+ • PWA • offline • v1.1</div>
       </div>
+      <div class="pill">honey.plnt.earth</div>
+    </header>
 
-      <div>
-        <h3 style="margin:0 0 6px">Entry details</h3>
-        <div class="row">
-          <label>Channel <input id="channel" type="text" placeholder="illumina / AB12"/></label>
-          <label>Tags <input id="tags" type="text" placeholder="honey,inbox,dots"/></label>
-        </div>
-        <textarea id="notes" placeholder="Observation (e.g., 'bright ridge NE quadrant', 'none')"></textarea>
-        <div class="controls">
-          <button id="save" disabled>Save entry</button>
-          <span class="pill"><span id="streak">0</span> day streak</span>
-        </div>
-        <div class="hr"></div>
-        <div class="row">
-          <button id="useLastGhost" class="ghost">Use last photo as ghost</button>
-          <button id="clearGhost" class="ghost">Clear ghost</button>
-        </div>
-      </div>
+    <div class="tabs">
+      <button class="tab active" data-panel="capture">Capture</button>
+      <button class="tab" data-panel="logbook">Logbook</button>
+      <button class="tab" data-panel="slip">Slip &amp; Envelope</button>
+      <button class="tab" data-panel="reminders">Reminders</button>
+      <button class="tab" data-panel="help">Rituals &amp; Help</button>
+      <button class="tab" data-panel="settings">Settings</button>
     </div>
-    <div class="footer-note">All photos & notes are stored locally (IndexedDB). Nothing is uploaded.</div>
-  </section>
 
-  <!-- LOGBOOK -->
-  <section id="logbook" class="card" style="display:none">
-    <div class="row">
-      <button id="refreshLog" class="secondary">Refresh</button>
-      <button id="exportJson" class="secondary">Backup (JSON)</button>
-      <label class="secondary" style="padding:0">
-        <input id="importFile" type="file" accept="application/json" style="display:none"/>
-        <button id="importBtn" class="secondary">Restore</button>
-      </label>
-      <span class="pill" style="margin-left:auto">Storage: <span id="storeInfo" class="mono">—</span></span>
-    </div>
-    <div id="gallery" class="gallery"></div>
-  </section>
-
-  <!-- SLIP & ENVELOPE -->
-  <section id="slip" class="card" style="display:none">
-    <div class="grid">
-      <div>
-        <h3 style="margin:0 0 6px">Compose slip</h3>
-        <div class="row">
-          <label>Channel <input id="slipChannel" type="text" placeholder="illumina / AB12"/></label>
-          <label>When <input id="slipTime" type="time"/></label>
-        </div>
-        <textarea id="slipMsg" placeholder="Optional plain message (will be Base32 encoded)"></textarea>
-        <div class="row">
-          <button id="makeEnvelope">Encode → I31</button>
-          <button id="copyEnvelope" class="secondary" disabled>Copy (no spaces)</button>
-        </div>
-        <textarea id="envelope" class="mono" readonly placeholder="I31:&lt;BASE32&gt;:CRC=&lt;8&gt;"></textarea>
-      </div>
-      <div>
-        <h3 style="margin:0 0 6px">Printable slip</h3>
-        <div class="card" id="slipCard" style="background:#0e1422">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div><strong>Honey Inbox</strong></div>
-            <div class="mono small" id="slipDate">—</div>
+    <!-- CAPTURE -->
+    <section id="capture" class="card">
+      <div class="grid">
+        <div>
+          <h3 style="margin:0 0 6px">Camera</h3>
+          <div class="stage" id="stage">
+            <video id="video" playsinline></video>
+            <img id="ghost" class="overlay-ghost" alt="" style="display:none"/>
+            <div id="grid" class="overlay-grid" style="display:none"></div>
           </div>
-          <div class="small" id="slipChan">illumina / —</div>
-          <div class="mono" id="slipEnv" style="margin-top:6px; word-break:break-all; font-size:12px; line-height:1.4">—</div>
-          <div class="small" style="margin-top:8px;color:#cbd5e1">Place by plate. Dots = send; scrape = end. Check same time daily.</div>
+          <div class="controls">
+            <button id="startCam">Start camera</button>
+            <button id="stopCam" class="secondary" disabled>Stop</button>
+            <button id="shot" class="secondary" disabled>Take photo</button>
+            <label class="slider">Ghost <input id="ghostToggle" type="checkbox"/></label>
+            <label class="slider">Opacity <input id="ghostAlpha" type="range" min="0" max="100" value="35"/></label>
+            <label class="slider">Grid <input id="gridToggle" type="checkbox"/></label>
+          </div>
+          <div class="row" style="margin-top:6px">
+            <input id="filePick" type="file" accept="image/*" capture="environment"/>
+            <button id="loadFile" class="secondary">Use photo</button>
+            <span class="small">Tip: HTTPS is required for live camera on phones. Photo upload works anywhere.</span>
+          </div>
+          <canvas id="photo" style="display:none"></canvas>
         </div>
-        <div class="row">
-          <button id="printSlip" class="secondary">Print / Save PDF</button>
+
+        <div>
+          <h3 style="margin:0 0 6px">Entry details</h3>
+          <div class="row">
+            <label>Channel <input id="channel" type="text" placeholder="illumina / AB12"/></label>
+            <label>Tags <input id="tags" type="text" placeholder="honey,inbox,dots"/></label>
+          </div>
+          <textarea id="notes" placeholder="Observation (e.g., 'bright ridge NE quadrant', 'none')"></textarea>
+          <div class="controls">
+            <button id="save" disabled>Save entry</button>
+            <span class="pill"><span id="streak">0</span> day streak</span>
+          </div>
+          <div class="hr"></div>
+          <div class="row">
+            <button id="useLastGhost" class="ghost">Use last photo as ghost</button>
+            <button id="clearGhost" class="ghost">Clear ghost</button>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+      <div class="footer-note">All photos & notes are stored locally (IndexedDB). Nothing is uploaded.</div>
+    </section>
 
-  <!-- REMINDERS -->
-  <section id="reminders" class="card" style="display:none">
-    <h3 style="margin:0 0 6px">Daily reminder (.ics)</h3>
-    <div class="row">
-      <label>Event name <input id="remName" type="text" value="Honey Inbox — Daily Check"/></label>
-      <label>Time <input id="remTime" type="time"/></label>
-      <label>Minutes before <select id="remAhead">
-        <option value="0">0</option><option>5</option><option>10</option><option>15</option>
-        <option>30</option><option>60</option>
-      </select></label>
-      <button id="makeICS" class="secondary">Download .ics</button>
-    </div>
-    <div class="small">Import the .ics to your phone calendar to get a daily ping.</div>
-  </section>
+    <!-- LOGBOOK -->
+    <section id="logbook" class="card" style="display:none">
+      <div class="row">
+        <button id="refreshLog" class="secondary">Refresh</button>
+        <button id="exportJson" class="secondary">Backup (JSON)</button>
+        <label class="secondary" style="padding:0">
+          <input id="importFile" type="file" accept="application/json" style="display:none"/>
+          <button id="importBtn" class="secondary">Restore</button>
+        </label>
+        <span class="pill" style="margin-left:auto">Storage: <span id="storeInfo" class="mono">—</span></span>
+      </div>
+      <div id="gallery" class="gallery"></div>
+    </section>
 
-  <!-- HELP -->
-  <section id="help" class="card" style="display:none">
-    <h3 style="margin:0 0 6px">Rituals &amp; Tips</h3>
-    <ul>
-      <li><strong>Quiet Inbox:</strong> thin smear on plate/glass; phone/light at a shallow angle. Tiny dots/lines with a toothpick. Check once/day.</li>
-      <li><strong>Persistence Tablet:</strong> 4–8 miniscule food-safe color dots as a recognizable signature. Scrape to close.</li>
-      <li><strong>Soft Mute:</strong> very thin honey film on a metal corner (bell/ruler). Clean = on, coated = off.</li>
-      <li><strong>Consistency:</strong> same light angle & camera spot. iPhone: tap-hold for AE/AF LOCK. Android: Pro/Manual if available.</li>
-      <li><strong>Safety:</strong> treat experimental honey as non-food; warm water cleans fast.</li>
-    </ul>
-  </section>
+    <!-- SLIP & ENVELOPE -->
+    <section id="slip" class="card" style="display:none">
+      <div class="grid">
+        <div>
+          <h3 style="margin:0 0 6px">Compose slip</h3>
+          <div class="row">
+            <label>Channel <input id="slipChannel" type="text" placeholder="illumina / AB12"/></label>
+            <label>When <input id="slipTime" type="time"/></label>
+          </div>
+          <textarea id="slipMsg" placeholder="Optional plain message (will be Base32 encoded)"></textarea>
+          <div class="row">
+            <button id="makeEnvelope">Encode → I31</button>
+            <button id="copyEnvelope" class="secondary" disabled>Copy (no spaces)</button>
+          </div>
+          <textarea id="envelope" class="mono" readonly placeholder="I31:&lt;BASE32&gt;:CRC=&lt;8&gt;"></textarea>
+        </div>
+        <div>
+          <h3 style="margin:0 0 6px">Printable slip</h3>
+          <div class="card" id="slipCard" style="background:#0e1422">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div><strong>Honey Inbox</strong></div>
+              <div class="mono small" id="slipDate">—</div>
+            </div>
+            <div class="small" id="slipChan">illumina / —</div>
+            <div class="mono" id="slipEnv" style="margin-top:6px; word-break:break-all; font-size:12px; line-height:1.4">—</div>
+            <div class="small" style="margin-top:8px;color:#cbd5e1">Place by plate. Dots = send; scrape = end. Check same time daily.</div>
+          </div>
+          <div class="row">
+            <button id="printSlip" class="secondary">Print / Save PDF</button>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <!-- SETTINGS -->
-  <section id="settings" class="card" style="display:none">
-    <div class="row">
-      <button id="clearAll" class="danger">Erase all data</button>
-      <span class="small">Clears photos & notes from this browser (cannot be undone).</span>
-      <span class="pill" style="margin-left:auto">Theme: auto (system)</span>
-    </div>
-  </section>
-</div>
+    <!-- REMINDERS -->
+    <section id="reminders" class="card" style="display:none">
+      <h3 style="margin:0 0 6px">Daily reminder (.ics)</h3>
+      <div class="row">
+        <label>Event name <input id="remName" type="text" value="Honey Inbox — Daily Check"/></label>
+        <label>Time <input id="remTime" type="time"/></label>
+        <label>Minutes before <select id="remAhead">
+          <option value="0">0</option><option>5</option><option>10</option><option>15</option>
+          <option>30</option><option>60</option>
+        </select></label>
+        <button id="makeICS" class="secondary">Download .ics</button>
+      </div>
+      <div class="small">Import the .ics to your phone calendar to get a daily ping.</div>
+    </section>
+
+    <!-- HELP -->
+    <section id="help" class="card" style="display:none">
+      <h3 style="margin:0 0 6px">Rituals &amp; Tips</h3>
+      <ul>
+        <li><strong>Quiet Inbox:</strong> thin smear on plate/glass; phone/light at a shallow angle. Tiny dots/lines with a toothpick. Check once/day.</li>
+        <li><strong>Persistence Tablet:</strong> 4–8 miniscule food-safe color dots as a recognizable signature. Scrape to close.</li>
+        <li><strong>Soft Mute:</strong> very thin honey film on a metal corner (bell/ruler). Clean = on, coated = off.</li>
+        <li><strong>Consistency:</strong> same light angle & camera spot. iPhone: tap-hold for AE/AF LOCK. Android: Pro/Manual if available.</li>
+        <li><strong>Safety:</strong> treat experimental honey as non-food; warm water cleans fast.</li>
+      </ul>
+    </section>
+
+    <!-- SETTINGS -->
+    <section id="settings" class="card" style="display:none">
+      <div class="row">
+        <button id="clearAll" class="danger">Erase all data</button>
+        <span class="small">Clears photos & notes from this browser (cannot be undone).</span>
+        <span class="pill" style="margin-left:auto">Theme: auto (system)</span>
+      </div>
+    </section>
+  </div>
 
 <script>
 /* Tabs */
@@ -416,21 +417,13 @@ document.getElementById('clearAll').onclick=async ()=>{ if(!confirm("Erase ALL l
 /* Init */
 function show(panel){document.querySelectorAll('section.card').forEach(s=>s.style.display='none'); document.getElementById(panel).style.display='block';}
 document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>show(t.dataset.panel)));
-async function renderLog(){ const all=await getAll(); all.sort((a,b)=>b.ts-a.ts); const gallery=document.getElementById('gallery'); gallery.innerHTML=""; let totalBytes=0;
-  for(const e of all){ totalBytes+=Math.ceil((e.img.length*3)/4); const card=document.createElement('div'); card.className='thumb';
-    const img=document.createElement('img'); img.src=e.img; const cap=document.createElement('div'); cap.className='cap';
-    const ts=new Date(e.ts).toLocaleString(); const t=document.createElement('div'); t.className='ts'; t.textContent=ts;
-    const ch=document.createElement('div'); ch.textContent=e.channel||"—"; const tagRow=document.createElement('div'); tagRow.className='tags';
-    (e.tags||[]).forEach(s=>{const span=document.createElement('span'); span.className='tag'; span.textContent=s; tagRow.appendChild(span);});
-    const btns=document.createElement('div'); btns.className='row'; btns.style.marginTop='6px';
-    const del=document.createElement('button'); del.className='danger'; del.textContent='Delete'; del.onclick=async()=>{ if(confirm('Delete this entry?')){ await delEntry(e.id); renderLog(); } };
-    const view=document.createElement('button'); view.className='secondary'; view.textContent='View'; view.onclick=()=>{ const w=window.open('','_blank'); w.document.write(`<img src="${e.img}" style="max-width:100%"/>`); };
-    btns.append(view,del); cap.append(ch,t,tagRow,btns); card.append(img,cap); gallery.append(card); }
-  document.getElementById('storeInfo').textContent=(totalBytes/1024/1024).toFixed(2)+" MB, "+all.length+" entries"; }
 renderLog();
+updateStreak();
 
-/* PWA: register service worker */
-if('serviceWorker' in navigator){ window.addEventListener('load',()=>{ navigator.serviceWorker.register('./sw.js').catch(()=>{}); }); }
+/* PWA: register service worker for whole origin */
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{ navigator.serviceWorker.register('/sw.js').catch(()=>{}); });
+}
 </script>
 </body>
 </html>
