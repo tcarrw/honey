@@ -1,429 +1,491 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<title>Honey Inbox — Ultimate+ (Illumina)</title>
-<meta name="description" content="Professional Honey Inbox with camera capture, ghost overlay, grid, logbook, slip/envelope, reminders — all local, PWA, offline."/>
-<meta name="theme-color" content="#0b0f19"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>honey.plnt.earth — coo coo coo honey</title>
+  <meta name="description" content="Honey Inbox — the nectar space of PLNT.earth. coo coo coo honey." />
+  <meta name="theme-color" content="#0B0F19" />
 
-<!-- PWA -->
-<link rel="manifest" href="/manifest.webmanifest">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- Favicon (inline SVG) -->
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+    <defs>
+      <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#F5D142"/><stop offset="100%" stop-color="#F59E0B"/>
+      </linearGradient>
+    </defs>
+    <rect width="96" height="96" rx="20" fill="#0B0F19"/>
+    <path fill="url(#g)" d="M78 26c-9 9-18 13-28 13-8 0-16-4-24-12 3 12 10 19 20 21-6 3-12 4-18 3 7 7 16 10 26 8-6 5-13 8-21 9 13 8 26 8 38 0 12-9 16-23 7-42z"/>
+    <path fill="url(#g)" d="M70 70c0 6-10 10-10 16 0 2 2 4 4 4 2 0 4-2 4-4 0-6 2-6 2-16z"/>
+  </svg>' />
 
-<style>
-  :root{
-    /* plnt.earth night theme + amber/violet accents */
-    --bg:#0b0f19; --panel:#0f1627; --ink:#e6e8ee; --muted:#a3acc2; --rule:#2a3348;
-    --accent:#f59e0b; --accent2:#7c3aed; --ok:#22c55e; --warn:#eab308; --danger:#ef4444;
-  }
-  @media (prefers-color-scheme: light){
-    :root{ --bg:#ffffff; --panel:#f6f7fb; --ink:#0f1222; --muted:#4a546e; --rule:#e4e7f0; --accent:#b45309; --accent2:#6d28d9; }
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial;overflow-x:hidden}
-  .wrap{max-width:1040px;margin:0 auto;padding:22px 14px 96px;position:relative}
+  <style>
+    :root{
+      --bg:#0B0F19; --ink:#E5E7EB; --muted:#9CA3AF;
+      --line:rgba(255,255,255,.06);
+      --panel:rgba(255,255,255,.03);
+      --panel-strong:rgba(255,255,255,.05);
+      --gold1:#F5D142; --gold2:#F59E0B; --gold3:#D97706;
+      --ok:#22c55e; --warn:#f59e0b; --bad:#ef4444;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Helvetica,Arial}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit;color:inherit}
+    header{
+      position:sticky; top:0; z-index:10;
+      display:flex; align-items:center; gap:.75rem; padding:.9rem 1rem;
+      backdrop-filter:saturate(110%) blur(4px);
+      background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,0));
+      border-bottom:1px solid var(--line);
+    }
+    .dove{width:22px;height:22px;flex:none;filter:drop-shadow(0 1px 2px rgba(0,0,0,.45))}
+    .mark{display:flex;align-items:baseline;gap:.35rem;white-space:nowrap;font-weight:800;letter-spacing:.01em}
+    .mark .coo{font-size:clamp(16px,2.4vw,20px);opacity:.9}
+    .mark .honey{
+      font-size:clamp(22px,3.2vw,28px);line-height:1;font-weight:900;
+      background:linear-gradient(180deg,var(--gold1),var(--gold2) 55%,var(--gold3));
+      -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+      text-shadow:0 1px 0 rgba(0,0,0,.35)
+    }
+    .actions{margin-left:auto;display:flex;gap:.5rem}
+    .btn{
+      border:1px solid var(--line); background:var(--panel); color:var(--ink);
+      border-radius:10px; padding:.45rem .7rem; display:inline-flex; align-items:center; gap:.4rem;
+      transition:transform .05s ease, background .2s ease, border-color .2s ease; cursor:pointer
+    }
+    .btn:active{transform:translateY(1px)}
+    .btn.primary{background:var(--panel-strong);border-color:rgba(245,158,11,.35)}
+    .btn .dot{width:8px;height:8px;border-radius:999px;background:currentColor;opacity:.8}
 
-  /* MOON ORB 2.1 — responsive, high-contrast, graceful fallback */
-  .orb{
-    position:fixed;
-    top:clamp(-120px,-10vw,-40px);
-    right:clamp(-120px,-10vw,-40px);
-    width:clamp(320px,38vw,640px);
-    height:clamp(320px,38vw,640px);
-    pointer-events:none; z-index:0;
-    filter:blur(24px) saturate(1.15);
-    opacity:.60;
-    will-change:transform,opacity;
-    mix-blend-mode:screen;
-    background:
-      radial-gradient(48% 58% at 30% 30%, rgba(124,58,237,.60) 0%, rgba(124,58,237,0) 68%),
-      radial-gradient(52% 62% at 70% 65%, rgba(245,158,11,.60) 0%, rgba(245,158,11,0) 68%),
-      radial-gradient(60% 70% at 50% 50%, rgba(255,255,255,.22) 0%, rgba(255,255,255,0) 75%);
-    animation:orbSpin 38s linear infinite;
-    transform:translateZ(0); backface-visibility:hidden;
-  }
-  @keyframes orbSpin{
-    0%   { transform:translateZ(0) rotate(0deg)    scale(1.00); opacity:.58; }
-    50%  { transform:translateZ(0) rotate(180deg)  scale(1.04); opacity:.64; }
-    100% { transform:translateZ(0) rotate(360deg)  scale(1.00); opacity:.58; }
-  }
-  @media (prefers-color-scheme: light){
-    .orb{ opacity:.50; filter:blur(20px) saturate(1.1); }
-  }
-  @media (prefers-reduced-motion: reduce){
-    .orb{ animation:none; opacity:.65; }
-  }
-  @supports not (mix-blend-mode: screen){
-    .orb{ mix-blend-mode:normal; opacity:.65; }
-  }
+    main{max-width:1100px;margin:1rem auto 2rem;padding:0 1rem;display:grid;grid-template-columns:280px 1fr;gap:1rem}
+    @media (max-width:980px){ main{grid-template-columns:1fr} }
 
-  header{position:relative; z-index:1; display:flex;gap:12px;justify-content:space-between;align-items:center;margin-bottom:12px}
-  .brand{display:flex;align-items:center;gap:10px}
-  .logo{font-weight:900;letter-spacing:.3px}
-  .logo b{background:linear-gradient(135deg,var(--accent2),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-  .meta{color:var(--muted);font-size:12px}
+    .side,.content{background:var(--panel);border:1px solid var(--line);border-radius:14px}
+    .side{padding:14px}
+    .content{padding:14px}
 
-  .tabs{position:relative; z-index:1; display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 14px}
-  .tab{border:1px solid var(--rule);background:var(--panel);color:var(--ink);padding:8px 12px;border-radius:12px;cursor:pointer}
-  .tab.active{outline:2px solid var(--accent)}
+    /* composer */
+    .composer{display:grid;gap:.5rem;background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:12px;padding:12px}
+    .row{display:flex;gap:.6rem;flex-wrap:wrap}
+    .input, .tags{
+      flex:1 1 auto; min-width:180px; border:1px solid var(--line); background:rgba(255,255,255,.02);
+      color:var(--ink); border-radius:10px; padding:.6rem .75rem; outline:none
+    }
+    .tags{min-width:140px}
+    .composer .btn{white-space:nowrap}
+    .hint{color:var(--muted);font-size:12px}
 
-  .card{position:relative; z-index:1; background:var(--panel);border:1px solid var(--rule);border-radius:12px;padding:14px 16px;margin:10px 0}
-  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    /* controls */
+    .controls{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;margin-top:.75rem}
+    .chip{
+      border:1px solid var(--line); background:rgba(255,255,255,.02);
+      padding:.35rem .6rem; border-radius:999px; cursor:pointer; user-select:none; font-size:13px
+    }
+    .chip[aria-pressed="true"]{border-color:rgba(245,158,11,.35); background:rgba(245,158,11,.12)}
+    .search{flex:1;border:1px solid var(--line);background:rgba(255,255,255,.02);color:var(--ink);border-radius:10px;padding:.5rem .6rem;min-width:160px}
 
-  label,button,input,select,textarea{font:inherit}
-  input[type=text],input[type=time],input[type=file],select,textarea{
-    border:1px solid var(--rule);background:#0e1422;color:var(--ink);border-radius:10px;padding:8px 10px
-  }
-  textarea{width:100%;min-height:100px;resize:vertical}
-  button{background:var(--accent2);color:#fff;border:0;border-radius:10px;padding:8px 12px;cursor:pointer}
-  button.secondary{background:#334155}
-  button.ghost{background:transparent;border:1px dashed var(--rule);color:var(--ink)}
-  button.danger{background:var(--danger)}
-  button:disabled{opacity:.6;cursor:not-allowed}
-  .pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--rule);border-radius:999px;padding:2px 8px;color:#cbd5e1;font-size:12px}
-  .small{font-size:12px;color:var(--muted)}
-  .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:12px}
-  @media (max-width:980px){.grid{grid-template-columns:1fr}}
-  .mono{font-family:ui-monospace,Menlo,Consolas,monospace}
-  .hr{border-top:1px solid var(--rule);margin:10px 0}
+    /* list */
+    .list{margin-top:12px;display:grid;gap:10px}
+    .card{
+      border:1px solid var(--line); background:rgba(255,255,255,.02); border-radius:12px; padding:12px; display:grid; gap:8px
+    }
+    .meta{display:flex;align-items:center;gap:.5rem;justify-content:space-between}
+    .left{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+    .pill{font-size:11px; padding:.2rem .45rem; border-radius:999px; border:1px solid var(--line); color:var(--muted)}
+    .title{font-weight:700}
+    .text{white-space:pre-wrap;line-height:1.45}
+    .ops{display:flex;gap:.4rem;flex-wrap:wrap}
+    .small{font-size:12px; color:var(--muted)}
+    .star{color:#facc15}
+    .archived .title{opacity:.7;text-decoration:line-through}
+    .empty{border:1px dashed var(--line);border-radius:12px;padding:16px;text-align:center;color:var(--muted);margin-top:12px}
 
-  .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
-  .thumb{background:#0e1422;border:1px solid var(--rule);border-radius:10px;overflow:hidden}
-  .thumb img{width:100%;display:block;aspect-ratio:4/3;object-fit:cover}
-  .thumb .cap{padding:8px}
-  .cap .ts{color:#cbd5e1;font-size:12px}
-  .cap .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
-  .tag{font-size:11px;border:1px solid var(--rule);border-radius:999px;padding:0 6px;color:#cbd5e1}
-
-  .footer-note{margin-top:10px;color:var(--muted);font-size:12px;text-align:center}
-
-  /* capture panel */
-  .stage{position:relative;border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:#0a0f1a;min-height:260px}
-  video,canvas#photo{display:block;width:100%;height:auto}
-  .overlay-grid{position:absolute;inset:0;pointer-events:none;background:
-    linear-gradient(to right, rgba(255,255,255,.08) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255,255,255,.08) 1px, transparent 1px);
-    background-size: calc(100%/3) calc(100%/3);
-  }
-  .overlay-ghost{position:absolute;inset:0;pointer-events:none;opacity:.35;mix-blend-mode:screen}
-  .controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-  .controls .slider{display:flex;align-items:center;gap:8px}
-  input[type=range]{accent-color:var(--accent2)}
-
-  @media print{
-    body{background:#fff;color:#111}
-    .card{background:#fff}
-    .wrap{padding:10mm}
-    .orb{display:none}
-  }
-</style>
+    /* golden aura */
+    .golden .content{box-shadow:0 0 24px rgba(245,158,11,.2), inset 0 0 0 1px rgba(245,158,11,.25)}
+  </style>
 </head>
 <body>
-  <!-- Put the orb FIRST inside <body> -->
-  <div class="orb" aria-hidden="true"></div>
-
-  <div class="wrap">
-    <header>
-      <div class="brand">
-        <div class="logo">🍯 <b>Honey Inbox</b></div>
-        <div class="meta">Ultimate+ • PWA • offline • v1.1</div>
-      </div>
-      <div class="pill">honey.plnt.earth</div>
-    </header>
-
-    <div class="tabs">
-      <button class="tab active" data-panel="capture">Capture</button>
-      <button class="tab" data-panel="logbook">Logbook</button>
-      <button class="tab" data-panel="slip">Slip &amp; Envelope</button>
-      <button class="tab" data-panel="reminders">Reminders</button>
-      <button class="tab" data-panel="help">Rituals &amp; Help</button>
-      <button class="tab" data-panel="settings">Settings</button>
+  <header>
+    <svg class="dove" viewBox="0 0 96 96" aria-hidden="true">
+      <defs><linearGradient id="wing" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F5D142"/><stop offset="100%" stop-color="#F59E0B"/></linearGradient></defs>
+      <path fill="url(#wing)" d="M78 26c-9 9-18 13-28 13-8 0-16-4-24-12 3 12 10 19 20 21-6 3-12 4-18 3 7 7 16 10 26 8-6 5-13 8-21 9 13 8 26 8 38 0 12-9 16-23 7-42z"/>
+    </svg>
+    <a class="mark" href="/">
+      <span class="coo">coo coo coo</span>
+      <span class="honey">HONEY</span>
+    </a>
+    <div class="actions">
+      <button class="btn primary" id="exportBtn" aria-label="Export inbox">
+        <span class="dot" style="background:#F59E0B"></span> Export
+      </button>
+      <button class="btn" id="importBtn" aria-label="Import inbox">Import</button>
+      <input type="file" id="importFile" accept="application/json" hidden />
     </div>
+  </header>
 
-    <!-- CAPTURE -->
-    <section id="capture" class="card">
-      <div class="grid">
-        <div>
-          <h3 style="margin:0 0 6px">Camera</h3>
-          <div class="stage" id="stage">
-            <video id="video" playsinline></video>
-            <img id="ghost" class="overlay-ghost" alt="" style="display:none"/>
-            <div id="grid" class="overlay-grid" style="display:none"></div>
-          </div>
-          <div class="controls">
-            <button id="startCam">Start camera</button>
-            <button id="stopCam" class="secondary" disabled>Stop</button>
-            <button id="shot" class="secondary" disabled>Take photo</button>
-            <label class="slider">Ghost <input id="ghostToggle" type="checkbox"/></label>
-            <label class="slider">Opacity <input id="ghostAlpha" type="range" min="0" max="100" value="35"/></label>
-            <label class="slider">Grid <input id="gridToggle" type="checkbox"/></label>
-          </div>
-          <div class="row" style="margin-top:6px">
-            <input id="filePick" type="file" accept="image/*" capture="environment"/>
-            <button id="loadFile" class="secondary">Use photo</button>
-            <span class="small">Tip: HTTPS is required for live camera on phones. Photo upload works anywhere.</span>
-          </div>
-          <canvas id="photo" style="display:none"></canvas>
+  <main>
+    <!-- Sidebar -->
+    <aside class="side" aria-label="Filters">
+      <div class="composer" id="composer">
+        <input id="title" class="input" placeholder="Title (optional)" maxlength="140" />
+        <textarea id="body" class="input" rows="3" placeholder="Drop sweet notes, links, ideas…" maxlength="5000"></textarea>
+        <div class="row">
+          <input id="tags" class="tags" placeholder="tags (comma or #tag #tag)" />
+          <button id="add" class="btn primary" aria-label="Add to Honey Inbox">Add to Inbox</button>
         </div>
+        <div class="hint">Tips: use <b>#tags</b>, paste links, press <b>⌘/Ctrl+Enter</b> to add.</div>
+      </div>
 
-        <div>
-          <h3 style="margin:0 0 6px">Entry details</h3>
-          <div class="row">
-            <label>Channel <input id="channel" type="text" placeholder="illumina / AB12"/></label>
-            <label>Tags <input id="tags" type="text" placeholder="honey,inbox,dots"/></label>
-          </div>
-          <textarea id="notes" placeholder="Observation (e.g., 'bright ridge NE quadrant', 'none')"></textarea>
-          <div class="controls">
-            <button id="save" disabled>Save entry</button>
-            <span class="pill"><span id="streak">0</span> day streak</span>
-          </div>
-          <div class="hr"></div>
-          <div class="row">
-            <button id="useLastGhost" class="ghost">Use last photo as ghost</button>
-            <button id="clearGhost" class="ghost">Clear ghost</button>
-          </div>
+      <div class="controls" style="margin-top:12px">
+        <button class="chip" id="showAll" aria-pressed="true">All</button>
+        <button class="chip" id="showOpen" aria-pressed="false">Open</button>
+        <button class="chip" id="showStar" aria-pressed="false">Starred</button>
+        <button class="chip" id="showArch" aria-pressed="false">Archived</button>
+        <input class="search" id="q" placeholder="Search…" />
+      </div>
+
+      <div style="margin-top:10px">
+        <div class="small">Quick Actions</div>
+        <div class="controls" style="margin-top:6px">
+          <button class="chip" id="clearAll" title="Clear inbox (keeps backup export)">Clear</button>
+          <button class="chip" id="backup" title="Make backup (downloads JSON)">Backup</button>
         </div>
       </div>
-      <div class="footer-note">All photos & notes are stored locally (IndexedDB). Nothing is uploaded.</div>
+    </aside>
+
+    <!-- Content -->
+    <section class="content" aria-label="Honey Inbox">
+      <div class="list" id="list"></div>
+      <div class="empty" id="empty" hidden>Empty jar. Add something sweet.</div>
     </section>
+  </main>
 
-    <!-- LOGBOOK -->
-    <section id="logbook" class="card" style="display:none">
-      <div class="row">
-        <button id="refreshLog" class="secondary">Refresh</button>
-        <button id="exportJson" class="secondary">Backup (JSON)</button>
-        <label class="secondary" style="padding:0">
-          <input id="importFile" type="file" accept="application/json" style="display:none"/>
-          <button id="importBtn" class="secondary">Restore</button>
-        </label>
-        <span class="pill" style="margin-left:auto">Storage: <span id="storeInfo" class="mono">—</span></span>
-      </div>
-      <div id="gallery" class="gallery"></div>
-    </section>
+  <footer style="opacity:.7;font-size:12px;text-align:center;margin:2rem 0">© PLNT.earth · honey.plnt.earth</footer>
 
-    <!-- SLIP & ENVELOPE -->
-    <section id="slip" class="card" style="display:none">
-      <div class="grid">
-        <div>
-          <h3 style="margin:0 0 6px">Compose slip</h3>
-          <div class="row">
-            <label>Channel <input id="slipChannel" type="text" placeholder="illumina / AB12"/></label>
-            <label>When <input id="slipTime" type="time"/></label>
-          </div>
-          <textarea id="slipMsg" placeholder="Optional plain message (will be Base32 encoded)"></textarea>
-          <div class="row">
-            <button id="makeEnvelope">Encode → I31</button>
-            <button id="copyEnvelope" class="secondary" disabled>Copy (no spaces)</button>
-          </div>
-          <textarea id="envelope" class="mono" readonly placeholder="I31:&lt;BASE32&gt;:CRC=&lt;8&gt;"></textarea>
-        </div>
-        <div>
-          <h3 style="margin:0 0 6px">Printable slip</h3>
-          <div class="card" id="slipCard" style="background:#0e1422">
-            <div style="display:flex;justify-content:space-between;align-items:center">
-              <div><strong>Honey Inbox</strong></div>
-              <div class="mono small" id="slipDate">—</div>
-            </div>
-            <div class="small" id="slipChan">illumina / —</div>
-            <div class="mono" id="slipEnv" style="margin-top:6px; word-break:break-all; font-size:12px; line-height:1.4">—</div>
-            <div class="small" style="margin-top:8px;color:#cbd5e1">Place by plate. Dots = send; scrape = end. Check same time daily.</div>
-          </div>
-          <div class="row">
-            <button id="printSlip" class="secondary">Print / Save PDF</button>
-          </div>
-        </div>
-      </div>
-    </section>
+  <script>
+    (function () {
+      var KEY = "honey_inbox_v1";
+      var body = document.body;
 
-    <!-- REMINDERS -->
-    <section id="reminders" class="card" style="display:none">
-      <h3 style="margin:0 0 6px">Daily reminder (.ics)</h3>
-      <div class="row">
-        <label>Event name <input id="remName" type="text" value="Honey Inbox — Daily Check"/></label>
-        <label>Time <input id="remTime" type="time"/></label>
-        <label>Minutes before <select id="remAhead">
-          <option value="0">0</option><option>5</option><option>10</option><option>15</option>
-          <option>30</option><option>60</option>
-        </select></label>
-        <button id="makeICS" class="secondary">Download .ics</button>
-      </div>
-      <div class="small">Import the .ics to your phone calendar to get a daily ping.</div>
-    </section>
+      var el = {
+        title: document.getElementById("title"),
+        body: document.getElementById("body"),
+        tags: document.getElementById("tags"),
+        add: document.getElementById("add"),
+        list: document.getElementById("list"),
+        empty: document.getElementById("empty"),
+        q: document.getElementById("q"),
+        showAll: document.getElementById("showAll"),
+        showOpen: document.getElementById("showOpen"),
+        showStar: document.getElementById("showStar"),
+        showArch: document.getElementById("showArch"),
+        exportBtn: document.getElementById("exportBtn"),
+        importBtn: document.getElementById("importBtn"),
+        importFile: document.getElementById("importFile"),
+        clearAll: document.getElementById("clearAll"),
+        backup: document.getElementById("backup")
+      };
 
-    <!-- HELP -->
-    <section id="help" class="card" style="display:none">
-      <h3 style="margin:0 0 6px">Rituals &amp; Tips</h3>
-      <ul>
-        <li><strong>Quiet Inbox:</strong> thin smear on plate/glass; phone/light at a shallow angle. Tiny dots/lines with a toothpick. Check once/day.</li>
-        <li><strong>Persistence Tablet:</strong> 4–8 miniscule food-safe color dots as a recognizable signature. Scrape to close.</li>
-        <li><strong>Soft Mute:</strong> very thin honey film on a metal corner (bell/ruler). Clean = on, coated = off.</li>
-        <li><strong>Consistency:</strong> same light angle & camera spot. iPhone: tap-hold for AE/AF LOCK. Android: Pro/Manual if available.</li>
-        <li><strong>Safety:</strong> treat experimental honey as non-food; warm water cleans fast.</li>
-      </ul>
-    </section>
+      var state = {
+        items: load(),
+        filter: "all",
+        q: ""
+      };
 
-    <!-- SETTINGS -->
-    <section id="settings" class="card" style="display:none">
-      <div class="row">
-        <button id="clearAll" class="danger">Erase all data</button>
-        <span class="small">Clears photos & notes from this browser (cannot be undone).</span>
-        <span class="pill" style="margin-left:auto">Theme: auto (system)</span>
-      </div>
-    </section>
-  </div>
+      function load() {
+        try {
+          var raw = localStorage.getItem(KEY);
+          if (!raw) return [];
+          var data = JSON.parse(raw);
+          if (Array.isArray(data)) return data;
+        } catch (e) {}
+        return [];
+      }
 
-<script>
-/* Tabs */
-document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
-  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-  document.querySelectorAll('section.card').forEach(s=>s.style.display='none');
-  t.classList.add('active'); document.getElementById(t.dataset.panel).style.display='block';
-});
+      function save() {
+        try { localStorage.setItem(KEY, JSON.stringify(state.items)); } catch (e) {}
+      }
 
-/* IndexedDB */
-const DB_NAME='HoneyInboxDB', DB_VER=1, STORE='entries';
-function openDB(){return new Promise((resolve,reject)=>{const r=indexedDB.open(DB_NAME,DB_VER);
-  r.onupgradeneeded=e=>{const db=e.target.result; if(!db.objectStoreNames.contains(STORE)){
-    const os=db.createObjectStore(STORE,{keyPath:'id',autoIncrement:true}); os.createIndex('ts','ts',{unique:false});}};
-  r.onsuccess=()=>resolve(r.result); r.onerror=()=>reject(r.error);});}
-async function addEntry(o){const db=await openDB();return new Promise((res,rej)=>{const tx=db.transaction(STORE,'readwrite');
-  tx.objectStore(STORE).add(o).onsuccess=()=>res();tx.onerror=()=>rej(tx.error);});}
-async function getAll(){const db=await openDB();return new Promise((res,rej)=>{const tx=db.transaction(STORE,'readonly');
-  const q=tx.objectStore(STORE).getAll(); q.onsuccess=()=>res(q.result||[]); q.onerror=()=>rej(q.error);});}
-async function delEntry(id){const db=await openDB();return new Promise((res,rej)=>{const tx=db.transaction(STORE,'readwrite');
-  tx.objectStore(STORE).delete(id).onsuccess=()=>res(); tx.onerror=()=>rej(tx.error);});}
-async function clearDB(){const db=await openDB();return new Promise((res,rej)=>{const tx=db.transaction(STORE,'readwrite');
-  tx.objectStore(STORE).clear().onsuccess=()=>res(); tx.onerror=()=>rej(tx.error);});}
+      function uid() {
+        return "hny_" + Math.random().toString(36).slice(2, 9) + Date.now().toString(36);
+      }
 
-/* Camera & capture */
-const video=document.getElementById('video'), startCam=document.getElementById('startCam'), stopCam=document.getElementById('stopCam'),
-      shot=document.getElementById('shot'), filePick=document.getElementById('filePick'), loadFile=document.getElementById('loadFile'),
-      photo=document.getElementById('photo'), ghostImg=document.getElementById('ghost'),
-      ghostToggle=document.getElementById('ghostToggle'), ghostAlpha=document.getElementById('ghostAlpha'),
-      gridToggle=document.getElementById('gridToggle'), grid=document.getElementById('grid');
-let stream=null, lastCaptureDataURL=null;
+      function parseTags(input) {
+        var t = (input || "").trim();
+        if (!t) return [];
+        var parts = t
+          .replace(/#/g, " #")        // split glued hashtags
+          .split(/[, ]+/)
+          .map(function (s) { return s.trim(); })
+          .filter(Boolean)
+          .map(function (s) { return s[0] === "#" ? s.slice(1) : s; })
+          .map(function (s) { return s.toLowerCase(); });
+        var seen = {};
+        var out = [];
+        for (var i = 0; i < parts.length; i++) {
+          var p = parts[i];
+          if (!seen[p]) { seen[p] = 1; out.push(p); }
+        }
+        return out.slice(0, 8);
+      }
 
-startCam.onclick=async ()=>{
-  try{
-    stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'},audio:false});
-    video.srcObject=stream; await video.play(); stopCam.disabled=false; shot.disabled=false;
-  }catch(e){ alert("Camera error: "+e.message+"\nTip: use HTTPS or use the 'Use photo' button."); }
-};
-stopCam.onclick=()=>{try{stream&&stream.getTracks().forEach(t=>t.stop());}catch(e){} video.srcObject=null; stopCam.disabled=true; shot.disabled=true;};
-shot.onclick=()=>{ if(!video.videoWidth){alert("Camera not ready.");return;}
-  const w=video.videoWidth,h=video.videoHeight; photo.width=w; photo.height=h;
-  const ctx=photo.getContext('2d'); ctx.drawImage(video,0,0,w,h);
-  lastCaptureDataURL=photo.toDataURL('image/jpeg',0.88); document.getElementById('save').disabled=false;
-};
-loadFile.onclick=()=>{ const f=filePick.files&&filePick.files[0]; if(!f){alert("Pick an image first.");return;}
-  const r=new FileReader(); r.onload=()=>{ const img=new Image(); img.onload=()=>{ photo.width=img.naturalWidth; photo.height=img.naturalHeight;
-    const c=photo.getContext('2d'); c.drawImage(img,0,0); lastCaptureDataURL=photo.toDataURL('image/jpeg',0.9); document.getElementById('save').disabled=false; };
-    img.src=r.result; }; r.readAsDataURL(f); };
+      function addItem() {
+        var t = el.title.value.trim();
+        var b = el.body.value.trim();
+        var g = parseTags(el.tags.value);
+        if (!t && !b) return;
 
-document.getElementById('useLastGhost').onclick=async ()=>{ const all=await getAll(); if(!all.length){alert("No previous photo.");return;}
-  const last=all.sort((a,b)=>b.ts-a.ts)[0]; ghostImg.src=last.img; ghostImg.style.display='block'; ghostToggle.checked=true; };
-document.getElementById('clearGhost').onclick=()=>{ghostImg.removeAttribute('src'); ghostImg.style.display='none'; ghostToggle.checked=false;};
-ghostToggle.onchange=()=>{ghostImg.style.display=ghostToggle.checked?'block':'none';};
-ghostAlpha.oninput=()=>{ghostImg.style.opacity=(parseInt(ghostAlpha.value)||35)/100;};
-gridToggle.onchange=()=>{grid.style.display=gridToggle.checked?'block':'none';};
+        state.items.unshift({
+          id: uid(),
+          title: t,
+          body: b,
+          tags: g,
+          url: extractURL(b),
+          starred: false,
+          archived: false,
+          createdAt: Date.now(),
+          updatedAt: Date.now()
+        });
+        save();
+        render();
 
-/* Save entry */
-const channel=document.getElementById('channel'), tags=document.getElementById('tags'), notes=document.getElementById('notes'), saveBtn=document.getElementById('save');
-saveBtn.onclick=async ()=>{ if(!lastCaptureDataURL){alert("Take a photo or choose one.");return;}
-  const ts=Date.now(); const obj={ts,channel:channel.value||"",tags:(tags.value||"").split(/[, ]+/).filter(Boolean),notes:notes.value||"",img:lastCaptureDataURL};
-  await addEntry(obj); notes.value=""; document.getElementById('save').disabled=true; updateStreak(); alert("Saved."); };
+        el.title.value = "";
+        el.body.value = "";
+        el.tags.value = "";
+        el.title.focus();
+      }
 
-/* Logbook */
-const gallery=document.getElementById('gallery');
-document.getElementById('refreshLog').onclick=renderLog;
-async function renderLog(){ const all=await getAll(); all.sort((a,b)=>b.ts-a.ts); gallery.innerHTML=""; let totalBytes=0;
-  for(const e of all){ totalBytes+=Math.ceil((e.img.length*3)/4);
-    const card=document.createElement('div'); card.className='thumb';
-    const img=document.createElement('img'); img.src=e.img; const cap=document.createElement('div'); cap.className='cap';
-    const ts=new Date(e.ts).toLocaleString(); const t=document.createElement('div'); t.className='ts'; t.textContent=ts;
-    const ch=document.createElement('div'); ch.textContent=e.channel||"—"; const tagRow=document.createElement('div'); tagRow.className='tags';
-    (e.tags||[]).forEach(s=>{const span=document.createElement('span'); span.className='tag'; span.textContent=s; tagRow.appendChild(span);});
-    const btns=document.createElement('div'); btns.className='row'; btns.style.marginTop='6px';
-    const del=document.createElement('button'); del.className='danger'; del.textContent='Delete'; del.onclick=async()=>{ if(confirm('Delete this entry?')){ await delEntry(e.id); renderLog(); } };
-    const view=document.createElement('button'); view.className='secondary'; view.textContent='View'; view.onclick=()=>{ const w=window.open('','_blank'); w.document.write(`<img src="${e.img}" style="max-width:100%"/>`); };
-    btns.append(view,del); cap.append(ch,t,tagRow,btns); card.append(img,cap); gallery.append(card); }
-  document.getElementById('storeInfo').textContent=(totalBytes/1024/1024).toFixed(2)+" MB, "+all.length+" entries"; }
-document.getElementById('exportJson').onclick=async ()=>{ const all=await getAll(); const blob=new Blob([JSON.stringify(all)],{type:'application/json'});
-  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='honey_inbox_backup.json'; a.click(); };
-document.getElementById('importBtn').onclick=()=>document.getElementById('importFile').click();
-document.getElementById('importFile').onchange=async (e)=>{ const f=e.target.files[0]; if(!f) return;
-  const txt=await f.text(); let arr=[]; try{arr=JSON.parse(txt)||[];}catch(err){alert("Invalid JSON");return;}
-  if(!Array.isArray(arr)){alert("Backup format not recognized");return;}
-  if(!confirm("Import "+arr.length+" entries?")) return;
-  for(const it of arr){ await addEntry({ts:it.ts||Date.now(),channel:it.channel||"",tags:it.tags||[],notes:it.notes||"",img:it.img}); }
-  renderLog(); };
+      function extractURL(text) {
+        var m = (text || "").match(/https?:\/\/[^\s]+/);
+        return m ? m[0] : "";
+      }
 
-/* Streak */
-async function updateStreak(){ const all=await getAll(); if(!all.length){document.getElementById('streak').textContent="0";return;}
-  all.sort((a,b)=>a.ts-b.ts); const day=86400000; const today=new Date(); today.setHours(0,0,0,0);
-  let streak=0; const days=new Set(all.map(e=>{const d=new Date(e.ts); d.setHours(0,0,0,0); return d.getTime();}));
-  for(let i=0;i<3650;i++){ const t=today.getTime()-i*day; if(days.has(t)) streak++; else break; }
-  document.getElementById('streak').textContent=String(streak); }
-updateStreak();
+      function toggle(id, field) {
+        for (var i = 0; i < state.items.length; i++) {
+          if (state.items[i].id === id) {
+            state.items[i][field] = !state.items[i][field];
+            state.items[i].updatedAt = Date.now();
+            break;
+          }
+        }
+        save();
+        render();
+      }
 
-/* Envelope (Base32 + CRC) */
-const slipChannel=document.getElementById('slipChannel'), slipTime=document.getElementById('slipTime'), slipMsg=document.getElementById('slipMsg');
-const envelope=document.getElementById('envelope'), copyEnvelope=document.getElementById('copyEnvelope');
-const slipDate=document.getElementById('slipDate'), slipChan=document.getElementById('slipChan'), slipEnv=document.getElementById('slipEnv');
-document.getElementById('printSlip').onclick=()=>window.print();
-function utf8ToBytes(str){return new TextEncoder().encode(str);}
-const B32_ALPH="ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
-function base32Encode(bytes){let out="",buf=0,bits=0;for(const b of bytes){buf=(buf<<8)|(b&255);bits+=8;while(bits>=5){out+=B32_ALPH[(buf>>>(bits-5))&31];bits-=5;}} if(bits>0) out+=B32_ALPH[((buf<<(5-bits))&31)]; return out;}
-function crc32(str){const t=(()=>{let c,tab=[];for(let n=0;n<256;n++){c=n;for(let k=0;k<8;k++) c=((c&1)?(0xEDB88320^(c>>>1)):(c>>>1)); tab[n]=c>>>0;} return tab;})();
-  let crc=0^(-1); const b=utf8ToBytes(str); for(let i=0;i<b.length;i++){ const y=(crc^b[i])&0xFF; crc=(crc>>>8)^t[y]; } return ((crc^(-1))>>>0).toString(16).toUpperCase().padStart(8,'0');}
-function buildEnvelope(plain){const b32=base32Encode(utf8ToBytes(plain)); const c=crc32(plain); return {env:`I31:${b32}:CRC=${c}`};}
-document.getElementById('makeEnvelope').onclick=()=>{const msg=(slipMsg.value||"").trim(); const {env}=buildEnvelope(msg);
-  envelope.value=env; copyEnvelope.disabled=false; slipChan.textContent=slipChannel.value?slipChannel.value:"illumina / —";
-  const now=new Date(); const hm= slipTime.value || String(now.getHours()).padStart(2,'0')+":"+String(now.getMinutes()).padStart(2,'0');
-  slipDate.textContent=now.toLocaleDateString()+" • "+hm; slipEnv.textContent=env;};
-async function copyText(txt){try{
-  if(navigator.clipboard&&window.isSecureContext){ if(window.ClipboardItem){
-    const item=new ClipboardItem({"text/plain":new Blob([txt],{type:"text/plain"})}); await navigator.clipboard.write([item]); return;}
-    else{await navigator.clipboard.writeText(txt); return;}}
-}catch(e){} const ta=document.createElement('textarea'); ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta);
-  ta.select(); try{document.execCommand('copy');}catch(e){} document.body.removeChild(ta);}
-document.getElementById('copyEnvelope').onclick=()=>copyText(envelope.value||"");
+      function remove(id) {
+        state.items = state.items.filter(function (x) { return x.id !== id; });
+        save();
+        render();
+      }
 
-/* .ics reminders */
-document.getElementById('makeICS').onclick=()=>{const name=(document.getElementById('remName').value||'Honey Inbox — Daily Check');
-  const time=(document.getElementById('remTime').value||'09:00'); const ahead=parseInt(document.getElementById('remAhead').value||'0',10);
-  const now=new Date(); const y=now.getFullYear(), m=String(now.getMonth()+1).padStart(2,'0'), d=String(now.getDate()).padStart(2,'0');
-  const [hh,mm]=time.split(':'); const dt=`${y}${m}${d}T${hh}${mm}00`;
-  const alarm=ahead>0?`BEGIN:VALARM\nTRIGGER:-PT${ahead}M\nACTION:DISPLAY\nDESCRIPTION:${name}\nEND:VALARM\n`:''; 
-  const ics=`BEGIN:VCALENDAR
-VERSION:2.0
-PRODID:-//Illumina//Honey Inbox//EN
-BEGIN:VEVENT
-UID:honey-${Date.now()}@honey.plnt.earth
-DTSTAMP:${y}${m}${d}T${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}00
-SUMMARY:${name}
-DTSTART:${dt}
-RRULE:FREQ=DAILY
-${alarm}END:VEVENT
-END:VCALENDAR`;
-  const blob=new Blob([ics],{type:'text/calendar'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='honey_inbox_daily.ics'; a.click();};
+      function filterItems() {
+        var q = state.q.toLowerCase().trim();
+        var f = state.filter;
+        var arr = state.items.slice();
 
-/* Settings */
-document.getElementById('clearAll').onclick=async ()=>{ if(!confirm("Erase ALL local photos & notes?")) return; await clearDB(); renderLog(); updateStreak(); alert("Cleared."); };
+        if (f === "open") arr = arr.filter(function (x) { return !x.archived; });
+        if (f === "star") arr = arr.filter(function (x) { return x.starred; });
+        if (f === "arch") arr = arr.filter(function (x) { return x.archived; });
 
-/* Init */
-function show(panel){document.querySelectorAll('section.card').forEach(s=>s.style.display='none'); document.getElementById(panel).style.display='block';}
-document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>show(t.dataset.panel)));
-renderLog();
-updateStreak();
+        if (q) {
+          arr = arr.filter(function (x) {
+            var hay = (x.title + " " + x.body + " " + (x.tags || []).join(" ")).toLowerCase();
+            return hay.indexOf(q) !== -1;
+          });
+        }
+        return arr;
+      }
 
-/* PWA: register service worker for whole origin */
-if('serviceWorker' in navigator){
-  window.addEventListener('load',()=>{ navigator.serviceWorker.register('/sw.js').catch(()=>{}); });
-}
-</script>
+      function fmtDate(ts) {
+        var d = new Date(ts);
+        return d.toLocaleString();
+      }
+
+      function pill(text) {
+        var span = document.createElement("span");
+        span.className = "pill";
+        span.textContent = text;
+        return span;
+      }
+
+      function render() {
+        var items = filterItems();
+        el.list.innerHTML = "";
+
+        if (!items.length) {
+          el.empty.hidden = false;
+          return;
+        }
+        el.empty.hidden = true;
+
+        for (var i = 0; i < items.length; i++) {
+          var it = items[i];
+          var card = document.createElement("article");
+          card.className = "card" + (it.archived ? " archived" : "");
+          card.setAttribute("data-id", it.id);
+
+          // meta row
+          var meta = document.createElement("div");
+          meta.className = "meta";
+
+          var left = document.createElement("div");
+          left.className = "left";
+          var ttl = document.createElement("div");
+          ttl.className = "title";
+          ttl.textContent = it.title || (it.body ? (it.body.length > 60 ? it.body.slice(0, 60) + "…" : it.body) : "Untitled");
+          left.appendChild(ttl);
+
+          if (it.tags && it.tags.length) {
+            for (var k = 0; k < it.tags.length; k++) left.appendChild(pill("#" + it.tags[k]));
+          }
+          meta.appendChild(left);
+
+          var ops = document.createElement("div");
+          ops.className = "ops";
+
+          var aStar = document.createElement("button");
+          aStar.className = "btn";
+          aStar.innerHTML = it.starred ? "★ Starred" : "☆ Star";
+          aStar.setAttribute("aria-pressed", it.starred ? "true" : "false");
+          aStar.onclick = (function (id) { return function () { toggle(id, "starred"); }; })(it.id);
+
+          var aArch = document.createElement("button");
+          aArch.className = "btn";
+          aArch.textContent = it.archived ? "Unarchive" : "Archive";
+          aArch.onclick = (function (id) { return function () { toggle(id, "archived"); }; })(it.id);
+
+          var aDel = document.createElement("button");
+          aDel.className = "btn";
+          aDel.textContent = "Delete";
+          aDel.onclick = (function (id) { return function () { remove(id); }; })(it.id);
+
+          ops.appendChild(aStar); ops.appendChild(aArch); ops.appendChild(aDel);
+          meta.appendChild(ops);
+
+          // body
+          var text = document.createElement("div");
+          text.className = "text";
+          text.textContent = it.body || "";
+
+          // link row
+          var info = document.createElement("div");
+          info.className = "small";
+          var when = "Added " + fmtDate(it.createdAt);
+          if (it.url) {
+            var a = document.createElement("a");
+            a.href = it.url; a.rel = "noopener noreferrer";
+            a.textContent = " · Link";
+            info.textContent = when;
+            info.appendChild(a);
+          } else {
+            info.textContent = when;
+          }
+
+          card.appendChild(meta);
+          if (it.body) card.appendChild(text);
+          card.appendChild(info);
+
+          el.list.appendChild(card);
+        }
+      }
+
+      // Filters
+      function setFilter(f) {
+        state.filter = f;
+        el.showAll.setAttribute("aria-pressed", f === "all" ? "true" : "false");
+        el.showOpen.setAttribute("aria-pressed", f === "open" ? "true" : "false");
+        el.showStar.setAttribute("aria-pressed", f === "star" ? "true" : "false");
+        el.showArch.setAttribute("aria-pressed", f === "arch" ? "true" : "false");
+        render();
+      }
+
+      // Import/Export
+      function downloadBlob(name, dataStr) {
+        var blob = new Blob([dataStr], { type: "application/json" });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement("a");
+        a.href = url; a.download = name; document.body.appendChild(a); a.click();
+        a.remove(); URL.revokeObjectURL(url);
+      }
+
+      function doExport() {
+        var data = JSON.stringify(state.items, null, 2);
+        downloadBlob("honey-inbox-backup.json", data);
+      }
+
+      function doBackup() {
+        var data = JSON.stringify(state.items, null, 2);
+        downloadBlob("honey-inbox-backup-" + Date.now() + ".json", data);
+      }
+
+      function doImport(file) {
+        var reader = new FileReader();
+        reader.onload = function () {
+          try {
+            var data = JSON.parse(reader.result || "[]");
+            if (Array.isArray(data)) {
+              state.items = data;
+              save();
+              render();
+            }
+          } catch (e) {}
+        };
+        reader.readAsText(file);
+      }
+
+      // Events
+      el.add.onclick = addItem;
+      el.title.addEventListener("keydown", function (e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === "Enter") addItem();
+      });
+      el.body.addEventListener("keydown", function (e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === "Enter") addItem();
+      });
+
+      el.q.oninput = function () { state.q = el.q.value || ""; render(); };
+      el.showAll.onclick = function () { setFilter("all"); };
+      el.showOpen.onclick = function () { setFilter("open"); };
+      el.showStar.onclick = function () { setFilter("star"); };
+      el.showArch.onclick = function () { setFilter("arch"); };
+
+      el.exportBtn.onclick = function () { doExport(); };
+      el.backup.onclick = function () { doBackup(); };
+      el.importBtn.onclick = function () { el.importFile.click(); };
+      el.importFile.onchange = function () {
+        var f = el.importFile.files && el.importFile.files[0];
+        if (f) doImport(f);
+        el.importFile.value = "";
+      };
+
+      el.clearAll.onclick = function () {
+        var sure = confirm("Clear all items? This cannot be undone.");
+        if (!sure) return;
+        state.items = [];
+        save();
+        render();
+      };
+
+      // Golden Mode easter egg
+      (function () {
+        var seq = "coo coo coo honey";
+        var buf = "";
+        document.addEventListener("keydown", function (e) {
+          if (e.key && e.key.length === 1) {
+            buf += e.key.toLowerCase();
+            if (buf.length > seq.length) buf = buf.slice(-seq.length);
+            if (buf === seq) { body.classList.toggle("golden"); }
+          } else if (e.key === "Escape") {
+            body.classList.remove("golden");
+          }
+        }, { passive: true });
+      })();
+
+      // First render
+      render();
+    })();
+  </script>
 </body>
 </html>
