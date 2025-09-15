@@ -1,116 +1,264 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>coo coo coo HONEY: An Illumina Framework Note with Electrolyte Conductivity as Interaction Metaphor</title>
-<meta name="description" content="A design/research note positioning Illumina as a symbolic-operational framework with a companion website (honey.plnt.earth), a triadic chant ritual, and an electrolyte conductivity metaphor for interactive flow.">
-<meta name="theme-color" content="#0B0F19">
-<style>
-  :root{--bg:#0B0F19;--ink:#E5E7EB;--muted:#9CA3AF;--line:rgba(255,255,255,.12);
-        --gold1:#F5D142;--gold2:#F59E0B;--gold3:#D97706;}
-  *{box-sizing:border-box}html,body{height:100%}
-  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
-  main{max-width:860px;margin:32px auto;padding:0 16px}
-  h1,h2,h3{line-height:1.25;margin:1.2em 0 .6em}
-  h1{font-size:clamp(28px,4vw,40px)}
-  h2{font-size:clamp(20px,3vw,26px);border-bottom:1px solid var(--line);padding-bottom:.25rem}
-  h3{font-size:clamp(18px,2.2vw,20px)}
-  p,li{color:#dfe3ea}
-  .muted{color:var(--muted)}
-  .meta{display:flex;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:14px;margin-top:-8px}
-  code,kbd,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
-  pre{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:12px;padding:12px;overflow:auto}
-  .box{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:14px;padding:14px}
-  .logo{display:flex;align-items:center;gap:10px;margin:8px 0 20px}
-  .mark{font-weight:900;letter-spacing:.01em;background:linear-gradient(180deg,var(--gold1),var(--gold2) 55%,var(--gold3));
-        -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-  .grid{display:grid;gap:12px}
-  .two{grid-template-columns:1fr 1fr}
-  @media (max-width:860px){.two{grid-template-columns:1fr}}
-  .ref li{margin:.4em 0}
-  .foot{margin:40px 0 60px;color:var(--muted);font-size:14px}
-  .ver{font-size:12px;color:var(--muted);text-align:right;margin-top:8px}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HONEY · Illumina Entry Portal</title>
+  <meta name="description" content="Start here. Honey, seeds, smoke — a gentle portal into the Illumina cycle.">
+  <meta name="theme-color" content="#0B0F19">
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <style>
+    :root{
+      --bg:#0B0F19; --ink:#E5E7EB; --muted:#9CA3AF; --line:rgba(255,255,255,.12);
+      --gold1:#F5D142; --gold2:#F59E0B; --gold3:#D97706;
+      --accent:#9b87f5;
+      --ok:#22c55e; --warn:#f59e0b; --bad:#ef4444;
+      --radius:14px; --shadow:0 10px 30px rgba(0,0,0,.35);
+      --maxw:1120px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:radial-gradient(1000px 600px at 20% 0%, rgba(155,135,245,.12), transparent 50%),
+                       radial-gradient(900px 600px at 80% 100%, rgba(245,209,66,.08), transparent 50%),
+                       var(--bg);
+      color:var(--ink); font:16px/1.6 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+    a{color:var(--gold1); text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{max-width:var(--maxw); margin:0 auto; padding:24px}
+    header{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:16px; padding:10px 0 4px; border-bottom:1px solid var(--line);
+    }
+    .brand{display:flex; align-items:center; gap:14px; text-decoration:none}
+    .sig{width:40px; height:40px; border-radius:50%;
+         background:conic-gradient(from 0deg, var(--gold1), var(--gold2), var(--gold3), var(--gold1));
+         box-shadow:0 0 0 3px rgba(245,209,66,.15), inset 0 0 30px rgba(0,0,0,.45);
+         position:relative;
+    }
+    .sig:after{content:""; position:absolute; inset:6px; border-radius:50%; background:var(--bg); box-shadow:inset 0 0 20px rgba(245,209,66,.25)}
+    .title{font-weight:800; letter-spacing:.6px}
+    nav{display:flex; flex-wrap:wrap; gap:10px}
+    nav a{padding:8px 12px; border:1px solid var(--line); border-radius:999px; color:var(--ink)}
+    nav a:hover{border-color:var(--gold1)}
+    .hero{
+      display:grid; grid-template-columns:1.1fr .9fr; gap:28px; align-items:center;
+      padding:28px 0 10px;
+    }
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow);
+      padding:22px;
+    }
+    h1{font-size:clamp(28px, 4vw, 38px); line-height:1.15; margin:10px 0 8px}
+    h2{font-size:20px; margin:0 0 8px}
+    .kicker{color:var(--muted); font-weight:600; letter-spacing:.12em; text-transform:uppercase}
+    .cta{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:12px 16px; border-radius:12px; border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(245,209,66,.15), rgba(245,158,11,.08));
+      color:#111; font-weight:700;
+    }
+    .cta span{color:#111}
+    .cta small{color:#222; opacity:.7}
+    .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+    .chip{display:inline-block; padding:6px 10px; border-radius:999px; background:rgba(155,135,245,.12); color:var(--ink); border:1px solid var(--line)}
+    .list{margin:10px 0 0; padding:0 0 0 18px}
+    .list li{margin:6px 0}
+    .bar{height:1px; background:var(--line); margin:20px 0}
+    .muted{color:var(--muted)}
+    .foot{display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between}
+    .btnrow{display:flex; gap:10px; flex-wrap:wrap}
+    .btn{
+      padding:10px 14px; border-radius:10px; border:1px solid var(--line); background:rgba(255,255,255,.03);
+      display:inline-flex; align-items:center; gap:8px; text-decoration:none; color:var(--ink);
+    }
+    .btn:hover{border-color:var(--gold1)}
+    .status{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+    .dot{width:10px; height:10px; border-radius:50%}
+    .ok{background:var(--ok)} .warn{background:var(--warn)} .bad{background:var(--bad)}
+    .pill{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border:1px solid var(--line); border-radius:999px}
+    .mono{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; font-size:.95em}
+    .nowrap{white-space:nowrap}
+    .faqgrid{display:grid; grid-template-columns:1fr 1fr; gap:18px}
+    .note-form{display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:8px}
+    .note-input{flex:1; min-width:220px; padding:10px 12px; border-radius:10px; border:1px solid var(--line); background:rgba(255,255,255,.03); color:var(--ink)}
+    .note-btn{padding:10px 14px; border-radius:10px; border:1px solid var(--line); background:linear-gradient(180deg, rgba(245,209,66,.15), rgba(245,158,11,.08)); color:#111; font-weight:700}
+    @media (max-width: 920px){
+      .hero{grid-template-columns:1fr;}
+      .grid{grid-template-columns:1fr;}
+      .faqgrid{grid-template-columns:1fr;}
+    }
+  </style>
 </head>
 <body>
-<main>
-  <div class="logo">
-    <svg width="28" height="28" viewBox="0 0 96 96" aria-hidden="true">
-      <defs><linearGradient id="wing" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F5D142"/><stop offset="100%" stop-color="#F59E0B"/></linearGradient></defs>
-      <path fill="url(#wing)" d="M78 26c-9 9-18 13-28 13-8 0-16-4-24-12 3 12 10 19 20 21-6 3-12 4-18 3 7 7 16 10 26 8-6 5-13 8-21 9 13 8 26 8 38 0 12-9 16-23 7-42z"/>
-    </svg>
-    <div>
-      <div class="mark" style="font-size:22px;line-height:1">coo coo coo HONEY</div>
-      <div class="muted" style="font-size:12px">honey.plnt.earth — companion artifact</div>
-    </div>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="/" aria-label="HONEY home">
+        <div class="sig" aria-hidden="true"></div>
+        <div>
+          <div class="kicker">Illumina</div>
+          <div class="title">HONEY · Entry Portal</div>
+        </div>
+      </a>
+      <nav aria-label="Primary">
+        <a href="https://jar.plnt.earth/">Jar</a>
+        <a href="https://jar.plnt.earth/day/">Day</a>
+        <a href="https://jar.plnt.earth/calendar/illumina1/">Calendar</a>
+        <a href="https://tunes.plnt.earth/">Tunes</a>
+        <a href="https://jar.plnt.earth/interludes/">Interludes</a>
+        <a href="https://jar.plnt.earth/constellation/">Constellation</a>
+        <a href="https://jar.plnt.earth/archive/">Archive</a>
+        <a href="https://jar.plnt.earth/science/">Science</a>
+        <a href="https://jar.plnt.earth/references/">References</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="card">
+        <div class="kicker">Start Here</div>
+        <h1>Honey · Seeds · Smoke</h1>
+        <p>Welcome. This is the gentlest doorway into the Illumina cycle. Begin with <strong>honey smoke</strong> to open, then a single <strong>seed ritual</strong> to anchor perception, and finish with a quick <strong>Moon Note</strong>.</p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin:12px 0 8px">
+          <span class="chip">42‑day rhythm</span>
+          <span class="chip">1/7 clock</span>
+          <span class="chip">Moon notes</span>
+        </div>
+        <p class="muted">Prefer a guided flow? Jump to the daily Day page. It pairs the ritual with your playlist and constellation overlays.</p>
+        <form class="note-form" id="noteForm" aria-label="Quick Moon Note">
+          <input class="note-input" id="noteInput" type="text" maxlength="160" placeholder="Moon Note (one line)…">
+          <button class="note-btn" type="submit">Send to Day</button>
+          <span class="muted" id="todayLabel" aria-hidden="true">Loading…</span>
+        </form>
+        <p style="margin-top:8px"><a class="cta" href="https://jar.plnt.earth/day/"><span>Open Day</span></a></p>
+      </div>
+
+      <div class="card">
+        <div class="kicker">Quick Ritual</div>
+        <h2>3‑Step Honey Ritual (≈5 min)</h2>
+        <ol class="list">
+          <li><strong>Open (Smoke):</strong> Gentle incense or a breath at the window. If using honey smoke, keep it minimal and ventilated.</li>
+          <li><strong>Anchor (Seed):</strong> Choose one seed. <em>Cosmic</em> → clarity; <em>Pumpkin</em> → night grounding; <em>Cumin</em> → attention. Swallow vs. chew changes tempo.</li>
+          <li><strong>Note (Moon):</strong> One line about how you feel. That’s it. You’re in the cycle.</li>
+        </ol>
+        <p class="muted">Safety first: tiny quantities, know your body, and avoid allergens. Rituals are symbolic — not medical advice.</p>
+      </div>
+    </section>
+
+    <section class="grid" aria-label="Sections">
+      <article class="card">
+        <div class="kicker">Toolkit</div>
+        <h2>Seeds & Effects</h2>
+        <p>Simple, symbolic map for first‑timers: what one seed vs. two+ implies; swallow vs. chew; morning vs. night.</p>
+        <div class="faqgrid">
+          <ul class="list">
+            <li><strong>One seed (chewed):</strong> quicker onset, crisp focus.</li>
+            <li><strong>One seed (swallowed):</strong> slower, steadier cadence.</li>
+            <li><strong>Two+ seeds:</strong> intensifies the motif — not required for beginners.</li>
+          </ul>
+          <ul class="list">
+            <li><strong>Morning:</strong> lift/clarity pairing with breathwork.</li>
+            <li><strong>Night:</strong> grounding before sleep (pumpkin tends to pair well).</li>
+            <li><strong>Honey smoke:</strong> a minimal opening gesture; ventilate.</li>
+          </ul>
+        </div>
+        <p><a class="btn" href="https://jar.plnt.earth/references/seeds/">Open Seed FAQ</a></p>
+      </article>
+
+      <article class="card">
+        <div class="kicker">Time</div>
+        <h2>1/7 Equations (Explainer)</h2>
+        <p>How Illumina treats time: a 42‑day window with a 1/7 cadence, cycling attention like breath. Metaphor meets measurement.</p>
+        <p><a class="btn" href="https://jar.plnt.earth/science/">Read Science</a></p>
+      </article>
+
+      <article class="card">
+        <div class="kicker">Music</div>
+        <h2>Playlist Portal</h2>
+        <p>Every day pairs a track with a seed and note. Follow along on <span class="mono">tunes.plnt.earth</span>.</p>
+        <p><a class="btn" href="https://tunes.plnt.earth/">Go to Tunes</a></p>
+      </article>
+
+      <article class="card">
+        <div class="kicker">Visuals</div>
+        <h2>Interludes & Constellation</h2>
+        <p>Six interludes (Sabrina, Janet Planet, Eminem, Emma Stone, Doechii, Hot To Go) and your constellation anchors + watchmen overlays.</p>
+        <div class="btnrow">
+          <a class="btn" href="https://jar.plnt.earth/interludes/">Interludes</a>
+          <a class="btn" href="https://jar.plnt.earth/constellation/">Constellation</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="kicker">Calendar</div>
+        <h2>Illumina 1 · Dates</h2>
+        <ul class="list">
+          <li><strong>Start:</strong> Nov 5, 2025 (Full Moon)</li>
+          <li><strong>End:</strong> Dec 17, 2025</li>
+        </ul>
+        <p><a class="btn" href="https://jar.plnt.earth/calendar/illumina1/">Open Calendar</a></p>
+      </article>
+
+      <article class="card">
+        <div class="kicker">Archive</div>
+        <h2>Axioms, Notes, & Papers</h2>
+        <p>Everything that accrues along the way: axioms, experiments (e.g., silica + honey), and references.</p>
+        <div class="btnrow">
+          <a class="btn" href="https://jar.plnt.earth/archive/">Archive</a>
+          <a class="btn" href="https://jar.plnt.earth/references/">References</a>
+        </div>
+      </article>
+    </section>
+
+    <div class="bar"></div>
+
+    <section class="card">
+      <div class="kicker">For Curators & Scientists</div>
+      <h2>How to Read HONEY</h2>
+      <p>HONEY is a <em>translation layer</em>. The personal ritual (honey, seeds, smoke) provides a repeatable cadence for attention. The public layer (papers, 1/7) offers a frame to evaluate, critique, or extend. You can use one without the other — or study the bridge itself.</p>
+      <ul class="list">
+        <li><strong>Personal Discovery:</strong> self‑report clarity via Moon Notes.</li>
+        <li><strong>Physics Dialogue:</strong> examine 1/7 rhythms against ordinary clocks; treat it as a falsifiable lens, not a medical claim.</li>
+        <li><strong>Web Evidence:</strong> the calendar and day pages timestamp practice for later review.</li>
+      </ul>
+    </section>
+
+    <footer class="foot" aria-label="Footer">
+      <div class="status">
+        <span class="pill"><span class="dot ok"></span> <span>Portal live</span></span>
+        <span class="pill"><span class="dot warn"></span> <span>Seed FAQ review</span></span>
+        <span class="pill"><span class="dot ok"></span> <span>Calendar linked</span></span>
+      </div>
+      <div class="btnrow">
+        <a class="btn" href="https://jar.plnt.earth/day/">Today</a>
+        <a class="btn" href="https://jar.plnt.earth/science/">1/7 Science</a>
+        <a class="btn" href="https://jar.plnt.earth/interludes/">Interludes</a>
+      </div>
+    </footer>
   </div>
 
-  <h1>coo coo coo HONEY: An Illumina Framework Note with Electrolyte Conductivity as Interaction Metaphor</h1>
-  <div class="meta">
-    <span>Tristan White</span>
-    <span>PLNT.earth</span>
-    <span class="muted">Contact: hello@plnt.earth</span>
-  </div>
-  <div class="ver">Version 1.0 • Draft</div>
+  <script>
+    (function(){
+      try{
+        var label = document.getElementById('todayLabel');
+        var d = new Date();
+        var y = d.getFullYear();
+        var m = (d.getMonth()+1).toString().padStart(2,'0');
+        var day = d.getDate().toString().padStart(2,'0');
+        if(label) label.textContent = y + "-" + m + "-" + day;
 
-  <h2>Abstract</h2>
-  <p>This note positions the Illumina framework as a symbolic–operational lens for designing interactive systems. We introduce a triadic cadence (“coo coo coo”) that condenses into a branded essence (“HONEY”), and we map electrolyte conductivity κ as a metaphor and control surface for the flow of “honey-energy” in a user interface. The website <em>honey.plnt.earth</em> serves as a living companion artifact (visualization, ritual splash, data capture). We propose concrete, testable interaction-level predictions (signal–conductivity coupling, triadic cadence effects, ritual priming) and outline a minimal evaluation plan suitable for rapid deployment. We do not claim a replacement of physical theories; rather, we articulate a design framework inspired by dimensional analogies.</p>
-
-  <h2>1. Introduction & Scope</h2>
-  <p>Illumina treats ritual cadence and essence-storage as design primitives. The chant (“coo coo coo”) is an oscillatory signal; “HONEY” is condensed, memorable output. We scope Illumina as <em>design-level</em> theory with measurable UX consequences, not as a new physical law.</p>
-
-  <h2>2. Core Constructs</h2>
-  <div class="grid two">
-    <div class="box">
-      <h3>2.1 Triadic Cadence</h3>
-      <p>Three-beat signaling (“coo coo coo”) structures anticipation and release. Prior work shows rhythm affects attention and recall; we operationalize this with timed UI reveals.</p>
-    </div>
-    <div class="box">
-      <h3>2.2 Essence (HONEY)</h3>
-      <p>Brand-mark + condensed state. In UI, “HONEY” marks completion/commit; visually realized as a gradient gold wordmark with optional drip motif.</p>
-    </div>
-  </div>
-
-  <h2>3. Electrolytes as Conductivity Metaphor</h2>
-  <p>We borrow the conductivity relation κ = Σ(λ<sub>i</sub>·c<sub>i</sub>) (molar conductivity × concentration). In Illumina, κ becomes a UI parameter controlling latency, throughput, or diffusion in visual flows—<em>a metaphor, not a physiological claim</em>.</p>
-  <pre><code>Illumina mapping (operational):
-κ ↑  ⇒ animation latency ↓ and coherence ↑
-κ knob (UI) ⇒ immediate change in flow metrics (FPS, streak length, link-rate)
-</code></pre>
-
-  <h2>4. Predictions</h2>
-  <ol>
-    <li><strong>Signal–Conductivity Coupling:</strong> Increasing κ reduces median animation latency and increases frame coherence (monotonic trend) in Honey visualization.</li>
-    <li><strong>Triadic Cadence Effect:</strong> 3-beat cadence yields higher tag recall vs. 2- or 4-beat rhythms in a within-subjects study.</li>
-    <li><strong>Ritual Priming:</strong> A 2-s “coo→HONEY” intro reduces time-to-first-add compared to no intro (production A/B).</li>
-  </ol>
-
-  <h2>5. Methods (Minimal)</h2>
-  <ul>
-    <li><strong>System:</strong> honey.plnt.earth (Honey Inbox, chant splash, κ control).</li>
-    <li><strong>Measures:</strong> latency (ms), frame coherence (SSIM-like index), tag recall (%), TTF-add (s).</li>
-    <li><strong>Design:</strong> within-subjects for recall; online A/B for TTF-add; scripted κ sweeps for system metrics.</li>
-    <li><strong>Analysis:</strong> monotonic trend tests, paired t-tests/Wilcoxon, effect sizes.</li>
-  </ul>
-
-  <h2>6. Implementation Notes</h2>
-  <p>The companion site includes (a) triadic chant splash, (b) Honey Inbox with local storage, (c) inline SVG diagram for electrolytes. A “κ” slider exposes animation timing and diffusion parameters.</p>
-
-  <h2>7. Limitations</h2>
-  <p>Metaphoric mapping; not a biomedical or physics claim. Results generalize to interaction design patterns and branding memory, not physical conductivity.</p>
-
-  <h2>8. Related Work (select)</h2>
-  <ul class="ref">
-    <li>Ritual & interaction: ceremonial UX patterns, onboarding micro-rituals.</li>
-    <li>Rhythm & memory: temporal expectancy, meter and recall in HCI/psych literature.</li>
-    <li>Data-poetics & sonification: aesthetic mappings that scaffold understanding.</li>
-  </ul>
-
-  <h2>9. Acknowledgment</h2>
-  <p>Section 4 shaped by prior advice emphasizing falsifiable predictions. Appreciation to Michael Shara for a recommendation to strengthen testability.</p>
-
-  <div class="foot">Companion artifact: <a href="https://honey.plnt.earth" rel="noopener">honey.plnt.earth</a>. Source diagrams and assets available upon request.</div>
-</main>
+        var form = document.getElementById('noteForm');
+        form.addEventListener('submit', function(e){
+          e.preventDefault();
+          var v = document.getElementById('noteInput').value || "";
+          var url = "https://jar.plnt.earth/day/?note=" + encodeURIComponent(v);
+          window.location.href = url;
+        }, false);
+      }catch(e){/* no-op */}
+    })();
+  </script>
 </body>
 </html>
