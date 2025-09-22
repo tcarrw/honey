@@ -12,47 +12,78 @@
 <meta property="og:url" content="https://honey.plnt.earth">
 <style>
   :root{
-    --bg:#0B0F19;--ink:#E5E7EB;--muted:#9CA3AF;--line:rgba(229,231,235,.15);
+    --bg:#0B0F19;--ink:#E5E7EB;--muted:#9CA3AF;--line:rgba(229,231,235,.12);
     --gold1:#F5D142;--gold2:#F59E0B;--gold3:#D97706;--accent:#A78BFA;
-    --maxw:980px;--r:14px;--pad:20px;--gap:18px;
+    --maxw:1100px;--r:16px;--pad:22px;--gap:18px;
   }
   *{box-sizing:border-box}
   html,body{height:100%}
   body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
   a{color:var(--gold1);text-decoration:none}
   a:hover{text-decoration:underline}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:clamp(16px,4vw,32px)}
-  header{display:grid;gap:8px;margin:8px 0 18px}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:clamp(16px,4vw,36px);position:relative;z-index:1}
+  header{display:grid;gap:8px;margin:6px 0 18px}
   header .tag{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
-  .card{border:1px solid var(--line);border-radius:var(--r);padding:var(--pad);background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0))}
-  h1{font-size:clamp(24px,4.6vw,40px);line-height:1.2;margin:.2em 0 .1em}
-  h2{font-size:clamp(18px,3.2vw,24px);margin:0 0 .2em}
-  p{margin:.4em 0 1em}
+  h1{font-size:clamp(26px,4.6vw,44px);line-height:1.2;margin:.1em 0 .05em}
+  h2{font-size:clamp(18px,3.2vw,24px);margin:0 0 .4em}
+  p{margin:.35em 0 1em}
+  .kicker{font-size:15px;color:var(--muted)}
   .grid{display:grid;gap:var(--gap)}
-  .grid.cols{grid-template-columns:repeat(1,minmax(0,1fr))}
-  @media (min-width:760px){.grid.cols{grid-template-columns:1.1fr .9fr}}
+  .cols{grid-template-columns:1fr}
+  @media (min-width:860px){.cols{grid-template-columns:1.05fr .95fr}}
+  .card{border:1px solid var(--line);border-radius:var(--r);padding:var(--pad);background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0))}
   .btns{display:grid;gap:10px;margin-top:10px}
   .btn{display:flex;align-items:center;justify-content:center;padding:14px 16px;border-radius:12px;border:1px solid var(--line);text-align:center;background:rgba(255,255,255,.02)}
   .btn strong{margin-left:6px}
   .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:13px}
   .list{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:8px}
   .list li{padding:10px 12px;border:1px dashed var(--line);border-radius:10px;color:#d7dbe3}
-  .kicker{font-size:14px;color:var(--muted)}
   .hr{height:1px;background:var(--line);margin:20px 0}
-  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
-  footer{margin:26px 0 8px;color:var(--muted);font-size:14px}
   .tiny{font-size:12px;color:var(--muted)}
+  footer{margin:28px 0 8px;color:var(--muted);font-size:14px}
   .row{display:flex;flex-wrap:wrap;gap:10px}
-  .callout{border-left:3px solid var(--gold2);padding-left:12px;margin:.4em 0 1em}
-  .hint{opacity:.9}
+  .controls{position:fixed;inset:auto 12px 12px auto;z-index:2;display:flex;gap:8px;flex-wrap:wrap}
+  .ctl{background:rgba(11,15,25,.6);backdrop-filter:saturate(120%) blur(6px);border:1px solid var(--line);color:var(--ink);padding:8px 12px;border-radius:999px;font-size:14px}
+  .ctl[aria-pressed="true"]{outline:1px solid var(--gold2)}
+  /* Background layers */
+  .bg{position:fixed;inset:0;z-index:0;overflow:hidden}
+  canvas{position:absolute;inset:0;width:100%;height:100%}
+  .pollen{position:absolute;inset:0;pointer-events:none}
+  .dot{position:absolute;width:6px;height:6px;background:radial-gradient(circle at 30% 30%, #F5D142, #F59E0B 65%, rgba(0,0,0,0) 66%);border-radius:50%;opacity:.18;filter:blur(.2px)}
+  @media (prefers-reduced-motion: reduce){
+    .pollen{display:none}
+    canvas{display:none}
+  }
+  /* Composer */
+  .composer{display:grid;gap:10px;margin-top:10px}
+  .field{display:grid;gap:6px}
+  .field label{font-size:14px;color:var(--muted)}
+  .field input,.field textarea,.field select{
+    width:100%;padding:12px 12px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.02);color:var(--ink);font:inherit
+  }
+  .actions{display:flex;gap:10px;flex-wrap:wrap}
+  .primary{background:linear-gradient(180deg,rgba(245,209,66,.25),rgba(245,158,11,.18));border:1px solid var(--gold2)}
+  .success{border:1px solid rgba(80,200,120,.35)}
 </style>
 </head>
 <body>
+  <!-- Background Screensaver -->
+  <div class="bg" aria-hidden="true">
+    <canvas id="wave"></canvas>
+    <div class="pollen" id="pollen"></div>
+  </div>
+
+  <!-- On-screen controls -->
+  <div class="controls" role="group" aria-label="Background controls">
+    <button id="toggleMotion" class="ctl" type="button" aria-pressed="true" aria-label="Toggle motion">Motion: On</button>
+    <button id="audioBtn" class="ctl" type="button" aria-pressed="false" aria-label="Toggle ambient sound">Sound: Off</button>
+  </div>
+
   <div class="wrap">
     <header>
       <div class="tag">🍯 Honey Inbox — Illumina Community Portal</div>
       <h1>Send your seeds, songs, collabs &amp; questions</h1>
-      <p class="kicker">Tag your subject line to route fast: <span class="mono">SUBMISSION</span>, <span class="mono">COLLAB</span>, <span class="mono">PRESS</span>, <span class="mono">SUPPORT</span>, or <span class="mono">VIP</span>.</p>
+      <p class="kicker">Tag your subject line to route fast: <strong>SUBMISSION</strong>, <strong>COLLAB</strong>, <strong>PRESS</strong>, <strong>SUPPORT</strong>, or <strong>VIP</strong>.</p>
     </header>
 
     <section class="grid cols">
@@ -72,24 +103,42 @@
         <h2>Send an email</h2>
         <p class="kicker">Choose a lane—subject tag is pre-filled.</p>
         <div class="btns">
-          <!-- Update the email after you create it -->
-          <a class="btn" href="mailto:honey@plnt.earth?subject=SUBMISSION:%20Your%20Title&body=Link(s)%20to%20files%20or%20drive:%0AHow%20to%20credit%20you:%0AShort%20blurb%20(<=120w):">
-            ✉️ <strong>SUBMISSION</strong> — art · music · seed rituals
-          </a>
-          <a class="btn" href="mailto:honey@plnt.earth?subject=COLLAB:%20Idea&body=One%20pager%20or%20deck:%0ATimeline:%0AGoal:%0A">
-            🤝 <strong>COLLAB</strong> — collaboration / partnership
-          </a>
-          <a class="btn" href="mailto:honey@plnt.earth?subject=PRESS:%20Inquiry&body=Outlet:%0ADeadline:%0AAngle:%0AFormat%20(written/audio/video):">
-            🗞 <strong>PRESS</strong> — media &amp; interviews
-          </a>
-          <a class="btn" href="mailto:honey@plnt.earth?subject=SUPPORT:%20Help&body=Describe%20the%20issue:%0AURL%20or%20page:%0AScreenshots%20(if%20any):">
-            🛠 <strong>SUPPORT</strong> — site/account help
-          </a>
-          <a class="btn" href="mailto:honey@plnt.earth?subject=VIP:%20—&body=Message:">
-            ⭐️ <strong>VIP</strong> — direct / urgent
-          </a>
+          <a class="btn" href="mailto:honey@plnt.earth?subject=SUBMISSION:%20Your%20Title&body=Link(s)%20to%20files%20or%20drive:%0AHow%20to%20credit%20you:%0AShort%20blurb%20(≤120w):" rel="noopener">✉️ <strong>SUBMISSION</strong> — art · music · seed rituals</a>
+          <a class="btn" href="mailto:honey@plnt.earth?subject=COLLAB:%20Idea&body=One%20pager%20or%20deck:%0ATimeline:%0AGoal:%0A" rel="noopener">🤝 <strong>COLLAB</strong> — collaboration / partnership</a>
+          <a class="btn" href="mailto:honey@plnt.earth?subject=PRESS:%20Inquiry&body=Outlet:%0ADeadline:%0AAngle:%0AFormat%20(written/audio/video):" rel="noopener">🗞 <strong>PRESS</strong> — media &amp; interviews</a>
+          <a class="btn" href="mailto:honey@plnt.earth?subject=SUPPORT:%20Help&body=Describe%20the%20issue:%0AURL%20or%20page:%0AScreenshots%20(if%20any):" rel="noopener">🛠 <strong>SUPPORT</strong> — site/account help</a>
+          <a class="btn" href="mailto:honey@plnt.earth?subject=VIP:%20—&body=Message:" rel="noopener">⭐️ <strong>VIP</strong> — direct / urgent</a>
         </div>
-        <p class="tiny hint" aria-hidden="true">Psst: insiders sometimes write <span class="mono">L=1/7</span> or <span class="mono">142857</span>.</p>
+      </div>
+    </section>
+
+    <section class="card" style="margin-top:20px">
+      <h2>Email Composer (optional)</h2>
+      <p class="kicker">Build your message here and open your email app pre-filled.</p>
+      <div class="composer" id="composer">
+        <div class="field">
+          <label for="lane">Lane / Subject tag</label>
+          <select id="lane" aria-label="Choose a subject tag">
+            <option>SUBMISSION</option>
+            <option>COLLAB</option>
+            <option>PRESS</option>
+            <option>SUPPORT</option>
+            <option>VIP</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="title">Subject title</label>
+          <input id="title" maxlength="80" placeholder="Your Title">
+        </div>
+        <div class="field">
+          <label for="body">Message</label>
+          <textarea id="body" rows="5" placeholder="Write a short note. Links to files help."></textarea>
+        </div>
+        <div class="actions">
+          <button class="ctl primary" type="button" id="openEmail">Open Email</button>
+          <button class="ctl success" type="button" id="copyAddress" aria-label="Copy address">Copy Address</button>
+        </div>
+        <p class="tiny">Email: <span id="addr">honey@plnt.earth</span></p>
       </div>
     </section>
 
@@ -102,7 +151,6 @@
         <span class="pill">SUPPORT → Bee (ops)</span>
         <span class="pill">VIP → escalated to Tristan</span>
       </div>
-      <p class="callout">Anchor-tier messages containing certain codes (e.g., <span class="mono">142857</span>) are routed even higher than VIP.</p>
     </section>
 
     <section class="grid" style="margin-top:20px">
@@ -128,8 +176,200 @@
 
     <footer>
       <div>PLNT Earth · Illumina</div>
-      <div class="tiny">If email links don’t open, write to <span class="mono">honey@plnt.earth</span> and add a subject tag.</div>
+      <div class="tiny">If email links don’t open, write to <span aria-label="email address">honey@plnt.earth</span> and add a subject tag.</div>
     </footer>
   </div>
+
+<script>
+  (function(){
+    var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var motionOn = !prefersReduced;
+    var wave = document.getElementById('wave');
+    var ctx = wave.getContext('2d');
+    var pollenLayer = document.getElementById('pollen');
+    var dots = [];
+    var audio = { ctx: null, gain: null, lfo: null, oscA: null, oscB: null, on: false };
+
+    function size(){
+      wave.width = wave.clientWidth;
+      wave.height = wave.clientHeight;
+    }
+    size();
+    window.addEventListener('resize', size, { passive: true });
+
+    function createPollen(){
+      pollenLayer.innerHTML = '';
+      dots.length = 0;
+      var count = Math.round((window.innerWidth * window.innerHeight) / 24000);
+      for (var i=0;i<count;i++){
+        var d = document.createElement('div');
+        d.className = 'dot';
+        var x = Math.random() * 100, y = Math.random() * 100;
+        d.style.left = x + '%';
+        d.style.top = y + '%';
+        pollenLayer.appendChild(d);
+        dots.push({el:d, x:x, y:y, z:Math.random()*0.6+0.4, a:Math.random()*Math.PI*2});
+      }
+    }
+    createPollen();
+    window.addEventListener('resize', createPollen, { passive: true });
+
+    var t0 = performance.now();
+    function anim(t){
+      if(motionOn){
+        var w = wave.width, h = wave.height;
+        ctx.clearRect(0,0,w,h);
+        var time = (t - t0) * 0.001;
+        var cx = w/2, cy = h/2;
+        var grd = ctx.createRadialGradient(cx, cy, Math.min(w,h)*0.1, cx, cy, Math.max(w,h)*0.8);
+        grd.addColorStop(0, 'rgba(245,209,66,0.06)');
+        grd.addColorStop(1, 'rgba(12,18,30,0.0)');
+        ctx.fillStyle = grd;
+        ctx.fillRect(0,0,w,h);
+
+        ctx.beginPath();
+        var amp = Math.max(12, Math.min(48, h*0.06));
+        var base = h*0.55 + Math.sin(time*0.5)*8;
+        for (var x=0;x<=w;x+=6){
+          var y = base + Math.sin(x*0.01 + time*0.9)*amp*0.6 + Math.sin(x*0.003 + time*0.35)*amp*0.4;
+          if(x===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+        }
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'rgba(245,158,11,0.28)';
+        ctx.stroke();
+
+        for (var i=0;i<dots.length;i++){
+          var d = dots[i];
+          d.a += 0.002 + d.z*0.003;
+          var dx = Math.cos(d.a)*d.z*0.5;
+          var dy = Math.sin(d.a)*d.z*0.35;
+          d.el.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+        }
+      }
+      requestAnimationFrame(anim);
+    }
+    requestAnimationFrame(anim);
+
+    var toggleMotion = document.getElementById('toggleMotion');
+    function updateMotionButton(){
+      toggleMotion.textContent = 'Motion: ' + (motionOn ? 'On' : 'Off');
+      toggleMotion.setAttribute('aria-pressed', motionOn ? 'true' : 'false');
+    }
+    updateMotionButton();
+    toggleMotion.addEventListener('click', function(){
+      motionOn = !motionOn;
+      updateMotionButton();
+    });
+
+    var audioBtn = document.getElementById('audioBtn');
+    function initAudio(){
+      if(audio.ctx) return;
+      var AC = window.AudioContext || window.webkitAudioContext;
+      audio.ctx = new AC();
+      var master = audio.ctx.createGain();
+      master.gain.value = 0.0;
+
+      var oscA = audio.ctx.createOscillator();
+      var oscB = audio.ctx.createOscillator();
+      var lfo = audio.ctx.createOscillator();
+      var lfoGain = audio.ctx.createGain();
+      var filter = audio.ctx.createBiquadFilter();
+
+      oscA.type = 'sine';
+      oscB.type = 'triangle';
+      // Base frequencies kept very low and soothing:
+      oscA.frequency.value = 128.0;
+      oscB.frequency.value = 192.0;
+
+      filter.type = 'lowpass';
+      filter.frequency.value = 1200;
+
+      lfo.type = 'sine';
+      lfo.frequency.value = 0.06;
+      lfoGain.gain.value = 14.0;
+
+      lfo.connect(lfoGain);
+      lfoGain.connect(oscA.frequency);
+      lfoGain.connect(oscB.frequency);
+
+      oscA.connect(filter);
+      oscB.connect(filter);
+      filter.connect(master);
+      master.connect(audio.ctx.destination);
+
+      audio.gain = master;
+      audio.oscA = oscA;
+      audio.oscB = oscB;
+      audio.lfo = lfo;
+    }
+
+    function startAudio(){
+      initAudio();
+      if(audio.on) return;
+      audio.oscA.start();
+      audio.oscB.start();
+      audio.lfo.start();
+      var now = audio.ctx.currentTime;
+      audio.gain.gain.cancelScheduledValues(now);
+      audio.gain.gain.setValueAtTime(audio.gain.gain.value, now);
+      audio.gain.gain.linearRampToValueAtTime(0.08, now + 1.2);
+      audio.on = true;
+    }
+
+    function stopAudio(){
+      if(!audio.ctx || !audio.on) return;
+      var now = audio.ctx.currentTime;
+      audio.gain.gain.cancelScheduledValues(now);
+      audio.gain.gain.linearRampToValueAtTime(0.0, now + 0.6);
+      audio.on = false;
+    }
+
+    function updateAudioBtn(){
+      audioBtn.textContent = 'Sound: ' + (audio.on ? 'On' : 'Off');
+      audioBtn.setAttribute('aria-pressed', audio.on ? 'true' : 'false');
+    }
+    updateAudioBtn();
+
+    audioBtn.addEventListener('click', function(){
+      if(!audio.ctx || audio.ctx.state === 'suspended'){ initAudio(); }
+      if(!audio.on){ startAudio(); } else { stopAudio(); }
+      updateAudioBtn();
+    });
+
+    // Composer
+    var lane = document.getElementById('lane');
+    var title = document.getElementById('title');
+    var body = document.getElementById('body');
+    var openEmail = document.getElementById('openEmail');
+    var copyAddress = document.getElementById('copyAddress');
+    var addrEl = document.getElementById('addr');
+    var targetEmail = 'honey@plnt.earth';
+
+    function buildMailto(){
+      var tag = (lane.value || 'SUBMISSION').toUpperCase();
+      var subjTitle = (title.value || 'Your Title').replace(/\s+/g,' ').trim();
+      var msg = (body.value || '').replace(/\r?\n/g,'%0A');
+      var subj = encodeURIComponent(tag + ': ' + subjTitle);
+      var b = encodeURIComponent(msg);
+      return 'mailto:' + encodeURIComponent(targetEmail) + '?subject=' + subj + '&body=' + b;
+    }
+    openEmail.addEventListener('click', function(){
+      var link = buildMailto();
+      var a = document.createElement('a');
+      a.href = link;
+      a.rel = 'noopener';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    });
+    copyAddress.addEventListener('click', function(){
+      var s = targetEmail;
+      if (navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(s); }
+      copyAddress.setAttribute('aria-label','Copied');
+      setTimeout(function(){ copyAddress.setAttribute('aria-label','Copy address'); }, 1200);
+    });
+
+  })();
+</script>
 </body>
 </html>
