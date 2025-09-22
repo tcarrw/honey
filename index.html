@@ -1,264 +1,135 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>HONEY · Illumina Entry Portal</title>
-  <meta name="description" content="Start here. Honey, seeds, smoke — a gentle portal into the Illumina cycle.">
-  <meta name="theme-color" content="#0B0F19">
-  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
-  <style>
-    :root{
-      --bg:#0B0F19; --ink:#E5E7EB; --muted:#9CA3AF; --line:rgba(255,255,255,.12);
-      --gold1:#F5D142; --gold2:#F59E0B; --gold3:#D97706;
-      --accent:#9b87f5;
-      --ok:#22c55e; --warn:#f59e0b; --bad:#ef4444;
-      --radius:14px; --shadow:0 10px 30px rgba(0,0,0,.35);
-      --maxw:1120px;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; background:radial-gradient(1000px 600px at 20% 0%, rgba(155,135,245,.12), transparent 50%),
-                       radial-gradient(900px 600px at 80% 100%, rgba(245,209,66,.08), transparent 50%),
-                       var(--bg);
-      color:var(--ink); font:16px/1.6 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial;
-      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-    }
-    a{color:var(--gold1); text-decoration:none}
-    a:hover{text-decoration:underline}
-    .wrap{max-width:var(--maxw); margin:0 auto; padding:24px}
-    header{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:16px; padding:10px 0 4px; border-bottom:1px solid var(--line);
-    }
-    .brand{display:flex; align-items:center; gap:14px; text-decoration:none}
-    .sig{width:40px; height:40px; border-radius:50%;
-         background:conic-gradient(from 0deg, var(--gold1), var(--gold2), var(--gold3), var(--gold1));
-         box-shadow:0 0 0 3px rgba(245,209,66,.15), inset 0 0 30px rgba(0,0,0,.45);
-         position:relative;
-    }
-    .sig:after{content:""; position:absolute; inset:6px; border-radius:50%; background:var(--bg); box-shadow:inset 0 0 20px rgba(245,209,66,.25)}
-    .title{font-weight:800; letter-spacing:.6px}
-    nav{display:flex; flex-wrap:wrap; gap:10px}
-    nav a{padding:8px 12px; border:1px solid var(--line); border-radius:999px; color:var(--ink)}
-    nav a:hover{border-color:var(--gold1)}
-    .hero{
-      display:grid; grid-template-columns:1.1fr .9fr; gap:28px; align-items:center;
-      padding:28px 0 10px;
-    }
-    .card{
-      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow);
-      padding:22px;
-    }
-    h1{font-size:clamp(28px, 4vw, 38px); line-height:1.15; margin:10px 0 8px}
-    h2{font-size:20px; margin:0 0 8px}
-    .kicker{color:var(--muted); font-weight:600; letter-spacing:.12em; text-transform:uppercase}
-    .cta{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:12px 16px; border-radius:12px; border:1px solid var(--line);
-      background:linear-gradient(180deg, rgba(245,209,66,.15), rgba(245,158,11,.08));
-      color:#111; font-weight:700;
-    }
-    .cta span{color:#111}
-    .cta small{color:#222; opacity:.7}
-    .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
-    .chip{display:inline-block; padding:6px 10px; border-radius:999px; background:rgba(155,135,245,.12); color:var(--ink); border:1px solid var(--line)}
-    .list{margin:10px 0 0; padding:0 0 0 18px}
-    .list li{margin:6px 0}
-    .bar{height:1px; background:var(--line); margin:20px 0}
-    .muted{color:var(--muted)}
-    .foot{display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between}
-    .btnrow{display:flex; gap:10px; flex-wrap:wrap}
-    .btn{
-      padding:10px 14px; border-radius:10px; border:1px solid var(--line); background:rgba(255,255,255,.03);
-      display:inline-flex; align-items:center; gap:8px; text-decoration:none; color:var(--ink);
-    }
-    .btn:hover{border-color:var(--gold1)}
-    .status{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
-    .dot{width:10px; height:10px; border-radius:50%}
-    .ok{background:var(--ok)} .warn{background:var(--warn)} .bad{background:var(--bad)}
-    .pill{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border:1px solid var(--line); border-radius:999px}
-    .mono{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; font-size:.95em}
-    .nowrap{white-space:nowrap}
-    .faqgrid{display:grid; grid-template-columns:1fr 1fr; gap:18px}
-    .note-form{display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:8px}
-    .note-input{flex:1; min-width:220px; padding:10px 12px; border-radius:10px; border:1px solid var(--line); background:rgba(255,255,255,.03); color:var(--ink)}
-    .note-btn{padding:10px 14px; border-radius:10px; border:1px solid var(--line); background:linear-gradient(180deg, rgba(245,209,66,.15), rgba(245,158,11,.08)); color:#111; font-weight:700}
-    @media (max-width: 920px){
-      .hero{grid-template-columns:1fr;}
-      .grid{grid-template-columns:1fr;}
-      .faqgrid{grid-template-columns:1fr;}
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Honey Inbox · PLNT Earth · Illumina</title>
+<meta name="description" content="Send seeds, songs, collaborations, press, and questions to the Honey Inbox. Tag your subject: SUBMISSION, COLLAB, PRESS, SUPPORT, or VIP for fastest routing.">
+<meta name="theme-color" content="#0B0F19">
+<meta property="og:title" content="Honey Inbox · PLNT Earth · Illumina">
+<meta property="og:description" content="Tag your subject — SUBMISSION, COLLAB, PRESS, SUPPORT, or VIP — and it will route to the right part of the Illumina Triad.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://honey.plnt.earth">
+<style>
+  :root{
+    --bg:#0B0F19;--ink:#E5E7EB;--muted:#9CA3AF;--line:rgba(229,231,235,.15);
+    --gold1:#F5D142;--gold2:#F59E0B;--gold3:#D97706;--accent:#A78BFA;
+    --maxw:980px;--r:14px;--pad:20px;--gap:18px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+  a{color:var(--gold1);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:clamp(16px,4vw,32px)}
+  header{display:grid;gap:8px;margin:8px 0 18px}
+  header .tag{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+  .card{border:1px solid var(--line);border-radius:var(--r);padding:var(--pad);background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0))}
+  h1{font-size:clamp(24px,4.6vw,40px);line-height:1.2;margin:.2em 0 .1em}
+  h2{font-size:clamp(18px,3.2vw,24px);margin:0 0 .2em}
+  p{margin:.4em 0 1em}
+  .grid{display:grid;gap:var(--gap)}
+  .grid.cols{grid-template-columns:repeat(1,minmax(0,1fr))}
+  @media (min-width:760px){.grid.cols{grid-template-columns:1.1fr .9fr}}
+  .btns{display:grid;gap:10px;margin-top:10px}
+  .btn{display:flex;align-items:center;justify-content:center;padding:14px 16px;border-radius:12px;border:1px solid var(--line);text-align:center;background:rgba(255,255,255,.02)}
+  .btn strong{margin-left:6px}
+  .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:13px}
+  .list{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:8px}
+  .list li{padding:10px 12px;border:1px dashed var(--line);border-radius:10px;color:#d7dbe3}
+  .kicker{font-size:14px;color:var(--muted)}
+  .hr{height:1px;background:var(--line);margin:20px 0}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
+  footer{margin:26px 0 8px;color:var(--muted);font-size:14px}
+  .tiny{font-size:12px;color:var(--muted)}
+  .row{display:flex;flex-wrap:wrap;gap:10px}
+  .callout{border-left:3px solid var(--gold2);padding-left:12px;margin:.4em 0 1em}
+  .hint{opacity:.9}
+</style>
 </head>
 <body>
   <div class="wrap">
     <header>
-      <a class="brand" href="/" aria-label="HONEY home">
-        <div class="sig" aria-hidden="true"></div>
-        <div>
-          <div class="kicker">Illumina</div>
-          <div class="title">HONEY · Entry Portal</div>
-        </div>
-      </a>
-      <nav aria-label="Primary">
-        <a href="https://jar.plnt.earth/">Jar</a>
-        <a href="https://jar.plnt.earth/day/">Day</a>
-        <a href="https://jar.plnt.earth/calendar/illumina1/">Calendar</a>
-        <a href="https://tunes.plnt.earth/">Tunes</a>
-        <a href="https://jar.plnt.earth/interludes/">Interludes</a>
-        <a href="https://jar.plnt.earth/constellation/">Constellation</a>
-        <a href="https://jar.plnt.earth/archive/">Archive</a>
-        <a href="https://jar.plnt.earth/science/">Science</a>
-        <a href="https://jar.plnt.earth/references/">References</a>
-      </nav>
+      <div class="tag">🍯 Honey Inbox — Illumina Community Portal</div>
+      <h1>Send your seeds, songs, collabs &amp; questions</h1>
+      <p class="kicker">Tag your subject line to route fast: <span class="mono">SUBMISSION</span>, <span class="mono">COLLAB</span>, <span class="mono">PRESS</span>, <span class="mono">SUPPORT</span>, or <span class="mono">VIP</span>.</p>
     </header>
 
-    <section class="hero">
+    <section class="grid cols">
       <div class="card">
-        <div class="kicker">Start Here</div>
-        <h1>Honey · Seeds · Smoke</h1>
-        <p>Welcome. This is the gentlest doorway into the Illumina cycle. Begin with <strong>honey smoke</strong> to open, then a single <strong>seed ritual</strong> to anchor perception, and finish with a quick <strong>Moon Note</strong>.</p>
-        <div style="display:flex; gap:10px; flex-wrap:wrap; margin:12px 0 8px">
-          <span class="chip">42‑day rhythm</span>
-          <span class="chip">1/7 clock</span>
-          <span class="chip">Moon notes</span>
-        </div>
-        <p class="muted">Prefer a guided flow? Jump to the daily Day page. It pairs the ritual with your playlist and constellation overlays.</p>
-        <form class="note-form" id="noteForm" aria-label="Quick Moon Note">
-          <input class="note-input" id="noteInput" type="text" maxlength="160" placeholder="Moon Note (one line)…">
-          <button class="note-btn" type="submit">Send to Day</button>
-          <span class="muted" id="todayLabel" aria-hidden="true">Loading…</span>
-        </form>
-        <p style="margin-top:8px"><a class="cta" href="https://jar.plnt.earth/day/"><span>Open Day</span></a></p>
-      </div>
-
-      <div class="card">
-        <div class="kicker">Quick Ritual</div>
-        <h2>3‑Step Honey Ritual (≈5 min)</h2>
-        <ol class="list">
-          <li><strong>Open (Smoke):</strong> Gentle incense or a breath at the window. If using honey smoke, keep it minimal and ventilated.</li>
-          <li><strong>Anchor (Seed):</strong> Choose one seed. <em>Cosmic</em> → clarity; <em>Pumpkin</em> → night grounding; <em>Cumin</em> → attention. Swallow vs. chew changes tempo.</li>
-          <li><strong>Note (Moon):</strong> One line about how you feel. That’s it. You’re in the cycle.</li>
-        </ol>
-        <p class="muted">Safety first: tiny quantities, know your body, and avoid allergens. Rituals are symbolic — not medical advice.</p>
-      </div>
-    </section>
-
-    <section class="grid" aria-label="Sections">
-      <article class="card">
-        <div class="kicker">Toolkit</div>
-        <h2>Seeds & Effects</h2>
-        <p>Simple, symbolic map for first‑timers: what one seed vs. two+ implies; swallow vs. chew; morning vs. night.</p>
-        <div class="faqgrid">
-          <ul class="list">
-            <li><strong>One seed (chewed):</strong> quicker onset, crisp focus.</li>
-            <li><strong>One seed (swallowed):</strong> slower, steadier cadence.</li>
-            <li><strong>Two+ seeds:</strong> intensifies the motif — not required for beginners.</li>
-          </ul>
-          <ul class="list">
-            <li><strong>Morning:</strong> lift/clarity pairing with breathwork.</li>
-            <li><strong>Night:</strong> grounding before sleep (pumpkin tends to pair well).</li>
-            <li><strong>Honey smoke:</strong> a minimal opening gesture; ventilate.</li>
-          </ul>
-        </div>
-        <p><a class="btn" href="https://jar.plnt.earth/references/seeds/">Open Seed FAQ</a></p>
-      </article>
-
-      <article class="card">
-        <div class="kicker">Time</div>
-        <h2>1/7 Equations (Explainer)</h2>
-        <p>How Illumina treats time: a 42‑day window with a 1/7 cadence, cycling attention like breath. Metaphor meets measurement.</p>
-        <p><a class="btn" href="https://jar.plnt.earth/science/">Read Science</a></p>
-      </article>
-
-      <article class="card">
-        <div class="kicker">Music</div>
-        <h2>Playlist Portal</h2>
-        <p>Every day pairs a track with a seed and note. Follow along on <span class="mono">tunes.plnt.earth</span>.</p>
-        <p><a class="btn" href="https://tunes.plnt.earth/">Go to Tunes</a></p>
-      </article>
-
-      <article class="card">
-        <div class="kicker">Visuals</div>
-        <h2>Interludes & Constellation</h2>
-        <p>Six interludes (Sabrina, Janet Planet, Eminem, Emma Stone, Doechii, Hot To Go) and your constellation anchors + watchmen overlays.</p>
-        <div class="btnrow">
-          <a class="btn" href="https://jar.plnt.earth/interludes/">Interludes</a>
-          <a class="btn" href="https://jar.plnt.earth/constellation/">Constellation</a>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="kicker">Calendar</div>
-        <h2>Illumina 1 · Dates</h2>
+        <h2>Who reads this?</h2>
+        <p>The Illumina Triad keeps things moving:</p>
         <ul class="list">
-          <li><strong>Start:</strong> Nov 5, 2025 (Full Moon)</li>
-          <li><strong>End:</strong> Dec 17, 2025</li>
+          <li>🐝 <strong>Bee</strong> — community &amp; ops triage</li>
+          <li>🌙 <strong>L. Moon</strong> — archives submissions &amp; seed notes</li>
+          <li>☀️ <strong>Sun</strong> — press, partnerships, flare moments</li>
         </ul>
-        <p><a class="btn" href="https://jar.plnt.earth/calendar/illumina1/">Open Calendar</a></p>
-      </article>
+        <div class="hr"></div>
+        <p class="kicker">We reply within 48 hours.</p>
+      </div>
 
-      <article class="card">
-        <div class="kicker">Archive</div>
-        <h2>Axioms, Notes, & Papers</h2>
-        <p>Everything that accrues along the way: axioms, experiments (e.g., silica + honey), and references.</p>
-        <div class="btnrow">
-          <a class="btn" href="https://jar.plnt.earth/archive/">Archive</a>
-          <a class="btn" href="https://jar.plnt.earth/references/">References</a>
+      <div class="card">
+        <h2>Send an email</h2>
+        <p class="kicker">Choose a lane—subject tag is pre-filled.</p>
+        <div class="btns">
+          <!-- Update the email after you create it -->
+          <a class="btn" href="mailto:honey@plnt.earth?subject=SUBMISSION:%20Your%20Title&body=Link(s)%20to%20files%20or%20drive:%0AHow%20to%20credit%20you:%0AShort%20blurb%20(<=120w):">
+            ✉️ <strong>SUBMISSION</strong> — art · music · seed rituals
+          </a>
+          <a class="btn" href="mailto:honey@plnt.earth?subject=COLLAB:%20Idea&body=One%20pager%20or%20deck:%0ATimeline:%0AGoal:%0A">
+            🤝 <strong>COLLAB</strong> — collaboration / partnership
+          </a>
+          <a class="btn" href="mailto:honey@plnt.earth?subject=PRESS:%20Inquiry&body=Outlet:%0ADeadline:%0AAngle:%0AFormat%20(written/audio/video):">
+            🗞 <strong>PRESS</strong> — media &amp; interviews
+          </a>
+          <a class="btn" href="mailto:honey@plnt.earth?subject=SUPPORT:%20Help&body=Describe%20the%20issue:%0AURL%20or%20page:%0AScreenshots%20(if%20any):">
+            🛠 <strong>SUPPORT</strong> — site/account help
+          </a>
+          <a class="btn" href="mailto:honey@plnt.earth?subject=VIP:%20—&body=Message:">
+            ⭐️ <strong>VIP</strong> — direct / urgent
+          </a>
         </div>
-      </article>
+        <p class="tiny hint" aria-hidden="true">Psst: insiders sometimes write <span class="mono">L=1/7</span> or <span class="mono">142857</span>.</p>
+      </div>
     </section>
 
-    <div class="bar"></div>
-
-    <section class="card">
-      <div class="kicker">For Curators & Scientists</div>
-      <h2>How to Read HONEY</h2>
-      <p>HONEY is a <em>translation layer</em>. The personal ritual (honey, seeds, smoke) provides a repeatable cadence for attention. The public layer (papers, 1/7) offers a frame to evaluate, critique, or extend. You can use one without the other — or study the bridge itself.</p>
-      <ul class="list">
-        <li><strong>Personal Discovery:</strong> self‑report clarity via Moon Notes.</li>
-        <li><strong>Physics Dialogue:</strong> examine 1/7 rhythms against ordinary clocks; treat it as a falsifiable lens, not a medical claim.</li>
-        <li><strong>Web Evidence:</strong> the calendar and day pages timestamp practice for later review.</li>
-      </ul>
+    <section class="card" style="margin-top:20px">
+      <h2>How routing works</h2>
+      <div class="row">
+        <span class="pill">SUBMISSION → Bee + Moon</span>
+        <span class="pill">COLLAB → Bee + Sun</span>
+        <span class="pill">PRESS → Sun (PR)</span>
+        <span class="pill">SUPPORT → Bee (ops)</span>
+        <span class="pill">VIP → escalated to Tristan</span>
+      </div>
+      <p class="callout">Anchor-tier messages containing certain codes (e.g., <span class="mono">142857</span>) are routed even higher than VIP.</p>
     </section>
 
-    <footer class="foot" aria-label="Footer">
-      <div class="status">
-        <span class="pill"><span class="dot ok"></span> <span>Portal live</span></span>
-        <span class="pill"><span class="dot warn"></span> <span>Seed FAQ review</span></span>
-        <span class="pill"><span class="dot ok"></span> <span>Calendar linked</span></span>
+    <section class="grid" style="margin-top:20px">
+      <div class="card">
+        <h2>FAQ</h2>
+        <p><strong>What can I send?</strong> Seeds, songs, art, notes, proposals, questions.</p>
+        <p><strong>How fast do you reply?</strong> Usually within 48 hours.</p>
+        <p><strong>Preferred formats?</strong> Links to files (Drive/Dropbox), or attachments under typical email limits.</p>
+        <p><strong>Credit &amp; rights?</strong> Include how you want to be credited; we’ll confirm before anything goes public.</p>
       </div>
-      <div class="btnrow">
-        <a class="btn" href="https://jar.plnt.earth/day/">Today</a>
-        <a class="btn" href="https://jar.plnt.earth/science/">1/7 Science</a>
-        <a class="btn" href="https://jar.plnt.earth/interludes/">Interludes</a>
+      <div class="card">
+        <h2>Related pages</h2>
+        <ul class="list">
+          <li><a href="https://jar.plnt.earth/">JAR Home</a></li>
+          <li><a href="https://jar.plnt.earth/calendar/illumina1/">Illumina 1 Calendar</a></li>
+          <li><a href="https://jar.plnt.earth/interludes/">Interludes</a></li>
+          <li><a href="https://jar.plnt.earth/references/">References</a></li>
+          <li><a href="https://jar.plnt.earth/science/">Science</a></li>
+          <li><a href="https://tunes.plnt.earth/">Tunes</a></li>
+        </ul>
       </div>
+    </section>
+
+    <footer>
+      <div>PLNT Earth · Illumina</div>
+      <div class="tiny">If email links don’t open, write to <span class="mono">honey@plnt.earth</span> and add a subject tag.</div>
     </footer>
   </div>
-
-  <script>
-    (function(){
-      try{
-        var label = document.getElementById('todayLabel');
-        var d = new Date();
-        var y = d.getFullYear();
-        var m = (d.getMonth()+1).toString().padStart(2,'0');
-        var day = d.getDate().toString().padStart(2,'0');
-        if(label) label.textContent = y + "-" + m + "-" + day;
-
-        var form = document.getElementById('noteForm');
-        form.addEventListener('submit', function(e){
-          e.preventDefault();
-          var v = document.getElementById('noteInput').value || "";
-          var url = "https://jar.plnt.earth/day/?note=" + encodeURIComponent(v);
-          window.location.href = url;
-        }, false);
-      }catch(e){/* no-op */}
-    })();
-  </script>
 </body>
 </html>
