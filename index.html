@@ -10,6 +10,7 @@
 <meta property="og:description" content="Tag your subject — SUBMISSION, COLLAB, PRESS, SUPPORT, or VIP — and it will route to the right part of the Illumina Triad.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://honey.plnt.earth">
+
 <style>
   :root{
     --bg:#0B0F19;--ink:#E5E7EB;--muted:#9CA3AF;--line:rgba(229,231,235,.12);
@@ -42,19 +43,6 @@
   .tiny{font-size:12px;color:var(--muted)}
   footer{margin:28px 0 8px;color:var(--muted);font-size:14px}
   .row{display:flex;flex-wrap:wrap;gap:10px}
-  .controls{position:fixed;inset:auto 12px 12px auto;z-index:2;display:flex;gap:8px;flex-wrap:wrap}
-  .ctl{background:rgba(11,15,25,.6);backdrop-filter:saturate(120%) blur(6px);border:1px solid var(--line);color:var(--ink);padding:8px 12px;border-radius:999px;font-size:14px}
-  .ctl[aria-pressed="true"]{outline:1px solid var(--gold2)}
-  /* Background layers */
-  .bg{position:fixed;inset:0;z-index:0;overflow:hidden}
-  canvas{position:absolute;inset:0;width:100%;height:100%}
-  .pollen{position:absolute;inset:0;pointer-events:none}
-  .dot{position:absolute;width:6px;height:6px;background:radial-gradient(circle at 30% 30%, #F5D142, #F59E0B 65%, rgba(0,0,0,0) 66%);border-radius:50%;opacity:.18;filter:blur(.2px)}
-  @media (prefers-reduced-motion: reduce){
-    .pollen{display:none}
-    canvas{display:none}
-  }
-  /* Composer */
   .composer{display:grid;gap:10px;margin-top:10px}
   .field{display:grid;gap:6px}
   .field label{font-size:14px;color:var(--muted)}
@@ -64,19 +52,49 @@
   .actions{display:flex;gap:10px;flex-wrap:wrap}
   .primary{background:linear-gradient(180deg,rgba(245,209,66,.25),rgba(245,158,11,.18));border:1px solid var(--gold2)}
   .success{border:1px solid rgba(80,200,120,.35)}
+
+  /* ===== Background Stars (parallax) ===== */
+  .stars-wrap{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+  .layer{position:absolute;inset:-10% -10%; /* bleed for smooth drift */ background-repeat:repeat; background-size:contain; opacity:.6}
+  .layer--1{opacity:.35; animation: drift1 120s linear infinite}
+  .layer--2{opacity:.5;  animation: drift2 160s linear infinite}
+  .layer--3{opacity:.75; animation: drift3 220s linear infinite}
+
+  /* Star textures via multiple radial-gradients sprinkled across a large background */
+  .layer--1{background-image:
+    radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,.75), rgba(255,255,255,0) 60%),
+    radial-gradient(1.5px 1.5px at 30% 80%, rgba(255,255,255,.6), rgba(255,255,255,0) 60%),
+    radial-gradient(1.8px 1.8px at 60% 40%, rgba(245,209,66,.8), rgba(255,255,255,0) 60%),
+    radial-gradient(1.3px 1.3px at 80% 15%, rgba(255,255,255,.55), rgba(255,255,255,0) 60%),
+    radial-gradient(1.2px 1.2px at 50% 60%, rgba(255,255,255,.6), rgba(255,255,255,0) 60%)}
+  .layer--2{background-image:
+    radial-gradient(1.4px 1.4px at 15% 70%, rgba(255,255,255,.65), rgba(255,255,255,0) 60%),
+    radial-gradient(1.6px 1.6px at 45% 25%, rgba(245,158,11,.7), rgba(255,255,255,0) 60%),
+    radial-gradient(1.2px 1.2px at 75% 55%, rgba(255,255,255,.55), rgba(255,255,255,0) 60%),
+    radial-gradient(1.5px 1.5px at 90% 30%, rgba(255,255,255,.65), rgba(255,255,255,0) 60%),
+    radial-gradient(1.2px 1.2px at 35% 45%, rgba(255,255,255,.55), rgba(255,255,255,0) 60%)}
+  .layer--3{background-image:
+    radial-gradient(2px 2px at 20% 35%, rgba(255,255,255,.9), rgba(255,255,255,0) 60%),
+    radial-gradient(1.7px 1.7px at 55% 75%, rgba(255,255,255,.8), rgba(255,255,255,0) 60%),
+    radial-gradient(1.6px 1.6px at 70% 50%, rgba(245,209,66,.85), rgba(255,255,255,0) 60%),
+    radial-gradient(1.3px 1.3px at 88% 65%, rgba(255,255,255,.7), rgba(255,255,255,0) 60%),
+    radial-gradient(1.2px 1.2px at 40% 20%, rgba(255,255,255,.75), rgba(255,255,255,0) 60%)}
+
+  @keyframes drift1{from{transform:translate3d(0,0,0)} to{transform:translate3d(-5%, -5%, 0)}}
+  @keyframes drift2{from{transform:translate3d(0,0,0)} to{transform:translate3d(-10%, -8%, 0)}}
+  @keyframes drift3{from{transform:translate3d(0,0,0)} to{transform:translate3d(-15%, -12%, 0)}}
+
+  @media (prefers-reduced-motion: reduce){
+    .layer{animation: none}
+  }
 </style>
 </head>
 <body>
-  <!-- Background Screensaver -->
-  <div class="bg" aria-hidden="true">
-    <canvas id="wave"></canvas>
-    <div class="pollen" id="pollen"></div>
-  </div>
-
-  <!-- On-screen controls -->
-  <div class="controls" role="group" aria-label="Background controls">
-    <button id="toggleMotion" class="ctl" type="button" aria-pressed="true" aria-label="Toggle motion">Motion: On</button>
-    <button id="audioBtn" class="ctl" type="button" aria-pressed="false" aria-label="Toggle ambient sound">Sound: Off</button>
+  <!-- Background starfield (mobile-friendly, no canvas needed) -->
+  <div class="stars-wrap" aria-hidden="true">
+    <div class="layer layer--1"></div>
+    <div class="layer layer--2"></div>
+    <div class="layer layer--3"></div>
   </div>
 
   <div class="wrap">
@@ -96,18 +114,18 @@
           <li>☀️ <strong>Sun</strong> — press, partnerships, flare moments</li>
         </ul>
         <div class="hr"></div>
-        <p class="kicker">We reply within 48 hours.</p>
+        <p class="kicker">Most replies are posted publicly so the community can benefit — individual replies are not guaranteed.</p>
       </div>
 
       <div class="card">
         <h2>Send an email</h2>
-        <p class="kicker">Choose a lane—subject tag is pre-filled.</p>
+        <p class="kicker">Choose a lane — subject tag is pre-filled.</p>
         <div class="btns">
-          <a class="btn" href="mailto:honey@plnt.earth?subject=SUBMISSION:%20Your%20Title&body=Link(s)%20to%20files%20or%20drive:%0AHow%20to%20credit%20you:%0AShort%20blurb%20(≤120w):" rel="noopener">✉️ <strong>SUBMISSION</strong> — art · music · seed rituals</a>
-          <a class="btn" href="mailto:honey@plnt.earth?subject=COLLAB:%20Idea&body=One%20pager%20or%20deck:%0ATimeline:%0AGoal:%0A" rel="noopener">🤝 <strong>COLLAB</strong> — collaboration / partnership</a>
-          <a class="btn" href="mailto:honey@plnt.earth?subject=PRESS:%20Inquiry&body=Outlet:%0ADeadline:%0AAngle:%0AFormat%20(written/audio/video):" rel="noopener">🗞 <strong>PRESS</strong> — media &amp; interviews</a>
-          <a class="btn" href="mailto:honey@plnt.earth?subject=SUPPORT:%20Help&body=Describe%20the%20issue:%0AURL%20or%20page:%0AScreenshots%20(if%20any):" rel="noopener">🛠 <strong>SUPPORT</strong> — site/account help</a>
-          <a class="btn" href="mailto:honey@plnt.earth?subject=VIP:%20—&body=Message:" rel="noopener">⭐️ <strong>VIP</strong> — direct / urgent</a>
+          <a class="btn" href="mailto:t@plnt.earth?subject=SUBMISSION:%20Your%20Title&body=Link(s)%20to%20files%20or%20drive:%0AHow%20to%20credit%20you:%0AShort%20blurb%20(≤120w):" rel="noopener">✉️ <strong>SUBMISSION</strong> — art · music · seed rituals</a>
+          <a class="btn" href="mailto:t@plnt.earth?subject=COLLAB:%20Idea&body=One%20pager%20or%20deck:%0ATimeline:%0AGoal:%0A" rel="noopener">🤝 <strong>COLLAB</strong> — collaboration / partnership</a>
+          <a class="btn" href="mailto:t@plnt.earth?subject=PRESS:%20Inquiry&body=Outlet:%0ADeadline:%0AAngle:%0AFormat%20(written/audio/video):" rel="noopener">🗞 <strong>PRESS</strong> — media &amp; interviews</a>
+          <a class="btn" href="mailto:t@plnt.earth?subject=SUPPORT:%20Help&body=Describe%20the%20issue:%0AURL%20or%20page:%0AScreenshots%20(if%20any):" rel="noopener">🛠 <strong>SUPPORT</strong> — site/account help</a>
+          <a class="btn" href="mailto:t@plnt.earth?subject=VIP:%20—&body=Message:" rel="noopener">⭐️ <strong>VIP</strong> — direct / urgent</a>
         </div>
       </div>
     </section>
@@ -135,10 +153,10 @@
           <textarea id="body" rows="5" placeholder="Write a short note. Links to files help."></textarea>
         </div>
         <div class="actions">
-          <button class="ctl primary" type="button" id="openEmail">Open Email</button>
-          <button class="ctl success" type="button" id="copyAddress" aria-label="Copy address">Copy Address</button>
+          <button class="btn primary" type="button" id="openEmail">Open Email</button>
+          <button class="btn success" type="button" id="copyAddress" aria-label="Copy address">Copy Address</button>
         </div>
-        <p class="tiny">Email: <span id="addr">honey@plnt.earth</span></p>
+        <p class="tiny">Email: <span id="addr">t@plnt.earth</span></p>
       </div>
     </section>
 
@@ -149,17 +167,18 @@
         <span class="pill">COLLAB → Bee + Sun</span>
         <span class="pill">PRESS → Sun (PR)</span>
         <span class="pill">SUPPORT → Bee (ops)</span>
-        <span class="pill">VIP → escalated to Tristan</span>
+        <span class="pill">VIP → escalated to T</span>
       </div>
+      <p class="tiny">By sending, you agree that selected messages may be referenced or responded to in public site updates.</p>
     </section>
 
     <section class="grid" style="margin-top:20px">
       <div class="card">
         <h2>FAQ</h2>
         <p><strong>What can I send?</strong> Seeds, songs, art, notes, proposals, questions.</p>
-        <p><strong>How fast do you reply?</strong> Usually within 48 hours.</p>
+        <p><strong>How will replies work?</strong> We review in batches and often respond publicly (posts/updates). Individual replies are not guaranteed.</p>
         <p><strong>Preferred formats?</strong> Links to files (Drive/Dropbox), or attachments under typical email limits.</p>
-        <p><strong>Credit &amp; rights?</strong> Include how you want to be credited; we’ll confirm before anything goes public.</p>
+        <p><strong>Credit &amp; rights?</strong> Include how you want to be credited; we’ll confirm before publishing your work.</p>
       </div>
       <div class="card">
         <h2>Related pages</h2>
@@ -176,199 +195,49 @@
 
     <footer>
       <div>PLNT Earth · Illumina</div>
-      <div class="tiny">If email links don’t open, write to <span aria-label="email address">honey@plnt.earth</span> and add a subject tag.</div>
+      <div class="tiny">If email links don’t open, write to <span aria-label="email address">t@plnt.earth</span> and add a subject tag.</div>
     </footer>
   </div>
 
 <script>
   (function(){
-    var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var motionOn = !prefersReduced;
-    var wave = document.getElementById('wave');
-    var ctx = wave.getContext('2d');
-    var pollenLayer = document.getElementById('pollen');
-    var dots = [];
-    var audio = { ctx: null, gain: null, lfo: null, oscA: null, oscB: null, on: false };
+    // Minimal parallax: tilt layers gently with scroll and touch; iOS-friendly, no console use.
+    var layers = document.getElementsByClassName('layer');
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var px = 0, py = 0;
 
-    function size(){
-      wave.width = wave.clientWidth;
-      wave.height = wave.clientHeight;
-    }
-    size();
-    window.addEventListener('resize', size, { passive: true });
-
-    function createPollen(){
-      pollenLayer.innerHTML = '';
-      dots.length = 0;
-      var count = Math.round((window.innerWidth * window.innerHeight) / 24000);
-      for (var i=0;i<count;i++){
-        var d = document.createElement('div');
-        d.className = 'dot';
-        var x = Math.random() * 100, y = Math.random() * 100;
-        d.style.left = x + '%';
-        d.style.top = y + '%';
-        pollenLayer.appendChild(d);
-        dots.push({el:d, x:x, y:y, z:Math.random()*0.6+0.4, a:Math.random()*Math.PI*2});
-      }
-    }
-    createPollen();
-    window.addEventListener('resize', createPollen, { passive: true });
-
-    var t0 = performance.now();
-    function anim(t){
-      if(motionOn){
-        var w = wave.width, h = wave.height;
-        ctx.clearRect(0,0,w,h);
-        var time = (t - t0) * 0.001;
-        var cx = w/2, cy = h/2;
-        var grd = ctx.createRadialGradient(cx, cy, Math.min(w,h)*0.1, cx, cy, Math.max(w,h)*0.8);
-        grd.addColorStop(0, 'rgba(245,209,66,0.06)');
-        grd.addColorStop(1, 'rgba(12,18,30,0.0)');
-        ctx.fillStyle = grd;
-        ctx.fillRect(0,0,w,h);
-
-        ctx.beginPath();
-        var amp = Math.max(12, Math.min(48, h*0.06));
-        var base = h*0.55 + Math.sin(time*0.5)*8;
-        for (var x=0;x<=w;x+=6){
-          var y = base + Math.sin(x*0.01 + time*0.9)*amp*0.6 + Math.sin(x*0.003 + time*0.35)*amp*0.4;
-          if(x===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
-        }
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = 'rgba(245,158,11,0.28)';
-        ctx.stroke();
-
-        for (var i=0;i<dots.length;i++){
-          var d = dots[i];
-          d.a += 0.002 + d.z*0.003;
-          var dx = Math.cos(d.a)*d.z*0.5;
-          var dy = Math.sin(d.a)*d.z*0.35;
-          d.el.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
-        }
-      }
-      requestAnimationFrame(anim);
-    }
-    requestAnimationFrame(anim);
-
-    var toggleMotion = document.getElementById('toggleMotion');
-    function updateMotionButton(){
-      toggleMotion.textContent = 'Motion: ' + (motionOn ? 'On' : 'Off');
-      toggleMotion.setAttribute('aria-pressed', motionOn ? 'true' : 'false');
-    }
-    updateMotionButton();
-    toggleMotion.addEventListener('click', function(){
-      motionOn = !motionOn;
-      updateMotionButton();
-    });
-
-    var audioBtn = document.getElementById('audioBtn');
-    function initAudio(){
-      if(audio.ctx) return;
-      var AC = window.AudioContext || window.webkitAudioContext;
-      audio.ctx = new AC();
-      var master = audio.ctx.createGain();
-      master.gain.value = 0.0;
-
-      var oscA = audio.ctx.createOscillator();
-      var oscB = audio.ctx.createOscillator();
-      var lfo = audio.ctx.createOscillator();
-      var lfoGain = audio.ctx.createGain();
-      var filter = audio.ctx.createBiquadFilter();
-
-      oscA.type = 'sine';
-      oscB.type = 'triangle';
-      // Base frequencies kept very low and soothing:
-      oscA.frequency.value = 128.0;
-      oscB.frequency.value = 192.0;
-
-      filter.type = 'lowpass';
-      filter.frequency.value = 1200;
-
-      lfo.type = 'sine';
-      lfo.frequency.value = 0.06;
-      lfoGain.gain.value = 14.0;
-
-      lfo.connect(lfoGain);
-      lfoGain.connect(oscA.frequency);
-      lfoGain.connect(oscB.frequency);
-
-      oscA.connect(filter);
-      oscB.connect(filter);
-      filter.connect(master);
-      master.connect(audio.ctx.destination);
-
-      audio.gain = master;
-      audio.oscA = oscA;
-      audio.oscB = oscB;
-      audio.lfo = lfo;
+    function apply(){
+      if(reduce) return;
+      // Smaller translations keep GPU happy on mobile
+      var dx1 = (px)*0.015, dy1 = (py)*0.015;
+      var dx2 = (px)*0.03,  dy2 = (py)*0.03;
+      var dx3 = (px)*0.05,  dy3 = (py)*0.05;
+      if(layers[0]) layers[0].style.transform = 'translate3d('+dx1+'px,'+dy1+'px,0)';
+      if(layers[1]) layers[1].style.transform = 'translate3d('+dx2+'px,'+dy2+'px,0)';
+      if(layers[2]) layers[2].style.transform = 'translate3d('+dx3+'px,'+dy3+'px,0)';
     }
 
-    function startAudio(){
-      initAudio();
-      if(audio.on) return;
-      audio.oscA.start();
-      audio.oscB.start();
-      audio.lfo.start();
-      var now = audio.ctx.currentTime;
-      audio.gain.gain.cancelScheduledValues(now);
-      audio.gain.gain.setValueAtTime(audio.gain.gain.value, now);
-      audio.gain.gain.linearRampToValueAtTime(0.08, now + 1.2);
-      audio.on = true;
+    // Track scroll position for parallax
+    function onScroll(){
+      // Normalize scroll to a gentle range
+      var y = window.scrollY || document.documentElement.scrollTop || 0;
+      py = (y % 400); // wrap so values stay small
+      apply();
+    }
+    // Track pointer move to add slight parallax
+    function onMove(e){
+      var w = window.innerWidth, h = window.innerHeight;
+      var x = (e.touches ? e.touches[0].clientX : e.clientX) || 0;
+      var y = (e.touches ? e.touches[0].clientY : e.clientY) || 0;
+      px = (x - w/2) * 0.2;
+      py = (y - h/2) * 0.2;
+      apply();
     }
 
-    function stopAudio(){
-      if(!audio.ctx || !audio.on) return;
-      var now = audio.ctx.currentTime;
-      audio.gain.gain.cancelScheduledValues(now);
-      audio.gain.gain.linearRampToValueAtTime(0.0, now + 0.6);
-      audio.on = false;
-    }
-
-    function updateAudioBtn(){
-      audioBtn.textContent = 'Sound: ' + (audio.on ? 'On' : 'Off');
-      audioBtn.setAttribute('aria-pressed', audio.on ? 'true' : 'false');
-    }
-    updateAudioBtn();
-
-    audioBtn.addEventListener('click', function(){
-      if(!audio.ctx || audio.ctx.state === 'suspended'){ initAudio(); }
-      if(!audio.on){ startAudio(); } else { stopAudio(); }
-      updateAudioBtn();
-    });
-
-    // Composer
-    var lane = document.getElementById('lane');
-    var title = document.getElementById('title');
-    var body = document.getElementById('body');
-    var openEmail = document.getElementById('openEmail');
-    var copyAddress = document.getElementById('copyAddress');
-    var addrEl = document.getElementById('addr');
-    var targetEmail = 'honey@plnt.earth';
-
-    function buildMailto(){
-      var tag = (lane.value || 'SUBMISSION').toUpperCase();
-      var subjTitle = (title.value || 'Your Title').replace(/\s+/g,' ').trim();
-      var msg = (body.value || '').replace(/\r?\n/g,'%0A');
-      var subj = encodeURIComponent(tag + ': ' + subjTitle);
-      var b = encodeURIComponent(msg);
-      return 'mailto:' + encodeURIComponent(targetEmail) + '?subject=' + subj + '&body=' + b;
-    }
-    openEmail.addEventListener('click', function(){
-      var link = buildMailto();
-      var a = document.createElement('a');
-      a.href = link;
-      a.rel = 'noopener';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-    });
-    copyAddress.addEventListener('click', function(){
-      var s = targetEmail;
-      if (navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(s); }
-      copyAddress.setAttribute('aria-label','Copied');
-      setTimeout(function(){ copyAddress.setAttribute('aria-label','Copy address'); }, 1200);
-    });
-
+    window.addEventListener('scroll', onScroll, { passive:true });
+    window.addEventListener('mousemove', onMove, { passive:true });
+    window.addEventListener('touchmove', onMove, { passive:true });
+    apply();
   })();
 </script>
 </body>
