@@ -4,71 +4,42 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Honey · Sensual 128 Hz Field</title>
-<meta name="description" content="Honey — a sensual 128 Hz field with silky fades, Glide micro-detune, and Muse Mode flutter. Mobile-clean header and links across PLNT Earth." />
+<meta name="description" content="Honey — sensual 128 Hz with a seamless loop. Perfect-loop engine, fine detune, mobile-clean header, and lock-screen friendly playback." />
 <meta name="theme-color" content="#0b0d11" media="(prefers-color-scheme: dark)">
 <meta name="theme-color" content="#0b0d11">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <style>
-  :root{
-    --bg:#0b0d11; --ink:#ecf1f9; --muted:#aeb4c4; --ring:#1a2236; --card:#0f1427;
-    --honey:#ffd37a; --rose:#ffbcd4; --aqua:#b5f0ea;
-  }
+  :root{ --bg:#0b0d11; --ink:#ecf1f9; --muted:#aeb4c4; --ring:#1a2236; --card:#0f1427; --honey:#ffd37a; }
   *{box-sizing:border-box}
-  html,body{margin:0;height:100%;background:radial-gradient(1200px 700px at 50% -10%, #161a33 0%, #0b0d11 38%, #0b0d11 100%);color:var(--ink);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
+  html,body{margin:0;height:100%;background:#0b0d11;color:var(--ink);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
+  @media(prefers-color-scheme:light){html,body{background:#0b0d11;color:var(--ink)}}
   a{color:inherit;text-decoration:none}
   .wrap{max-width:900px;margin:0 auto;padding:16px 16px 72px}
-
-  /* Slim header + non-sticky ribbon */
   header{padding:12px 16px 0}
   .brand{display:flex;align-items:center;gap:10px}
   .glyph{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#1b2337,#0f1220);display:grid;place-items:center;box-shadow:inset 0 0 0 1px #222b46}
   .glyph span{font-size:16px}
   h1{font-size:18px;margin:0 0 6px 0}
   .tag{font-size:12px;color:#c9d1e2}
-
-  .ribbon{
-    margin:10px 0 8px;display:flex;gap:8px;overflow:auto;padding-bottom:2px;
-    -webkit-overflow-scrolling:touch;scrollbar-width:none
-  }
+  .ribbon{margin:10px 0 8px;display:flex;gap:8px;overflow:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
   .ribbon::-webkit-scrollbar{display:none}
-  .chip{
-    white-space:nowrap;font-size:13px;padding:8px 12px;border-radius:999px;flex:0 0 auto;
-    background:#121a34;border:1px solid #2a3457;color:#e5ebfb
-  }
+  .chip{white-space:nowrap;font-size:13px;padding:8px 12px;border-radius:999px;flex:0 0 auto;background:#121a34;border:1px solid #2a3457;color:#e5ebfb}
   .chip[data-hi="1"]{border-color:#6f4b1b;background:#241707}
-
-  .card{
-    background:linear-gradient(180deg,#0f1427 0%, #0b0f1e 100%);border:1px solid var(--ring);
-    border-radius:14px;padding:14px;box-shadow:0 10px 28px #0007;margin:12px 0;position:relative
-  }
+  .card{background:linear-gradient(180deg,#0f1427 0%, #0b0f1e 100%);border:1px solid var(--ring);border-radius:14px;padding:14px;box-shadow:0 10px 28px #0007;margin:12px 0}
   .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
   .controls{display:grid;grid-template-columns:1fr;gap:10px}
   @media(min-width:660px){ .controls{grid-template-columns:1fr 1fr 1fr} }
-
-  button,.pill{
-    appearance:none;border:1px solid #2a3457;background:#121a34;color:var(--ink);
-    padding:10px 14px;border-radius:999px;font-weight:600;letter-spacing:.2px
-  }
+  button,.pill{appearance:none;border:1px solid #2a3457;background:#121a34;color:var(--ink);padding:10px 14px;border-radius:999px;font-weight:600;letter-spacing:.2px}
   button:active{transform:translateY(1px)}
   .on{background:linear-gradient(90deg,#3a2a12,#241707);border-color:#5e3f1d;box-shadow:0 0 0 1px #523410 inset, 0 0 20px #2b1a08}
   .badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:#121a34;border:1px solid #2a3457;font-size:13px}
   label{font-size:13px;color:var(--muted)}
   input[type="range"]{width:100%}
-
   .meter{height:8px;background:#0e1326;border:1px solid #1f2744;border-radius:999px;overflow:hidden}
-  .bar{height:100%;width:0%;background:linear-gradient(90deg,#ffd37a,#ffb87a,#ff9bb0);transition:width .35s ease}
-
+  .bar{height:100%;width:0%;background:linear-gradient(90deg,#ffd37a,#ffb87a);transition:width .35s ease}
   .note{font-size:14px;color:#cfd6ea}
-  .soft{color:#b0b6c8}
   .footer{opacity:.9;text-align:center;font-size:12px;color:#aab1c6;margin-top:10px}
-
-  /* Gentle “alive” shimmer */
-  .alive:after{
-    content:"";position:absolute;inset:-1px;border-radius:14px;pointer-events:none;
-    background:radial-gradient(600px 160px at 20% -50%, #ffd37a22, transparent 70%),
-               radial-gradient(800px 200px at 80% -60%, #b5f0ea22, transparent 75%)
-  }
 </style>
 </head>
 <body>
@@ -77,13 +48,12 @@
       <div class="glyph"><span>🍯</span></div>
       <div>
         <h1>Honey · <span style="text-shadow:0 0 14px #ffd37a77">Sensual 128 Hz Field</span></h1>
-        <div class="tag">Silky fades · Glide micro-detune · Muse flutter · mobile-clean header</div>
+        <div class="tag">Seamless 128 Hz · perfect-loop engine · lock-screen friendly</div>
       </div>
     </div>
-
-    <!-- Scrollable links across PLNT Earth -->
     <nav class="ribbon" aria-label="Sites">
       <a class="chip" href="https://mirrorhoney.plnt.earth/">MirrorHoney</a>
+      <a class="chip" href="https://mirrorsea.plnt.earth/">Mirror Sea</a>
       <a class="chip" href="https://earth.plnt.earth/">Earth</a>
       <a class="chip" data-hi="1" href="https://honey.plnt.earth/">Honey</a>
       <a class="chip" href="https://mask.plnt.earth/">Mask</a>
@@ -95,248 +65,77 @@
     </nav>
   </header>
 
-  <main class="wrap" id="main">
-    <!-- Honey Tone -->
-    <section class="card alive" aria-label="Honey tone controls">
-      <div class="row" style="justify-content:space-between;gap:10px">
+  <main class="wrap">
+    <section class="card" aria-label="Honey controls">
+      <div class="row" style="justify-content:space-between">
         <div class="badge">🍯 Honey — 128 Hz</div>
-        <div class="badge">Status: <strong id="statusText">Off</strong></div>
+        <div class="badge">Status: <strong id="status">Off</strong></div>
       </div>
-
-      <div class="row" style="margin-top:8px;gap:10px">
-        <button id="startBtn" class="pill">▶︎ Start Honey</button>
-        <button id="stopBtn" class="pill">■ Stop</button>
-        <button id="glideBtn" class="pill" aria-pressed="false">○ Glide: Off</button>
-        <button id="museBtn" class="pill" aria-pressed="false">○ Muse: Off</button>
+      <div class="row" style="margin-top:8px">
+        <button id="start" class="pill">▶︎ Start</button>
+        <button id="stop"  class="pill">■ Stop</button>
+        <button id="newtab" class="pill">↗︎ Open in New Tab</button>
+        <a id="download" class="pill" download="honey-128hz.wav" href="#">⬇︎ Download</a>
       </div>
-
       <div class="controls" style="margin-top:10px">
-        <div>
-          <label for="volume">Level</label>
-          <input id="volume" type="range" min="0" max="100" value="62" step="1" />
-        </div>
-        <div>
-          <label for="detune">Fine Detune (±2%)</label>
-          <input id="detune" type="range" min="-2" max="2" value="0" step="0.01" />
-        </div>
-        <div>
-          <label for="glideDepth">Glide Depth (¢)</label>
-          <input id="glideDepth" type="range" min="0" max="20" value="8" step="0.5" />
-        </div>
+        <div><label for="level">Level</label><input id="level" type="range" min="0" max="100" value="62" step="1" /></div>
+        <div><label for="detune">Fine Detune (±2%)</label><input id="detune" type="range" min="-2" max="2" value="0" step="0.01" /></div>
+        <div><label for="loopsec">Loop length (sec)</label><input id="loopsec" type="range" min="60" max="600" value="180" step="30" /></div>
       </div>
-
-      <div class="meter" style="margin-top:10px"><div class="bar" id="meterBar"></div></div>
-
-      <p class="note" style="margin-top:10px">
-        Tap <b>Start Honey</b> once to unlock audio on iPhone. <b>Glide</b> adds a second tone a few cents away to create a soft, sensual “grind.”
-        <b>Muse</b> adds a slow flutter (≈0.15 Hz, ±8 ¢) — airy but gentle. Use <b>Fine Detune</b> for your exact sweet spot.
-      </p>
+      <div class="meter" style="margin-top:10px"><div id="bar" class="bar"></div></div>
+      <p class="note" style="margin-top:10px">Gently nudge detune until your exhale “clicks.” The loop is mathematically perfect for zero ticks at repeat.</p>
+      <audio id="tone" preload="auto" loop playsinline></audio>
     </section>
-
-    <!-- Practice copy -->
-    <section class="card" aria-label="Practice">
-      <div class="badge">💠 Practice</div>
-      <p class="note">
-        Let the tone warm the chest first. If you feel a pull to move, keep the movement small — neck, shoulders, breath.
-        Nudge detune until your exhale feels like it “clicks.” When the tone turns silky, choose one tiny act of love and ship it.
-      </p>
-      <p class="soft">For Marina’s page with the video mix, visit <a href="https://mirrorhoney.plnt.earth/">MirrorHoney</a>. For grounding, try <a href="https://earth.plnt.earth/">Earth</a>.</p>
-    </section>
-
-    <div class="footer">Night-safe UI · zero-network WebAudio · smooth ramps · no overlays.</div>
+    <div class="footer">Night-safe UI · zero external libs · same engine as Earth/Mask/Voice.</div>
   </main>
 
 <script>
 (() => {
-  // UI elements
-  const statusText = document.getElementById('statusText');
-  const startBtn   = document.getElementById('startBtn');
-  const stopBtn    = document.getElementById('stopBtn');
-  const glideBtn   = document.getElementById('glideBtn');
-  const museBtn    = document.getElementById('museBtn');
-  const vol        = document.getElementById('volume');
-  const det        = document.getElementById('detune');
-  const glideDepth = document.getElementById('glideDepth');
-  const bar        = document.getElementById('meterBar');
+  const tone=document.getElementById('tone'), status=document.getElementById('status');
+  const start=document.getElementById('start'), stop=document.getElementById('stop');
+  const newtab=document.getElementById('newtab'), download=document.getElementById('download');
+  const level=document.getElementById('level'), detune=document.getElementById('detune'), loopsec=document.getElementById('loopsec');
+  const bar=document.getElementById('bar');
+  let url=null, blob=null, tabURL=null, on=false;
 
-  // WebAudio graph
-  let ctx, gain;
-  let osc1, osc2;       // main and glide oscillator
-  let lfo, lfoGain;     // Muse mode: slow detune modulation
-  let on = false, glide = false, muse = false;
+  function setBadge(v){ status.textContent=v?'On':'Off'; start.classList.toggle('on',v); }
+  function applyLevel(){ tone.volume=Math.min(1,Math.max(0,level.value/100)); bar.style.width=Math.round(tone.volume*100)+'%'; }
+  function applyDetune(){ const p=parseFloat(detune.value)||0; tone.playbackRate=1+(p/100); }
 
-  function ensureCtx(){
-    if(!ctx){
-      ctx = new (window.AudioContext || window.webkitAudioContext)({latencyHint:'playback'});
-      gain = ctx.createGain(); gain.gain.value = 0.0001; gain.connect(ctx.destination);
+  function makeWav(freq, seconds){
+    const sr=48000, secs=Math.max(5,Math.min(600,seconds||180));
+    const spc=sr/freq; const cyc=Math.round((sr*secs)/spc); const total=Math.floor(cyc*spc);
+    const data=new Int16Array(total), amp=0.25*0x7FFF, fade=Math.floor(sr*0.01);
+    for(let i=0;i<total;i++){ const s=Math.sin(2*Math.PI*freq*(i/sr));
+      let w=1; if(i<fade){const k=i/fade; w=0.5-0.5*Math.cos(Math.PI*k);} else if(i>total-fade){const k=(total-i)/fade; w=0.5-0.5*Math.cos(Math.PI*k);}
+      data[i]=Math.round(amp*s*w);
     }
+    const header=new ArrayBuffer(44), dv=new DataView(header); const put=(o,s)=>{for(let i=0;i<s.length;i++)dv.setUint8(o+i,s.charCodeAt(i));};
+    const bytes=data.length*2; put(0,"RIFF"); dv.setUint32(4,36+bytes,true); put(8,"WAVE"); put(12,"fmt "); dv.setUint32(16,16,true);
+    dv.setUint16(20,1,true); dv.setUint16(22,1,true); dv.setUint32(24,sr,true); dv.setUint32(28,sr*2,true); dv.setUint16(32,2,true); dv.setUint16(34,16,true);
+    put(36,"data"); dv.setUint32(40,bytes,true);
+    const out=new Uint8Array(44+bytes); out.set(new Uint8Array(header),0); out.set(new Uint8Array(new Int16Array(data).buffer),44);
+    return new Blob([out],{type:"audio/wav"});
   }
 
-  function setBadge(v){ statusText.textContent = v ? 'On' : 'Off'; startBtn.classList.toggle('on', v); }
-  function setToggle(btn, v, labelOn, labelOff){
-    btn.textContent = v ? labelOn : labelOff;
-    btn.setAttribute('aria-pressed', v ? 'true' : 'false');
-    btn.classList.toggle('on', v);
-  }
+  function ensureTone(){ if(!blob){ blob=makeWav(128, parseInt(loopsec.value,10)||180); url=URL.createObjectURL(blob); tone.src=url; download.href=url; } }
+  async function doStart(){ ensureTone(); tone.currentTime=0; applyDetune(); applyLevel(); try{ await tone.play(); on=true; setBadge(true);}catch(_){ } }
+  function doStop(){ try{ tone.pause(); }catch(_){ } on=false; setBadge(false); }
 
-  function rampGain(target, ms){
-    if(!gain) return;
-    const now = ctx.currentTime;
-    const dur = Math.max(0.06,(ms||250)/1000);
-    const current = gain.gain.value;
-    gain.gain.cancelScheduledValues(now);
-    gain.gain.setValueAtTime(current, now);
-    gain.gain.linearRampToValueAtTime(target, now + dur);
+  loopsec.addEventListener('input', ()=>{ if(on) return; blob=null; url=null; ensureTone(); });
+  level.addEventListener('input', applyLevel); detune.addEventListener('input', applyDetune);
+  start.addEventListener('click', doStart); stop.addEventListener('click', doStop);
 
-    // UI meter
-    const start = parseFloat(bar.style.width)||0;
-    const end = Math.round(Math.min(100, Math.max(0, target*100)));
-    const t0 = performance.now(), T = Math.max(60,(ms||250));
-    function step(ts){
-      const k = Math.min(1,(ts - t0)/T);
-      const val = Math.round(start + (end - start)*k);
-      bar.style.width = val + '%';
-      if(k<1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }
-
-  function baseLevel(){ return Math.min(1, Math.max(0, vol.value/100)); }
-
-  function applyFineDetune(){
-    if(!osc1) return;
-    const pct = parseFloat(det.value); // ±2%
-    // Map to cents softly: ±2% ≈ ±34.6 cents; keep within ±40 cents feel
-    const cents = pct * 20; // ±40 cents max
-    osc1.detune.setTargetAtTime(cents, ctx.currentTime, 0.05);
-    if(osc2){
-      // osc2 offset is osc1 + glideCents
-      const g = parseFloat(glideDepth.value)||0;
-      osc2.detune.setTargetAtTime(cents + g, ctx.currentTime, 0.05);
-    }
-  }
-
-  function ensureMuse(){
-    if(!lfo){
-      lfo = ctx.createOscillator(); lfo.type = 'sine';
-      lfo.frequency.setValueAtTime(0.15, ctx.currentTime); // ~6-7s per cycle
-      lfoGain = ctx.createGain();
-      lfoGain.gain.value = 0; // depth in cents
-      lfo.connect(lfoGain);
-      // detune is in cents and is an AudioParam, we can modulate directly
-      if(osc1) lfoGain.connect(osc1.detune);
-      lfo.start();
-    }
-  }
-
-  function updateMuseRouting(){
-    if(!lfoGain || !osc1) return;
-    try{ lfoGain.disconnect(); }catch(_){}
-    lfoGain.connect(osc1.detune);
-    if(osc2){ /* keep osc2 steady; we modulate osc1 only for subtle flutter */ }
-  }
-
-  async function start(){
-    ensureCtx();
-    if(on) return;
-    if(ctx.state === 'suspended'){ try{ await ctx.resume(); }catch(_){ } }
-
-    // Create main oscillator
-    osc1 = ctx.createOscillator();
-    osc1.type = 'sine';
-    osc1.frequency.setValueAtTime(128, ctx.currentTime);
-    osc1.connect(gain);
-
-    // Optional glide oscillator (created but connected/enabled only when toggled)
-    osc2 = null;
-
-    applyFineDetune();
-    osc1.start();
-
-    if(muse){
-      ensureMuse();
-      lfoGain.gain.setTargetAtTime(8, ctx.currentTime, 0.2); // ±8 cents
-      updateMuseRouting();
-    }
-
-    rampGain(baseLevel(), 420);
-    on = true; setBadge(true);
-  }
-
-  function stop(){
-    if(!ctx || !osc1 || !on) return;
-    rampGain(0.0001, 300);
-    const local1 = osc1, local2 = osc2;
-    setTimeout(() => {
-      try{ local1.stop(); local1.disconnect(); }catch(_){}
-      if(local2){ try{ local2.stop(); local2.disconnect(); }catch(_){ } }
-    }, 320);
-    on = false; setBadge(false);
-    osc1 = osc2 = null;
-  }
-
-  function toggleGlide(){
-    glide = !glide;
-    setToggle(glideBtn, glide, '● Glide: On', '○ Glide: Off');
-    if(!on) return;
-
-    // If turning on: create osc2 a few cents above osc1 to create slow beating
-    if(glide && !osc2){
-      osc2 = ctx.createOscillator();
-      osc2.type = 'sine';
-      osc2.frequency.setValueAtTime(128, ctx.currentTime);
-      // Detune relative to osc1
-      const finePct = parseFloat(det.value);
-      const fineCents = finePct * 20;
-      const g = parseFloat(glideDepth.value)||8; // cents
-      osc2.detune.setValueAtTime(fineCents + g, ctx.currentTime);
-      osc2.connect(gain);
-      osc2.start();
-    }
-    // If turning off: fade by disconnecting after a short stop
-    if(!glide && osc2){
-      try{ osc2.stop(ctx.currentTime + 0.2); }catch(_){}
-      try{ osc2.disconnect(); }catch(_){}
-      osc2 = null;
-    }
-  }
-
-  function toggleMuse(){
-    muse = !muse;
-    setToggle(museBtn, muse, '● Muse: On', '○ Muse: Off');
-    if(!on) return;
-
-    ensureMuse();
-    updateMuseRouting();
-    const depth = muse ? 8 : 0; // cents
-    lfoGain.gain.setTargetAtTime(depth, ctx.currentTime, 0.2);
-  }
-
-  // UI bindings
-  startBtn.addEventListener('click', start);
-  stopBtn .addEventListener('click', stop);
-  glideBtn.addEventListener('click', toggleGlide);
-  museBtn .addEventListener('click', toggleMuse);
-
-  vol.addEventListener('input', () => { if(ctx){ rampGain(baseLevel(), 140); } });
-  det.addEventListener('input', () => {
-    applyFineDetune();
-  });
-  glideDepth.addEventListener('input', () => {
-    if(osc2){
-      const finePct = parseFloat(det.value); const fineCents = finePct * 20;
-      osc2.detune.setTargetAtTime(fineCents + parseFloat(glideDepth.value||0), ctx.currentTime, 0.05);
-    }
+  newtab.addEventListener('click', ()=>{
+    ensureTone();
+    const html=`<!doctype html><meta name="viewport" content="width=device-width,initial-scale=1"><title>Honey 128 Hz</title>
+      <style>html,body{margin:0;height:100%;background:#000;color:#fff;display:grid;place-items:center;font:16px system-ui}</style>
+      <audio src="${url}" loop controls autoplay playsinline style="width:90%"></audio>
+      <p style="opacity:.8">Honey — 128 Hz · Perfect loop · Lock-screen friendly tab.</p>`;
+    const b=new Blob([html],{type:"text/html"}); tabURL=URL.createObjectURL(b); window.open(tabURL,"_blank","noopener");
   });
 
-  // Keep badge sane on visibility changes
-  document.addEventListener('visibilitychange', () => setBadge(on && !document.hidden));
-
-  // Init UI
-  setBadge(false);
-  setToggle(glideBtn, false, '● Glide: On', '○ Glide: Off');
-  setToggle(museBtn,  false, '● Muse: On',  '○ Muse: Off');
-  bar.style.width = vol.value + '%';
+  setBadge(false); bar.style.width=level.value+'%';
 })();
 </script>
 </body>
