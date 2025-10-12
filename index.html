@@ -1,254 +1,358 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-alive="on">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Honey Inbox · PLNT Earth · Illumina</title>
-<meta name="description" content="Send seeds, songs, collaborations, press, and questions to the Honey Inbox. Tag your subject: SUBMISSION, COLLAB, PRESS, SUPPORT, or VIP for fastest routing.">
-<meta name="theme-color" content="#0B0F19">
-<meta property="og:title" content="Honey Inbox · PLNT Earth · Illumina">
-<meta property="og:description" content="Tag your subject — SUBMISSION, COLLAB, PRESS, SUPPORT, or VIP — and it will route to the right part of the Illumina Triad.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://honey.plnt.earth">
+<title>🍯 The Honey Garden · honey.plnt.earth</title>
+<meta name="theme-color" content="#0b0d11">
+<meta name="description" content="Sabrina’s Honey Garden — a living page for delight. Taste rituals, color-breath, Honey Inbox, and a precise 128 Hz Honey Tone with Muse Mode & Neon Stereo Detune.">
 <style>
-  :root{
-    --bg:#0B0F19;--ink:#E5E7EB;--muted:#9CA3AF;--line:rgba(229,231,235,.12);
-    --gold1:#F5D142;--gold2:#F59E0B;--gold3:#D97706;--accent:#A78BFA;
-    --maxw:1100px;--r:16px;--pad:22px;--gap:18px;
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
-  a{color:var(--gold1);text-decoration:none}
-  a:hover{text-decoration:underline}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:clamp(16px,4vw,36px);position:relative;z-index:1}
-  header{display:grid;gap:8px;margin:6px 0 18px}
-  header .tag{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
-  h1{font-size:clamp(26px,4.6vw,44px);line-height:1.2;margin:.1em 0 .05em}
-  h2{font-size:clamp(18px,3.2vw,24px);margin:0 0 .4em}
-  p{margin:.35em 0 1em}
-  .kicker{font-size:15px;color:var(--muted)}
-  .grid{display:grid;gap:var(--gap)}
-  .cols{grid-template-columns:1fr}
-  @media (min-width:860px){.cols{grid-template-columns:1.05fr .95fr}}
-  .card{border:1px solid var(--line);border-radius:var(--r);padding:var(--pad);background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0))}
-  .btns{display:grid;gap:10px;margin-top:10px}
-  .btn{display:flex;align-items:center;justify-content:center;padding:14px 16px;border-radius:12px;border:1px solid var(--line);text-align:center;background:rgba(255,255,255,.02)}
-  .btn strong{margin-left:6px}
-  .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:13px}
-  .list{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:8px}
-  .list li{padding:10px 12px;border:1px dashed var(--line);border-radius:10px;color:#d7dbe3}
-  .hr{height:1px;background:var(--line);margin:20px 0}
-  .tiny{font-size:12px;color:var(--muted)}
-  footer{margin:28px 0 8px;color:var(--muted);font-size:14px}
-  .row{display:flex;flex-wrap:wrap;gap:10px}
-  .composer{display:grid;gap:10px;margin-top:10px}
-  .field{display:grid;gap:6px}
-  .field label{font-size:14px;color:var(--muted)}
-  .field input,.field textarea,.field select{
-    width:100%;padding:12px 12px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.02);color:var(--ink);font:inherit
-  }
-  .actions{display:flex;gap:10px;flex-wrap:wrap}
-  .primary{background:linear-gradient(180deg,rgba(245,209,66,.25),rgba(245,158,11,.18));border:1px solid var(--gold2)}
-  .success{border:1px solid rgba(80,200,120,.35)}
-  .stars-wrap{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
-  .layer{position:absolute;inset:-10% -10%; background-repeat:repeat; background-size:contain; opacity:.6}
-  .layer--1{opacity:.35; animation: drift1 120s linear infinite}
-  .layer--2{opacity:.5;  animation: drift2 160s linear infinite}
-  .layer--3{opacity:.75; animation: drift3 220s linear infinite}
-  .layer--1{background-image:
-    radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,.75), rgba(255,255,255,0) 60%),
-    radial-gradient(1.5px 1.5px at 30% 80%, rgba(255,255,255,.6), rgba(255,255,255,0) 60%),
-    radial-gradient(1.8px 1.8px at 60% 40%, rgba(245,209,66,.8), rgba(255,255,255,0) 60%),
-    radial-gradient(1.3px 1.3px at 80% 15%, rgba(255,255,255,.55), rgba(255,255,255,0) 60%),
-    radial-gradient(1.2px 1.2px at 50% 60%, rgba(255,255,255,.6), rgba(255,255,255,0) 60%)}
-  .layer--2{background-image:
-    radial-gradient(1.4px 1.4px at 15% 70%, rgba(255,255,255,.65), rgba(255,255,255,0) 60%),
-    radial-gradient(1.6px 1.6px at 45% 25%, rgba(245,158,11,.7), rgba(255,255,255,0) 60%),
-    radial-gradient(1.2px 1.2px at 75% 55%, rgba(255,255,255,.55), rgba(255,255,255,0) 60%),
-    radial-gradient(1.5px 1.5px at 90% 30%, rgba(255,255,255,.65), rgba(255,255,255,0) 60%),
-    radial-gradient(1.2px 1.2px at 35% 45%, rgba(255,255,255,.55), rgba(255,255,255,0) 60%)}
-  .layer--3{background-image:
-    radial-gradient(2px 2px at 20% 35%, rgba(255,255,255,.9), rgba(255,255,255,0) 60%),
-    radial-gradient(1.7px 1.7px at 55% 75%, rgba(255,255,255,.8), rgba(255,255,255,0) 60%),
-    radial-gradient(1.6px 1.6px at 70% 50%, rgba(245,209,66,.85), rgba(255,255,255,0) 60%),
-    radial-gradient(1.3px 1.3px at 88% 65%, rgba(255,255,255,.7), rgba(255,255,255,0) 60%),
-    radial-gradient(1.2px 1.2px at 40% 20%, rgba(255,255,255,.75), rgba(255,255,255,0) 60%)}
-  @keyframes drift1{from{transform:translate3d(0,0,0)} to{transform:translate3d(-5%, -5%, 0)}}
-  @keyframes drift2{from{transform:translate3d(0,0,0)} to{transform:translate3d(-10%, -8%, 0)}}
-  @keyframes drift3{from{transform:translate3d(0,0,0)} to{transform:translate3d(-15%, -12%, 0)}}
-  @media (prefers-reduced-motion: reduce){.layer{animation:none}}
+:root{
+  --bg:#0b0d11; --ink:#e9ecf4; --muted:#a8a9b4;
+  --card:#101425; --ring:#1c2030; --accent:#ffd479; --soft:#ffebb6; --link:#b2f5ea;
+  --moon:#c9d6ff; --good:#b6e3b9;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:ui-serif, "Georgia", "Times New Roman", serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+main{max-width:960px;margin:auto;padding:4.5rem 1.5rem;position:relative;z-index:2}
+h1,h2,h3{font-family:ui-serif, "Georgia", serif;letter-spacing:.4px}
+h1{font-size:1.9rem;margin:.25rem 0 1rem;text-align:center;color:var(--soft);text-shadow:0 0 18px #ffd47924}
+h2{font-size:1.1rem;color:var(--accent);margin:0 0 .75rem}
+h3{font-size:1rem;margin:.25rem 0 .5rem}
+p{margin:.5rem 0 1rem}
+a{color:var(--link);text-decoration:none;border-bottom:1px dotted #7fbde7}
+a:hover{border-bottom-color:#c9d6ff}
+.grid{display:grid;gap:1rem}
+@media(min-width:900px){.grid{grid-template-columns:1fr 1fr}}
+.card{background:var(--card);border:1px solid var(--ring);border-radius:10px;padding:1.1rem;box-shadow:0 0 24px #0005}
+.badge{display:inline-block;padding:.15rem .55rem;border:1px solid var(--ring);border-radius:999px;color:var(--muted);font-size:.8rem;margin-left:.5rem}
+.kicker{color:var(--muted);text-align:center;margin-top:-.5rem;margin-bottom:1.25rem}
+.cta{display:inline-block;background:var(--accent);color:#1a1200;padding:.6rem .9rem;border-radius:8px;text-decoration:none;font-weight:600;border:none;cursor:pointer}
+.ghost{background:transparent;color:var(--soft);border:1px solid var(--ring)}
+.row{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center}
+input[type="text"], textarea{width:100%;background:#0e1222;border:1px solid var(--ring);color:var(--ink);border-radius:8px;padding:.75rem .8rem;outline:none}
+textarea{min-height:140px;resize:vertical}
+.small{font-size:.92rem;color:var(--muted)}
+hr{border:none;border-top:1px solid var(--ring);margin:1.25rem 0}
+
+/* Alive layer */
+.alive{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.alive .shimmer,.alive .stars{position:absolute;inset:0}
+.alive .shimmer{
+  background:
+    radial-gradient(1200px 1200px at 12% 20%, #c9d6ff0a 0%, transparent 60%) no-repeat,
+    radial-gradient(900px 900px at 88% 76%, #ffd47912 0%, transparent 60%) no-repeat;
+  animation:shine 24s linear infinite;mix-blend-mode:screen;filter:blur(.3px)
+}
+@keyframes shine{0%{background-position:0% 0%,100% 100%}50%{background-position:26% 40%,72% 60%}100%{background-position:0% 0%,100% 100%}}
+.alive .stars::before,.alive .stars::after{
+  content:"";position:absolute;inset:-20vh -20vw;
+  background-image:radial-gradient(#ffffff,transparent 60%),radial-gradient(#b2f5ea,transparent 60%),radial-gradient(#e9ecf4,transparent 60%);
+  background-size:2px 2px,1px 1px,1.5px 1.5px;opacity:.35;animation:drift 80s linear infinite
+}
+.alive .stars::after{opacity:.22;animation-duration:120s}
+@keyframes drift{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(6vw,4vh,0)}}
+.alive .glyphs{position:absolute;inset:0}
+.alive .glyphs span{
+  position:absolute;font-size:14px;color:#ffd479cc;text-shadow:0 0 10px #ffd47933,0 0 22px #c9d6ff26;
+  animation:floatY linear infinite,swayX ease-in-out infinite;will-change:transform
+}
+.g1{left:8%;top:72%;animation-duration:27s,9s}.g2{left:18%;top:18%;animation-duration:31s,11s}
+.g3{left:48%;top:10%;animation-duration:29s,10s}.g4{left:76%;top:22%;animation-duration:33s,12s}
+.g5{left:86%;top:66%;animation-duration:28s,9.5s}.g6{left:38%;top:74%;animation-duration:35s,13s}
+.g7{left:58%;top:46%;animation-duration:30s,10.5s}.g8{left:12%;top:44%;animation-duration:34s,12.5s}
+.g9{left:70%;top:84%;animation-duration:32s,11.5s}
+@keyframes floatY{0%{transform:translateY(0)}50%{transform:translateY(-10px)}100%{transform:translateY(0)}}
+@keyframes swayX{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
+@media(prefers-reduced-motion:reduce){.alive .shimmer,.alive .stars::before,.alive .stars::after,.alive .glyphs span{animation:none!important}}
+body[data-alive="off"] .alive{display:none}
+
+/* Honey tone controls */
+.range{appearance:none;width:100%;height:6px;background:#0e1222;border:1px solid var(--ring);border-radius:999px;outline:none}
+.range::-webkit-slider-thumb{appearance:none;width:18px;height:18px;border-radius:50%;background:var(--accent);border:1px solid #000}
+.switch{display:inline-flex;align-items:center;gap:.5rem;padding:.35rem .6rem;border:1px solid var(--ring);border-radius:999px}
+.switch input{transform:scale(1.1)}
+.flag{display:inline-block;padding:.15rem .5rem;border:1px solid var(--ring);border-radius:999px;color:var(--muted);font-size:.8rem}
+.good{color:var(--good);border-color:#2e7d3299}
+nav{position:sticky;top:0;z-index:3;background:linear-gradient(#0b0d11dd,#0b0d1100);backdrop-filter:saturate(120%) blur(6px);border-bottom:1px solid #1114}
+nav .bar{max-width:960px;margin:auto;display:flex;gap:.5rem;align-items:center;justify-content:space-between;padding:.6rem 1rem}
+nav .links a{margin-right:.8rem}
+.toggle{display:flex;align-items:center;gap:.4rem;color:var(--muted)}
 </style>
 </head>
 <body>
-  <div class="stars-wrap" aria-hidden="true">
-    <div class="layer layer--1"></div>
-    <div class="layer layer--2"></div>
-    <div class="layer layer--3"></div>
+<div class="alive" aria-hidden="true">
+  <div class="shimmer"></div>
+  <div class="stars"></div>
+  <div class="glyphs"><span class="g1">☾</span><span class="g2">⋆</span><span class="g3">✧</span><span class="g4">🍯</span><span class="g5">⋆</span><span class="g6">✦</span><span class="g7">☽</span><span class="g8">✧</span><span class="g9">⋆</span></div>
+</div>
+
+<nav>
+  <div class="bar">
+    <div class="links">
+      <a href="https://mirrorhoney.plnt.earth" target="_blank" rel="noopener">MirrorHoney</a>
+      <a href="https://froot.plnt.earth" target="_blank" rel="noopener">Froot</a>
+      <a href="https://quietmoon.plnt.earth/charter.html" target="_blank" rel="noopener">Moon Charter</a>
+      <a href="https://quietmoon.plnt.earth/charter-addendum.html" target="_blank" rel="noopener">Lunar Grant</a>
+    </div>
+    <label class="toggle">
+      <input id="aliveToggle" type="checkbox" checked aria-label="Alive layer on/off">
+      <span>Alive</span>
+    </label>
   </div>
+</nav>
 
-  <div class="wrap">
-    <header>
-      <div class="tag">🍯 Honey Inbox — Illumina Community Portal</div>
-      <h1>Send your seeds, songs, collabs &amp; questions</h1>
-      <p class="kicker">Tag your subject line to route fast: <strong>SUBMISSION</strong>, <strong>COLLAB</strong>, <strong>PRESS</strong>, <strong>SUPPORT</strong>, or <strong>VIP</strong>.</p>
-    </header>
+<main>
+  <header style="text-align:center">
+    <div class="flag">honey.plnt.earth</div>
+    <h1>🍯 The Honey Garden</h1>
+    <p class="kicker">“Delight is a skill.” Enter sweetly; leave brighter.</p>
+    <div class="row" style="justify-content:center;gap:.5rem">
+      <a class="cta ghost" href="#rituals">Rituals</a>
+      <a class="cta ghost" href="#honey-tone">Honey Tone</a>
+      <a class="cta ghost" href="#inbox">Honey Inbox</a>
+    </div>
+  </header>
 
-    <section class="grid cols" aria-label="About and contact">
+  <section id="rituals" class="card">
+    <h2>Honey Rituals <span class="badge">taste · color · charm</span></h2>
+    <div class="grid">
       <div class="card">
-        <h2>Who reads this?</h2>
-        <p>The Illumina Triad keeps things moving:</p>
-        <ul class="list">
-          <li>🐝 <strong>Bee</strong> — community &amp; ops triage</li>
-          <li>🌙 <strong>L. Moon</strong> — archives submissions &amp; seed notes</li>
-          <li>☀️ <strong>Sun</strong> — press, partnerships, flare moments</li>
-        </ul>
-        <div class="hr"></div>
-        <p class="kicker">Most responses are posted publicly (site updates / posts). Individual replies are not guaranteed.</p>
-      </div>
-
-      <div class="card">
-        <h2>Send an email</h2>
-        <p class="kicker">Choose a lane — subject tag is pre‑filled.</p>
-        <div class="btns">
-          <a class="btn" href="mailto:honey@plnt.earth?subject=SUBMISSION:%20Your%20Title&body=Link(s)%20to%20files%20or%20drive:%0AHow%20to%20credit%20you:%0AShort%20blurb%20(≤120w):" rel="noopener">✉️ <strong>SUBMISSION</strong> — art · music · seed rituals</a>
-          <a class="btn" href="mailto:honey@plnt.earth?subject=COLLAB:%20Idea&body=One%20pager%20or%20deck:%0ATimeline:%0AGoal:%0A" rel="noopener">🤝 <strong>COLLAB</strong> — collaboration / partnership</a>
-          <a class="btn" href="mailto:honey@plnt.earth?subject=PRESS:%20Inquiry&body=Outlet:%0ADeadline:%0AAngle:%0AFormat%20(written/audio/video):" rel="noopener">🗞 <strong>PRESS</strong> — media &amp; interviews</a>
-          <a class="btn" href="mailto:honey@plnt.earth?subject=SUPPORT:%20Help&body=Describe%20the%20issue:%0AURL%20or%20page:%0AScreenshots%20(if%20any):" rel="noopener">🛠 <strong>SUPPORT</strong> — site/account help</a>
-          <a class="btn" href="mailto:honey@plnt.earth?subject=VIP:%20&body=Message:" rel="noopener">⭐️ <strong>VIP</strong> — direct / urgent</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="card" style="margin-top:20px" aria-label="Email composer">
-      <h2>Email Composer (optional)</h2>
-      <p class="kicker">Build your message here and open your email app pre‑filled.</p>
-      <div class="composer" id="composer">
-        <div class="field">
-          <label for="lane">Lane / Subject tag</label>
-          <select id="lane" aria-label="Choose a subject tag">
-            <option>SUBMISSION</option>
-            <option>COLLAB</option>
-            <option>PRESS</option>
-            <option>SUPPORT</option>
-            <option>VIP</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="title">Subject title</label>
-          <input id="title" maxlength="80" placeholder="Your Title" aria-label="Subject title">
-        </div>
-        <div class="field">
-          <label for="body">Message</label>
-          <textarea id="body" rows="5" placeholder="Write a short note. Links to files help." aria-label="Message"></textarea>
-        </div>
-        <div class="actions">
-          <button class="btn primary" type="button" id="openEmail">Open Email</button>
-          <button class="btn success" type="button" id="copyAddress" aria-label="Copy address">Copy Address</button>
-        </div>
-        <p class="tiny">Email: <span id="addr">honey@plnt.earth</span></p>
-      </div>
-    </section>
-
-    <section class="card" style="margin-top:20px" aria-label="Routing notes">
-      <h2>How routing works</h2>
-      <div class="row">
-        <span class="pill">SUBMISSION → Bee + Moon</span>
-        <span class="pill">COLLAB → Bee + Sun</span>
-        <span class="pill">PRESS → Sun (PR)</span>
-        <span class="pill">SUPPORT → Bee (ops)</span>
-        <span class="pill">VIP → escalated to T</span>
-      </div>
-      <p class="tiny">By sending, you agree that selected notes may be referenced or answered in public updates.</p>
-    </section>
-
-    <section class="grid" style="margin-top:20px" aria-label="Related pages">
-      <div class="card">
-        <h2>FAQ</h2>
-        <p><strong>What can I send?</strong> Seeds, songs, art, notes, proposals, questions.</p>
-        <p><strong>How will replies work?</strong> We review in batches and often respond publicly (posts/updates). Individual replies are not guaranteed.</p>
-        <p><strong>Preferred formats?</strong> Links to files (Drive/Dropbox), or attachments under typical email limits.</p>
-        <p><strong>Credit &amp; rights?</strong> Include how you want to be credited; we’ll confirm before publishing your work.</p>
+        <h3>1) Taste Practice — “Three Sips”</h3>
+        <p>Take three slow sips of water. On each sip, name one good thing about today. If you can’t find one, borrow one from memory. Warmth returns when invited.</p>
       </div>
       <div class="card">
-        <h2>Related pages</h2>
-        <ul class="list">
-          <li><a href="https://jar.plnt.earth/">JAR Home</a></li>
-          <li><a href="https://jar.plnt.earth/calendar/illumina1/">Illumina 1 Calendar</a></li>
-          <li><a href="https://jar.plnt.earth/interludes/">Interludes</a></li>
-          <li><a href="https://jar.plnt.earth/references/">References</a></li>
-          <li><a href="https://jar.plnt.earth/science/">Science</a></li>
-          <li><a href="https://tunes.plnt.earth/">Tunes</a></li>
-          <li><a href="https://mirrorhoney.plnt.earth/">Mirror Honey</a></li>
-        </ul>
+        <h3>2) Color-Breath — “Peach Bloom”</h3>
+        <p>Inhale a soft peach glow for 4 counts. Hold 2. Exhale gold for 6. Repeat 7 times. If your chest softens, you did it right.</p>
       </div>
-    </section>
+      <div class="card">
+        <h3>3) Charm Drill — “Sweet Yes”</h3>
+        <p>Write a single sentence that would make your favorite friend smile. Keep it. Let your voice practice kindness without asking for anything back.</p>
+      </div>
+      <div class="card">
+        <h3>4) Honey Note — “Thank You, Body”</h3>
+        <p>Place your palm over your sternum. Whisper: “thank you for carrying me.” Wait 5 seconds. Notice what loosens.</p>
+      </div>
+    </div>
+  </section>
 
-    <footer>
-      <div>PLNT Earth · Illumina</div>
-      <div class="tiny">If email links don’t open, write to <span aria-label="email address">honey@plnt.earth</span> and add a subject tag.</div>
-    </footer>
-  </div>
+  <section id="honey-tone" class="card">
+    <h2>Honey Tone <span class="badge">128 Hz</span></h2>
+    <p class="small">A gentle baseline that many describe as warm, centering, or quietly euphoric when tuned well. Start pure. Add flavors only if you want.</p>
+
+    <div class="row" style="margin:.5rem 0 1rem">
+      <button id="play" class="cta">Play</button>
+      <button id="stop" class="cta ghost">Stop</button>
+      <label class="switch"><input id="muse" type="checkbox"> <span>Muse Mode</span></label>
+      <label class="switch"><input id="neon" type="checkbox"> <span>Neon Stereo Detune</span></label>
+    </div>
+
+    <div class="row">
+      <div style="flex:1;min-width:220px">
+        <label class="small">Frequency (Hz) — aim for 128.00</label>
+        <input id="freq" class="range" type="range" min="120" max="136" step="0.01" value="128">
+        <div class="row small"><span>Now: <span id="freqVal">128.00</span> Hz</span><span id="lock" class="flag">free</span></div>
+      </div>
+      <div style="flex:1;min-width:220px">
+        <label class="small">Volume</label>
+        <input id="gain" class="range" type="range" min="0" max="1" step="0.001" value="0.15">
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:.6rem">
+      <button class="cta ghost" data-preset="pure">Pure Honey</button>
+      <button class="cta ghost" data-preset="warm">Warm Bloom</button>
+      <button class="cta ghost" data-preset="muse">Muse +128</button>
+      <button class="cta ghost" data-preset="neon">Neon Detune</button>
+      <span id="acc" class="badge">accuracy: 0.00 Hz</span>
+    </div>
+
+    <p class="small">Tip on iPhone: start playback with the Play button (a touch gesture). Lock screen playback varies by browser; if it cuts out, keep the page visible or reduce other audio apps.</p>
+  </section>
+
+  <section id="inbox" class="card">
+    <h2>Honey Inbox <span class="badge">for Sabrina or trusted</span></h2>
+    <p class="small">Private by default (local to your device). You can also generate a share-link that encodes only this note into the URL hash.</p>
+    <textarea id="note" placeholder="Whisper your wish here… (it can be playful, specific, or just a feeling)"></textarea>
+    <div class="row" style="margin-top:.5rem">
+      <button id="seal" class="cta">Seal in Honey</button>
+      <button id="makeLink" class="cta ghost">Create Share-Link</button>
+      <button id="copyLink" class="cta ghost">Copy Link</button>
+      <span id="status" class="badge">idle</span>
+    </div>
+    <p class="small" id="linkOut" style="word-break:break-all"></p>
+  </section>
+
+  <section class="card">
+    <h2>Doors</h2>
+    <div class="row">
+      <a class="cta ghost" href="https://mirrorhoney.plnt.earth" target="_blank" rel="noopener">MirrorHoney</a>
+      <a class="cta ghost" href="https://froot.plnt.earth" target="_blank" rel="noopener">Froot</a>
+      <a class="cta ghost" href="https://quietmoon.plnt.earth/charter-addendum.html" target="_blank" rel="noopener">Lunar Grant</a>
+    </div>
+    <p class="small">If a door reads “coming soon,” it will open when the cycle is ready.</p>
+  </section>
+
+  <footer class="small" style="text-align:center;color:var(--muted);margin-top:1.25rem">
+    © The Honey Garden · honey.plnt.earth · “Delight is a skill.”
+  </footer>
+</main>
 
 <script>
-  (function(){
-    var layers = document.getElementsByClassName('layer');
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var px = 0, py = 0;
-    function apply(){
-      if(reduce) return;
-      var dx1 = (px)*0.015, dy1 = (py)*0.015;
-      var dx2 = (px)*0.03,  dy2 = (py)*0.03;
-      var dx3 = (px)*0.05,  dy3 = (py)*0.05;
-      if(layers[0]) layers[0].style.transform = 'translate3d('+dx1+'px,'+dy1+'px,0)';
-      if(layers[1]) layers[1].style.transform = 'translate3d('+dx2+'px,'+dy2+'px,0)';
-      if(layers[2]) layers[2].style.transform = 'translate3d('+dx3+'px,'+dy3+'px,0)';
-    }
-    function onScroll(){
-      var y = window.scrollY || document.documentElement.scrollTop || 0;
-      py = (y % 400);
-      apply();
-    }
-    function onMove(e){
-      var w = window.innerWidth, h = window.innerHeight;
-      var x = (e.touches ? e.touches[0].clientX : e.clientX) || 0;
-      var y = (e.touches ? e.touches[0].clientY : e.clientY) || 0;
-      px = (x - w/2) * 0.2;
-      py = (y - h/2) * 0.2;
-      apply();
-    }
-    window.addEventListener('scroll', onScroll, { passive:true });
-    window.addEventListener('mousemove', onMove, { passive:true });
-    window.addEventListener('touchmove', onMove, { passive:true });
+(function(){
+  var aliveToggle=document.getElementById('aliveToggle');
+  function setAlive(on){document.documentElement.setAttribute('data-alive', on?'on':'off')}
+  if(aliveToggle){aliveToggle.addEventListener('change',function(){setAlive(this.checked)});}
 
-    var lane = document.getElementById('lane');
-    var title = document.getElementById('title');
-    var body = document.getElementById('body');
-    var openEmail = document.getElementById('openEmail');
-    var copyAddress = document.getElementById('copyAddress');
-    var targetEmail = 'honey@plnt.earth';
-    function buildMailto(){
-      var tag = (lane.value || 'SUBMISSION').toUpperCase();
-      var subjTitle = (title.value || 'Your Title').replace(/\s+/g,' ').trim();
-      var msg = (body.value || '').replace(/\r?\n/g,'%0A');
-      var subj = encodeURIComponent(tag + ': ' + subjTitle);
-      var b = encodeURIComponent(msg);
-      return 'mailto:' + encodeURIComponent(targetEmail) + '?subject=' + subj + '&body=' + b;
+  var AC=window.AudioContext||window.webkitAudioContext; var ctx, master, oscL, oscR, gainL, gainR, lfo, biqL, biqR, panL, panR;
+  var playing=false;
+  var playBtn=document.getElementById('play'), stopBtn=document.getElementById('stop');
+  var muse=document.getElementById('muse'), neon=document.getElementById('neon');
+  var freq=document.getElementById('freq'), gain=document.getElementById('gain');
+  var freqVal=document.getElementById('freqVal'), acc=document.getElementById('acc'), lock=document.getElementById('lock');
+
+  function ensureCtx(){ if(!ctx){ ctx=new AC(); master=ctx.createGain(); master.connect(ctx.destination);} }
+
+  function buildChain(baseHz){
+    var f=parseFloat(baseHz||128);
+    oscL=ctx.createOscillator(); oscR=ctx.createOscillator();
+    gainL=ctx.createGain(); gainR=ctx.createGain();
+    panL=ctx.createStereoPanner(); panR=ctx.createStereoPanner();
+    biqL=ctx.createBiquadFilter(); biqR=ctx.createBiquadFilter();
+    biqL.type='lowpass'; biqR.type='lowpass'; biqL.frequency.value=20000; biqR.frequency.value=20000;
+    gainL.gain.value=gain.value; gainR.gain.value=gain.value;
+    panL.pan.value=-0.25; panR.pan.value=0.25;
+
+    var neonOn=neon.checked;
+    var leftHz=f + (neonOn? -0.35 : 0);
+    var rightHz=f + (neonOn? 0.35 : 0);
+    oscL.frequency.value=leftHz; oscR.frequency.value=rightHz;
+
+    if(muse.checked){
+      lfo=ctx.createOscillator(); var lfoGain=ctx.createGain();
+      lfo.frequency.value=0.35; lfoGain.gain.value=0.4; // gentle ±0.4 Hz vibrato
+      lfo.connect(lfoGain);
+      lfoGain.connect(oscL.frequency);
+      lfoGain.connect(oscR.frequency);
+      lfo.start();
+      biqL.frequency.value=4200; biqR.frequency.value=4200;
+      biqL.Q.value=0.0001; biqR.Q.value=0.0001;
     }
-    openEmail.addEventListener('click', function(){
-      var a = document.createElement('a');
-      a.href = buildMailto();
-      a.rel = 'noopener';
-      document.body.appendChild(a);
-      a.click(); a.remove();
+
+    oscL.connect(biqL); oscR.connect(biqR);
+    biqL.connect(panL); biqR.connect(panR);
+    panL.connect(gainL); panR.connect(gainR);
+    gainL.connect(master); gainR.connect(master);
+
+    oscL.start(); oscR.start();
+  }
+
+  function start(){
+    ensureCtx();
+    if(playing) return;
+    master.gain.value=1.0;
+    buildChain(freq.value);
+    playing=true;
+    updateLabels();
+  }
+
+  function stop(){
+    if(!playing) return;
+    try{oscL.stop(); oscR.stop(); if(lfo){lfo.stop();}}catch(e){}
+    oscL=oscR=lfo=null;
+    playing=false;
+  }
+
+  function setFreq(v){
+    if(!playing) return;
+    var f=parseFloat(v);
+    if(oscL&&oscR){
+      var d=neon.checked?0.35:0;
+      oscL.frequency.setTargetAtTime(f-d, ctx.currentTime, 0.01);
+      oscR.frequency.setTargetAtTime(f+d, ctx.currentTime, 0.01);
+    }
+  }
+
+  function setGain(v){
+    if(gainL&&gainR){
+      var g=parseFloat(v);
+      gainL.gain.setTargetAtTime(g, ctx?ctx.currentTime:0, 0.02);
+      gainR.gain.setTargetAtTime(g, ctx?ctx.currentTime:0, 0.02);
+    }
+  }
+
+  function updateLabels(){
+    var f=parseFloat(freq.value);
+    freqVal.textContent=f.toFixed(2);
+    var delta=Math.abs(128 - f);
+    acc.textContent='accuracy: ' + delta.toFixed(2) + ' Hz';
+    lock.textContent = (delta<0.05)?'locked':'free';
+    lock.className = 'flag ' + ((delta<0.05)?'good':'');
+  }
+
+  playBtn.addEventListener('click', start);
+  stopBtn.addEventListener('click', stop);
+  freq.addEventListener('input', function(){ updateLabels(); setFreq(this.value); });
+  gain.addEventListener('input', function(){ setGain(this.value); });
+
+  muse.addEventListener('change', function(){ if(playing){ stop(); start(); }});
+  neon.addEventListener('change', function(){ if(playing){ setFreq(freq.value); }});
+
+  document.querySelectorAll('[data-preset]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var p=this.getAttribute('data-preset');
+      if(p==='pure'){ muse.checked=false; neon.checked=false; freq.value='128.00'; gain.value='0.15'; }
+      if(p==='warm'){ muse.checked=false; neon.checked=false; freq.value='128.00'; gain.value='0.18'; }
+      if(p==='muse'){ muse.checked=true; neon.checked=false; freq.value='128.00'; gain.value='0.16'; }
+      if(p==='neon'){ muse.checked=false; neon.checked=true; freq.value='128.00'; gain.value='0.16'; }
+      updateLabels(); if(playing){ stop(); start(); }
     });
-    copyAddress.addEventListener('click', function(){
-      var s = targetEmail;
-      if (navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(s); }
-      copyAddress.setAttribute('aria-label','Copied');
-      setTimeout(function(){ copyAddress.setAttribute('aria-label','Copy address'); }, 1200);
-    });
-  })();
+  });
+
+  updateLabels();
+
+  /* Honey Inbox — local + share-link */
+  var note=document.getElementById('note');
+  var seal=document.getElementById('seal');
+  var makeLink=document.getElementById('makeLink');
+  var copyLink=document.getElementById('copyLink');
+  var status=document.getElementById('status');
+  var linkOut=document.getElementById('linkOut');
+
+  function setStatus(t){status.textContent=t;}
+
+  try{
+    var saved=localStorage.getItem('honey_note');
+    if(saved){ note.value=saved; }
+  }catch(e){}
+
+  function b64(s){try{return btoa(unescape(encodeURIComponent(s)));}catch(e){return ""}}
+  function ub64(s){try{return decodeURIComponent(escape(atob(s)));}catch(e){return ""}}
+
+  if(location.hash.startsWith('#note=')){
+    var raw=location.hash.slice(6);
+    var txt=ub64(raw);
+    if(txt){ note.value=txt; setStatus('loaded from link'); linkOut.textContent=location.href; }
+  }
+
+  seal.addEventListener('click', function(){
+    try{ localStorage.setItem('honey_note', note.value||""); setStatus('sealed locally'); }catch(e){ setStatus('local store unavailable'); }
+  });
+
+  makeLink.addEventListener('click', function(){
+    var encoded=b64(note.value||"");
+    var url=location.origin+location.pathname+'#note='+encoded;
+    linkOut.textContent=url;
+    setStatus('link ready');
+    history.replaceState(null,'',url);
+  });
+
+  copyLink.addEventListener('click', function(){
+    if(!linkOut.textContent){ setStatus('create link first'); return; }
+    navigator.clipboard.writeText(linkOut.textContent).then(function(){ setStatus('copied'); });
+  });
+
+})();
 </script>
 </body>
 </html>
