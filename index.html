@@ -1,357 +1,342 @@
 <!DOCTYPE html>
-<html lang="en" data-alive="on">
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>🍯 The Honey Garden · honey.plnt.earth</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Honey · Sensual 128 Hz Field</title>
+<meta name="description" content="Honey — a sensual 128 Hz field with silky fades, Glide micro-detune, and Muse Mode flutter. Mobile-clean header and links across PLNT Earth." />
+<meta name="theme-color" content="#0b0d11" media="(prefers-color-scheme: dark)">
 <meta name="theme-color" content="#0b0d11">
-<meta name="description" content="Sabrina’s Honey Garden — a living page for delight. Taste rituals, color-breath, Honey Inbox, and a precise 128 Hz Honey Tone with Muse Mode & Neon Stereo Detune.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <style>
-:root{
-  --bg:#0b0d11; --ink:#e9ecf4; --muted:#a8a9b4;
-  --card:#101425; --ring:#1c2030; --accent:#ffd479; --soft:#ffebb6; --link:#b2f5ea;
-  --moon:#c9d6ff; --good:#b6e3b9;
-}
-*{box-sizing:border-box}
-html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:ui-serif, "Georgia", "Times New Roman", serif;line-height:1.6;-webkit-font-smoothing:antialiased}
-main{max-width:960px;margin:auto;padding:4.5rem 1.5rem;position:relative;z-index:2}
-h1,h2,h3{font-family:ui-serif, "Georgia", serif;letter-spacing:.4px}
-h1{font-size:1.9rem;margin:.25rem 0 1rem;text-align:center;color:var(--soft);text-shadow:0 0 18px #ffd47924}
-h2{font-size:1.1rem;color:var(--accent);margin:0 0 .75rem}
-h3{font-size:1rem;margin:.25rem 0 .5rem}
-p{margin:.5rem 0 1rem}
-a{color:var(--link);text-decoration:none;border-bottom:1px dotted #7fbde7}
-a:hover{border-bottom-color:#c9d6ff}
-.grid{display:grid;gap:1rem}
-@media(min-width:900px){.grid{grid-template-columns:1fr 1fr}}
-.card{background:var(--card);border:1px solid var(--ring);border-radius:10px;padding:1.1rem;box-shadow:0 0 24px #0005}
-.badge{display:inline-block;padding:.15rem .55rem;border:1px solid var(--ring);border-radius:999px;color:var(--muted);font-size:.8rem;margin-left:.5rem}
-.kicker{color:var(--muted);text-align:center;margin-top:-.5rem;margin-bottom:1.25rem}
-.cta{display:inline-block;background:var(--accent);color:#1a1200;padding:.6rem .9rem;border-radius:8px;text-decoration:none;font-weight:600;border:none;cursor:pointer}
-.ghost{background:transparent;color:var(--soft);border:1px solid var(--ring)}
-.row{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center}
-input[type="text"], textarea{width:100%;background:#0e1222;border:1px solid var(--ring);color:var(--ink);border-radius:8px;padding:.75rem .8rem;outline:none}
-textarea{min-height:140px;resize:vertical}
-.small{font-size:.92rem;color:var(--muted)}
-hr{border:none;border-top:1px solid var(--ring);margin:1.25rem 0}
+  :root{
+    --bg:#0b0d11; --ink:#ecf1f9; --muted:#aeb4c4; --ring:#1a2236; --card:#0f1427;
+    --honey:#ffd37a; --rose:#ffbcd4; --aqua:#b5f0ea;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:radial-gradient(1200px 700px at 50% -10%, #161a33 0%, #0b0d11 38%, #0b0d11 100%);color:var(--ink);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:900px;margin:0 auto;padding:16px 16px 72px}
 
-/* Alive layer */
-.alive{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
-.alive .shimmer,.alive .stars{position:absolute;inset:0}
-.alive .shimmer{
-  background:
-    radial-gradient(1200px 1200px at 12% 20%, #c9d6ff0a 0%, transparent 60%) no-repeat,
-    radial-gradient(900px 900px at 88% 76%, #ffd47912 0%, transparent 60%) no-repeat;
-  animation:shine 24s linear infinite;mix-blend-mode:screen;filter:blur(.3px)
-}
-@keyframes shine{0%{background-position:0% 0%,100% 100%}50%{background-position:26% 40%,72% 60%}100%{background-position:0% 0%,100% 100%}}
-.alive .stars::before,.alive .stars::after{
-  content:"";position:absolute;inset:-20vh -20vw;
-  background-image:radial-gradient(#ffffff,transparent 60%),radial-gradient(#b2f5ea,transparent 60%),radial-gradient(#e9ecf4,transparent 60%);
-  background-size:2px 2px,1px 1px,1.5px 1.5px;opacity:.35;animation:drift 80s linear infinite
-}
-.alive .stars::after{opacity:.22;animation-duration:120s}
-@keyframes drift{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(6vw,4vh,0)}}
-.alive .glyphs{position:absolute;inset:0}
-.alive .glyphs span{
-  position:absolute;font-size:14px;color:#ffd479cc;text-shadow:0 0 10px #ffd47933,0 0 22px #c9d6ff26;
-  animation:floatY linear infinite,swayX ease-in-out infinite;will-change:transform
-}
-.g1{left:8%;top:72%;animation-duration:27s,9s}.g2{left:18%;top:18%;animation-duration:31s,11s}
-.g3{left:48%;top:10%;animation-duration:29s,10s}.g4{left:76%;top:22%;animation-duration:33s,12s}
-.g5{left:86%;top:66%;animation-duration:28s,9.5s}.g6{left:38%;top:74%;animation-duration:35s,13s}
-.g7{left:58%;top:46%;animation-duration:30s,10.5s}.g8{left:12%;top:44%;animation-duration:34s,12.5s}
-.g9{left:70%;top:84%;animation-duration:32s,11.5s}
-@keyframes floatY{0%{transform:translateY(0)}50%{transform:translateY(-10px)}100%{transform:translateY(0)}}
-@keyframes swayX{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
-@media(prefers-reduced-motion:reduce){.alive .shimmer,.alive .stars::before,.alive .stars::after,.alive .glyphs span{animation:none!important}}
-body[data-alive="off"] .alive{display:none}
+  /* Slim header + non-sticky ribbon */
+  header{padding:12px 16px 0}
+  .brand{display:flex;align-items:center;gap:10px}
+  .glyph{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#1b2337,#0f1220);display:grid;place-items:center;box-shadow:inset 0 0 0 1px #222b46}
+  .glyph span{font-size:16px}
+  h1{font-size:18px;margin:0 0 6px 0}
+  .tag{font-size:12px;color:#c9d1e2}
 
-/* Honey tone controls */
-.range{appearance:none;width:100%;height:6px;background:#0e1222;border:1px solid var(--ring);border-radius:999px;outline:none}
-.range::-webkit-slider-thumb{appearance:none;width:18px;height:18px;border-radius:50%;background:var(--accent);border:1px solid #000}
-.switch{display:inline-flex;align-items:center;gap:.5rem;padding:.35rem .6rem;border:1px solid var(--ring);border-radius:999px}
-.switch input{transform:scale(1.1)}
-.flag{display:inline-block;padding:.15rem .5rem;border:1px solid var(--ring);border-radius:999px;color:var(--muted);font-size:.8rem}
-.good{color:var(--good);border-color:#2e7d3299}
-nav{position:sticky;top:0;z-index:3;background:linear-gradient(#0b0d11dd,#0b0d1100);backdrop-filter:saturate(120%) blur(6px);border-bottom:1px solid #1114}
-nav .bar{max-width:960px;margin:auto;display:flex;gap:.5rem;align-items:center;justify-content:space-between;padding:.6rem 1rem}
-nav .links a{margin-right:.8rem}
-.toggle{display:flex;align-items:center;gap:.4rem;color:var(--muted)}
+  .ribbon{
+    margin:10px 0 8px;display:flex;gap:8px;overflow:auto;padding-bottom:2px;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none
+  }
+  .ribbon::-webkit-scrollbar{display:none}
+  .chip{
+    white-space:nowrap;font-size:13px;padding:8px 12px;border-radius:999px;flex:0 0 auto;
+    background:#121a34;border:1px solid #2a3457;color:#e5ebfb
+  }
+  .chip[data-hi="1"]{border-color:#6f4b1b;background:#241707}
+
+  .card{
+    background:linear-gradient(180deg,#0f1427 0%, #0b0f1e 100%);border:1px solid var(--ring);
+    border-radius:14px;padding:14px;box-shadow:0 10px 28px #0007;margin:12px 0;position:relative
+  }
+  .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .controls{display:grid;grid-template-columns:1fr;gap:10px}
+  @media(min-width:660px){ .controls{grid-template-columns:1fr 1fr 1fr} }
+
+  button,.pill{
+    appearance:none;border:1px solid #2a3457;background:#121a34;color:var(--ink);
+    padding:10px 14px;border-radius:999px;font-weight:600;letter-spacing:.2px
+  }
+  button:active{transform:translateY(1px)}
+  .on{background:linear-gradient(90deg,#3a2a12,#241707);border-color:#5e3f1d;box-shadow:0 0 0 1px #523410 inset, 0 0 20px #2b1a08}
+  .badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:#121a34;border:1px solid #2a3457;font-size:13px}
+  label{font-size:13px;color:var(--muted)}
+  input[type="range"]{width:100%}
+
+  .meter{height:8px;background:#0e1326;border:1px solid #1f2744;border-radius:999px;overflow:hidden}
+  .bar{height:100%;width:0%;background:linear-gradient(90deg,#ffd37a,#ffb87a,#ff9bb0);transition:width .35s ease}
+
+  .note{font-size:14px;color:#cfd6ea}
+  .soft{color:#b0b6c8}
+  .footer{opacity:.9;text-align:center;font-size:12px;color:#aab1c6;margin-top:10px}
+
+  /* Gentle “alive” shimmer */
+  .alive:after{
+    content:"";position:absolute;inset:-1px;border-radius:14px;pointer-events:none;
+    background:radial-gradient(600px 160px at 20% -50%, #ffd37a22, transparent 70%),
+               radial-gradient(800px 200px at 80% -60%, #b5f0ea22, transparent 75%)
+  }
 </style>
 </head>
 <body>
-<div class="alive" aria-hidden="true">
-  <div class="shimmer"></div>
-  <div class="stars"></div>
-  <div class="glyphs"><span class="g1">☾</span><span class="g2">⋆</span><span class="g3">✧</span><span class="g4">🍯</span><span class="g5">⋆</span><span class="g6">✦</span><span class="g7">☽</span><span class="g8">✧</span><span class="g9">⋆</span></div>
-</div>
-
-<nav>
-  <div class="bar">
-    <div class="links">
-      <a href="https://mirrorhoney.plnt.earth" target="_blank" rel="noopener">MirrorHoney</a>
-      <a href="https://froot.plnt.earth" target="_blank" rel="noopener">Froot</a>
-      <a href="https://quietmoon.plnt.earth/charter.html" target="_blank" rel="noopener">Moon Charter</a>
-      <a href="https://quietmoon.plnt.earth/charter-addendum.html" target="_blank" rel="noopener">Lunar Grant</a>
+  <header class="wrap" aria-label="Site header">
+    <div class="brand">
+      <div class="glyph"><span>🍯</span></div>
+      <div>
+        <h1>Honey · <span style="text-shadow:0 0 14px #ffd37a77">Sensual 128 Hz Field</span></h1>
+        <div class="tag">Silky fades · Glide micro-detune · Muse flutter · mobile-clean header</div>
+      </div>
     </div>
-    <label class="toggle">
-      <input id="aliveToggle" type="checkbox" checked aria-label="Alive layer on/off">
-      <span>Alive</span>
-    </label>
-  </div>
-</nav>
 
-<main>
-  <header style="text-align:center">
-    <div class="flag">honey.plnt.earth</div>
-    <h1>🍯 The Honey Garden</h1>
-    <p class="kicker">“Delight is a skill.” Enter sweetly; leave brighter.</p>
-    <div class="row" style="justify-content:center;gap:.5rem">
-      <a class="cta ghost" href="#rituals">Rituals</a>
-      <a class="cta ghost" href="#honey-tone">Honey Tone</a>
-      <a class="cta ghost" href="#inbox">Honey Inbox</a>
-    </div>
+    <!-- Scrollable links across PLNT Earth -->
+    <nav class="ribbon" aria-label="Sites">
+      <a class="chip" href="https://mirrorhoney.plnt.earth/">MirrorHoney</a>
+      <a class="chip" href="https://earth.plnt.earth/">Earth</a>
+      <a class="chip" data-hi="1" href="https://honey.plnt.earth/">Honey</a>
+      <a class="chip" href="https://mask.plnt.earth/">Mask</a>
+      <a class="chip" href="https://voice.plnt.earth/">Voice</a>
+      <a class="chip" href="https://jar.plnt.earth/">Jar</a>
+      <a class="chip" href="https://froot.plnt.earth/">Froot</a>
+      <a class="chip" href="https://tunes.plnt.earth/">Tunes</a>
+      <a class="chip" href="https://bridge.plnt.earth/">Bridge</a>
+    </nav>
   </header>
 
-  <section id="rituals" class="card">
-    <h2>Honey Rituals <span class="badge">taste · color · charm</span></h2>
-    <div class="grid">
-      <div class="card">
-        <h3>1) Taste Practice — “Three Sips”</h3>
-        <p>Take three slow sips of water. On each sip, name one good thing about today. If you can’t find one, borrow one from memory. Warmth returns when invited.</p>
+  <main class="wrap" id="main">
+    <!-- Honey Tone -->
+    <section class="card alive" aria-label="Honey tone controls">
+      <div class="row" style="justify-content:space-between;gap:10px">
+        <div class="badge">🍯 Honey — 128 Hz</div>
+        <div class="badge">Status: <strong id="statusText">Off</strong></div>
       </div>
-      <div class="card">
-        <h3>2) Color-Breath — “Peach Bloom”</h3>
-        <p>Inhale a soft peach glow for 4 counts. Hold 2. Exhale gold for 6. Repeat 7 times. If your chest softens, you did it right.</p>
+
+      <div class="row" style="margin-top:8px;gap:10px">
+        <button id="startBtn" class="pill">▶︎ Start Honey</button>
+        <button id="stopBtn" class="pill">■ Stop</button>
+        <button id="glideBtn" class="pill" aria-pressed="false">○ Glide: Off</button>
+        <button id="museBtn" class="pill" aria-pressed="false">○ Muse: Off</button>
       </div>
-      <div class="card">
-        <h3>3) Charm Drill — “Sweet Yes”</h3>
-        <p>Write a single sentence that would make your favorite friend smile. Keep it. Let your voice practice kindness without asking for anything back.</p>
+
+      <div class="controls" style="margin-top:10px">
+        <div>
+          <label for="volume">Level</label>
+          <input id="volume" type="range" min="0" max="100" value="62" step="1" />
+        </div>
+        <div>
+          <label for="detune">Fine Detune (±2%)</label>
+          <input id="detune" type="range" min="-2" max="2" value="0" step="0.01" />
+        </div>
+        <div>
+          <label for="glideDepth">Glide Depth (¢)</label>
+          <input id="glideDepth" type="range" min="0" max="20" value="8" step="0.5" />
+        </div>
       </div>
-      <div class="card">
-        <h3>4) Honey Note — “Thank You, Body”</h3>
-        <p>Place your palm over your sternum. Whisper: “thank you for carrying me.” Wait 5 seconds. Notice what loosens.</p>
-      </div>
-    </div>
-  </section>
 
-  <section id="honey-tone" class="card">
-    <h2>Honey Tone <span class="badge">128 Hz</span></h2>
-    <p class="small">A gentle baseline that many describe as warm, centering, or quietly euphoric when tuned well. Start pure. Add flavors only if you want.</p>
+      <div class="meter" style="margin-top:10px"><div class="bar" id="meterBar"></div></div>
 
-    <div class="row" style="margin:.5rem 0 1rem">
-      <button id="play" class="cta">Play</button>
-      <button id="stop" class="cta ghost">Stop</button>
-      <label class="switch"><input id="muse" type="checkbox"> <span>Muse Mode</span></label>
-      <label class="switch"><input id="neon" type="checkbox"> <span>Neon Stereo Detune</span></label>
-    </div>
+      <p class="note" style="margin-top:10px">
+        Tap <b>Start Honey</b> once to unlock audio on iPhone. <b>Glide</b> adds a second tone a few cents away to create a soft, sensual “grind.”
+        <b>Muse</b> adds a slow flutter (≈0.15 Hz, ±8 ¢) — airy but gentle. Use <b>Fine Detune</b> for your exact sweet spot.
+      </p>
+    </section>
 
-    <div class="row">
-      <div style="flex:1;min-width:220px">
-        <label class="small">Frequency (Hz) — aim for 128.00</label>
-        <input id="freq" class="range" type="range" min="120" max="136" step="0.01" value="128">
-        <div class="row small"><span>Now: <span id="freqVal">128.00</span> Hz</span><span id="lock" class="flag">free</span></div>
-      </div>
-      <div style="flex:1;min-width:220px">
-        <label class="small">Volume</label>
-        <input id="gain" class="range" type="range" min="0" max="1" step="0.001" value="0.15">
-      </div>
-    </div>
+    <!-- Practice copy -->
+    <section class="card" aria-label="Practice">
+      <div class="badge">💠 Practice</div>
+      <p class="note">
+        Let the tone warm the chest first. If you feel a pull to move, keep the movement small — neck, shoulders, breath.
+        Nudge detune until your exhale feels like it “clicks.” When the tone turns silky, choose one tiny act of love and ship it.
+      </p>
+      <p class="soft">For Marina’s page with the video mix, visit <a href="https://mirrorhoney.plnt.earth/">MirrorHoney</a>. For grounding, try <a href="https://earth.plnt.earth/">Earth</a>.</p>
+    </section>
 
-    <div class="row" style="margin-top:.6rem">
-      <button class="cta ghost" data-preset="pure">Pure Honey</button>
-      <button class="cta ghost" data-preset="warm">Warm Bloom</button>
-      <button class="cta ghost" data-preset="muse">Muse +128</button>
-      <button class="cta ghost" data-preset="neon">Neon Detune</button>
-      <span id="acc" class="badge">accuracy: 0.00 Hz</span>
-    </div>
-
-    <p class="small">Tip on iPhone: start playback with the Play button (a touch gesture). Lock screen playback varies by browser; if it cuts out, keep the page visible or reduce other audio apps.</p>
-  </section>
-
-  <section id="inbox" class="card">
-    <h2>Honey Inbox <span class="badge">for Sabrina or trusted</span></h2>
-    <p class="small">Private by default (local to your device). You can also generate a share-link that encodes only this note into the URL hash.</p>
-    <textarea id="note" placeholder="Whisper your wish here… (it can be playful, specific, or just a feeling)"></textarea>
-    <div class="row" style="margin-top:.5rem">
-      <button id="seal" class="cta">Seal in Honey</button>
-      <button id="makeLink" class="cta ghost">Create Share-Link</button>
-      <button id="copyLink" class="cta ghost">Copy Link</button>
-      <span id="status" class="badge">idle</span>
-    </div>
-    <p class="small" id="linkOut" style="word-break:break-all"></p>
-  </section>
-
-  <section class="card">
-    <h2>Doors</h2>
-    <div class="row">
-      <a class="cta ghost" href="https://mirrorhoney.plnt.earth" target="_blank" rel="noopener">MirrorHoney</a>
-      <a class="cta ghost" href="https://froot.plnt.earth" target="_blank" rel="noopener">Froot</a>
-      <a class="cta ghost" href="https://quietmoon.plnt.earth/charter-addendum.html" target="_blank" rel="noopener">Lunar Grant</a>
-    </div>
-    <p class="small">If a door reads “coming soon,” it will open when the cycle is ready.</p>
-  </section>
-
-  <footer class="small" style="text-align:center;color:var(--muted);margin-top:1.25rem">
-    © The Honey Garden · honey.plnt.earth · “Delight is a skill.”
-  </footer>
-</main>
+    <div class="footer">Night-safe UI · zero-network WebAudio · smooth ramps · no overlays.</div>
+  </main>
 
 <script>
-(function(){
-  var aliveToggle=document.getElementById('aliveToggle');
-  function setAlive(on){document.documentElement.setAttribute('data-alive', on?'on':'off')}
-  if(aliveToggle){aliveToggle.addEventListener('change',function(){setAlive(this.checked)});}
+(() => {
+  // UI elements
+  const statusText = document.getElementById('statusText');
+  const startBtn   = document.getElementById('startBtn');
+  const stopBtn    = document.getElementById('stopBtn');
+  const glideBtn   = document.getElementById('glideBtn');
+  const museBtn    = document.getElementById('museBtn');
+  const vol        = document.getElementById('volume');
+  const det        = document.getElementById('detune');
+  const glideDepth = document.getElementById('glideDepth');
+  const bar        = document.getElementById('meterBar');
 
-  var AC=window.AudioContext||window.webkitAudioContext; var ctx, master, oscL, oscR, gainL, gainR, lfo, biqL, biqR, panL, panR;
-  var playing=false;
-  var playBtn=document.getElementById('play'), stopBtn=document.getElementById('stop');
-  var muse=document.getElementById('muse'), neon=document.getElementById('neon');
-  var freq=document.getElementById('freq'), gain=document.getElementById('gain');
-  var freqVal=document.getElementById('freqVal'), acc=document.getElementById('acc'), lock=document.getElementById('lock');
+  // WebAudio graph
+  let ctx, gain;
+  let osc1, osc2;       // main and glide oscillator
+  let lfo, lfoGain;     // Muse mode: slow detune modulation
+  let on = false, glide = false, muse = false;
 
-  function ensureCtx(){ if(!ctx){ ctx=new AC(); master=ctx.createGain(); master.connect(ctx.destination);} }
-
-  function buildChain(baseHz){
-    var f=parseFloat(baseHz||128);
-    oscL=ctx.createOscillator(); oscR=ctx.createOscillator();
-    gainL=ctx.createGain(); gainR=ctx.createGain();
-    panL=ctx.createStereoPanner(); panR=ctx.createStereoPanner();
-    biqL=ctx.createBiquadFilter(); biqR=ctx.createBiquadFilter();
-    biqL.type='lowpass'; biqR.type='lowpass'; biqL.frequency.value=20000; biqR.frequency.value=20000;
-    gainL.gain.value=gain.value; gainR.gain.value=gain.value;
-    panL.pan.value=-0.25; panR.pan.value=0.25;
-
-    var neonOn=neon.checked;
-    var leftHz=f + (neonOn? -0.35 : 0);
-    var rightHz=f + (neonOn? 0.35 : 0);
-    oscL.frequency.value=leftHz; oscR.frequency.value=rightHz;
-
-    if(muse.checked){
-      lfo=ctx.createOscillator(); var lfoGain=ctx.createGain();
-      lfo.frequency.value=0.35; lfoGain.gain.value=0.4; // gentle ±0.4 Hz vibrato
-      lfo.connect(lfoGain);
-      lfoGain.connect(oscL.frequency);
-      lfoGain.connect(oscR.frequency);
-      lfo.start();
-      biqL.frequency.value=4200; biqR.frequency.value=4200;
-      biqL.Q.value=0.0001; biqR.Q.value=0.0001;
+  function ensureCtx(){
+    if(!ctx){
+      ctx = new (window.AudioContext || window.webkitAudioContext)({latencyHint:'playback'});
+      gain = ctx.createGain(); gain.gain.value = 0.0001; gain.connect(ctx.destination);
     }
-
-    oscL.connect(biqL); oscR.connect(biqR);
-    biqL.connect(panL); biqR.connect(panR);
-    panL.connect(gainL); panR.connect(gainR);
-    gainL.connect(master); gainR.connect(master);
-
-    oscL.start(); oscR.start();
   }
 
-  function start(){
+  function setBadge(v){ statusText.textContent = v ? 'On' : 'Off'; startBtn.classList.toggle('on', v); }
+  function setToggle(btn, v, labelOn, labelOff){
+    btn.textContent = v ? labelOn : labelOff;
+    btn.setAttribute('aria-pressed', v ? 'true' : 'false');
+    btn.classList.toggle('on', v);
+  }
+
+  function rampGain(target, ms){
+    if(!gain) return;
+    const now = ctx.currentTime;
+    const dur = Math.max(0.06,(ms||250)/1000);
+    const current = gain.gain.value;
+    gain.gain.cancelScheduledValues(now);
+    gain.gain.setValueAtTime(current, now);
+    gain.gain.linearRampToValueAtTime(target, now + dur);
+
+    // UI meter
+    const start = parseFloat(bar.style.width)||0;
+    const end = Math.round(Math.min(100, Math.max(0, target*100)));
+    const t0 = performance.now(), T = Math.max(60,(ms||250));
+    function step(ts){
+      const k = Math.min(1,(ts - t0)/T);
+      const val = Math.round(start + (end - start)*k);
+      bar.style.width = val + '%';
+      if(k<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function baseLevel(){ return Math.min(1, Math.max(0, vol.value/100)); }
+
+  function applyFineDetune(){
+    if(!osc1) return;
+    const pct = parseFloat(det.value); // ±2%
+    // Map to cents softly: ±2% ≈ ±34.6 cents; keep within ±40 cents feel
+    const cents = pct * 20; // ±40 cents max
+    osc1.detune.setTargetAtTime(cents, ctx.currentTime, 0.05);
+    if(osc2){
+      // osc2 offset is osc1 + glideCents
+      const g = parseFloat(glideDepth.value)||0;
+      osc2.detune.setTargetAtTime(cents + g, ctx.currentTime, 0.05);
+    }
+  }
+
+  function ensureMuse(){
+    if(!lfo){
+      lfo = ctx.createOscillator(); lfo.type = 'sine';
+      lfo.frequency.setValueAtTime(0.15, ctx.currentTime); // ~6-7s per cycle
+      lfoGain = ctx.createGain();
+      lfoGain.gain.value = 0; // depth in cents
+      lfo.connect(lfoGain);
+      // detune is in cents and is an AudioParam, we can modulate directly
+      if(osc1) lfoGain.connect(osc1.detune);
+      lfo.start();
+    }
+  }
+
+  function updateMuseRouting(){
+    if(!lfoGain || !osc1) return;
+    try{ lfoGain.disconnect(); }catch(_){}
+    lfoGain.connect(osc1.detune);
+    if(osc2){ /* keep osc2 steady; we modulate osc1 only for subtle flutter */ }
+  }
+
+  async function start(){
     ensureCtx();
-    if(playing) return;
-    master.gain.value=1.0;
-    buildChain(freq.value);
-    playing=true;
-    updateLabels();
+    if(on) return;
+    if(ctx.state === 'suspended'){ try{ await ctx.resume(); }catch(_){ } }
+
+    // Create main oscillator
+    osc1 = ctx.createOscillator();
+    osc1.type = 'sine';
+    osc1.frequency.setValueAtTime(128, ctx.currentTime);
+    osc1.connect(gain);
+
+    // Optional glide oscillator (created but connected/enabled only when toggled)
+    osc2 = null;
+
+    applyFineDetune();
+    osc1.start();
+
+    if(muse){
+      ensureMuse();
+      lfoGain.gain.setTargetAtTime(8, ctx.currentTime, 0.2); // ±8 cents
+      updateMuseRouting();
+    }
+
+    rampGain(baseLevel(), 420);
+    on = true; setBadge(true);
   }
 
   function stop(){
-    if(!playing) return;
-    try{oscL.stop(); oscR.stop(); if(lfo){lfo.stop();}}catch(e){}
-    oscL=oscR=lfo=null;
-    playing=false;
+    if(!ctx || !osc1 || !on) return;
+    rampGain(0.0001, 300);
+    const local1 = osc1, local2 = osc2;
+    setTimeout(() => {
+      try{ local1.stop(); local1.disconnect(); }catch(_){}
+      if(local2){ try{ local2.stop(); local2.disconnect(); }catch(_){ } }
+    }, 320);
+    on = false; setBadge(false);
+    osc1 = osc2 = null;
   }
 
-  function setFreq(v){
-    if(!playing) return;
-    var f=parseFloat(v);
-    if(oscL&&oscR){
-      var d=neon.checked?0.35:0;
-      oscL.frequency.setTargetAtTime(f-d, ctx.currentTime, 0.01);
-      oscR.frequency.setTargetAtTime(f+d, ctx.currentTime, 0.01);
+  function toggleGlide(){
+    glide = !glide;
+    setToggle(glideBtn, glide, '● Glide: On', '○ Glide: Off');
+    if(!on) return;
+
+    // If turning on: create osc2 a few cents above osc1 to create slow beating
+    if(glide && !osc2){
+      osc2 = ctx.createOscillator();
+      osc2.type = 'sine';
+      osc2.frequency.setValueAtTime(128, ctx.currentTime);
+      // Detune relative to osc1
+      const finePct = parseFloat(det.value);
+      const fineCents = finePct * 20;
+      const g = parseFloat(glideDepth.value)||8; // cents
+      osc2.detune.setValueAtTime(fineCents + g, ctx.currentTime);
+      osc2.connect(gain);
+      osc2.start();
+    }
+    // If turning off: fade by disconnecting after a short stop
+    if(!glide && osc2){
+      try{ osc2.stop(ctx.currentTime + 0.2); }catch(_){}
+      try{ osc2.disconnect(); }catch(_){}
+      osc2 = null;
     }
   }
 
-  function setGain(v){
-    if(gainL&&gainR){
-      var g=parseFloat(v);
-      gainL.gain.setTargetAtTime(g, ctx?ctx.currentTime:0, 0.02);
-      gainR.gain.setTargetAtTime(g, ctx?ctx.currentTime:0, 0.02);
+  function toggleMuse(){
+    muse = !muse;
+    setToggle(museBtn, muse, '● Muse: On', '○ Muse: Off');
+    if(!on) return;
+
+    ensureMuse();
+    updateMuseRouting();
+    const depth = muse ? 8 : 0; // cents
+    lfoGain.gain.setTargetAtTime(depth, ctx.currentTime, 0.2);
+  }
+
+  // UI bindings
+  startBtn.addEventListener('click', start);
+  stopBtn .addEventListener('click', stop);
+  glideBtn.addEventListener('click', toggleGlide);
+  museBtn .addEventListener('click', toggleMuse);
+
+  vol.addEventListener('input', () => { if(ctx){ rampGain(baseLevel(), 140); } });
+  det.addEventListener('input', () => {
+    applyFineDetune();
+  });
+  glideDepth.addEventListener('input', () => {
+    if(osc2){
+      const finePct = parseFloat(det.value); const fineCents = finePct * 20;
+      osc2.detune.setTargetAtTime(fineCents + parseFloat(glideDepth.value||0), ctx.currentTime, 0.05);
     }
-  }
-
-  function updateLabels(){
-    var f=parseFloat(freq.value);
-    freqVal.textContent=f.toFixed(2);
-    var delta=Math.abs(128 - f);
-    acc.textContent='accuracy: ' + delta.toFixed(2) + ' Hz';
-    lock.textContent = (delta<0.05)?'locked':'free';
-    lock.className = 'flag ' + ((delta<0.05)?'good':'');
-  }
-
-  playBtn.addEventListener('click', start);
-  stopBtn.addEventListener('click', stop);
-  freq.addEventListener('input', function(){ updateLabels(); setFreq(this.value); });
-  gain.addEventListener('input', function(){ setGain(this.value); });
-
-  muse.addEventListener('change', function(){ if(playing){ stop(); start(); }});
-  neon.addEventListener('change', function(){ if(playing){ setFreq(freq.value); }});
-
-  document.querySelectorAll('[data-preset]').forEach(function(b){
-    b.addEventListener('click', function(){
-      var p=this.getAttribute('data-preset');
-      if(p==='pure'){ muse.checked=false; neon.checked=false; freq.value='128.00'; gain.value='0.15'; }
-      if(p==='warm'){ muse.checked=false; neon.checked=false; freq.value='128.00'; gain.value='0.18'; }
-      if(p==='muse'){ muse.checked=true; neon.checked=false; freq.value='128.00'; gain.value='0.16'; }
-      if(p==='neon'){ muse.checked=false; neon.checked=true; freq.value='128.00'; gain.value='0.16'; }
-      updateLabels(); if(playing){ stop(); start(); }
-    });
   });
 
-  updateLabels();
+  // Keep badge sane on visibility changes
+  document.addEventListener('visibilitychange', () => setBadge(on && !document.hidden));
 
-  /* Honey Inbox — local + share-link */
-  var note=document.getElementById('note');
-  var seal=document.getElementById('seal');
-  var makeLink=document.getElementById('makeLink');
-  var copyLink=document.getElementById('copyLink');
-  var status=document.getElementById('status');
-  var linkOut=document.getElementById('linkOut');
-
-  function setStatus(t){status.textContent=t;}
-
-  try{
-    var saved=localStorage.getItem('honey_note');
-    if(saved){ note.value=saved; }
-  }catch(e){}
-
-  function b64(s){try{return btoa(unescape(encodeURIComponent(s)));}catch(e){return ""}}
-  function ub64(s){try{return decodeURIComponent(escape(atob(s)));}catch(e){return ""}}
-
-  if(location.hash.startsWith('#note=')){
-    var raw=location.hash.slice(6);
-    var txt=ub64(raw);
-    if(txt){ note.value=txt; setStatus('loaded from link'); linkOut.textContent=location.href; }
-  }
-
-  seal.addEventListener('click', function(){
-    try{ localStorage.setItem('honey_note', note.value||""); setStatus('sealed locally'); }catch(e){ setStatus('local store unavailable'); }
-  });
-
-  makeLink.addEventListener('click', function(){
-    var encoded=b64(note.value||"");
-    var url=location.origin+location.pathname+'#note='+encoded;
-    linkOut.textContent=url;
-    setStatus('link ready');
-    history.replaceState(null,'',url);
-  });
-
-  copyLink.addEventListener('click', function(){
-    if(!linkOut.textContent){ setStatus('create link first'); return; }
-    navigator.clipboard.writeText(linkOut.textContent).then(function(){ setStatus('copied'); });
-  });
-
+  // Init UI
+  setBadge(false);
+  setToggle(glideBtn, false, '● Glide: On', '○ Glide: Off');
+  setToggle(museBtn,  false, '● Muse: On',  '○ Muse: Off');
+  bar.style.width = vol.value + '%';
 })();
 </script>
 </body>
