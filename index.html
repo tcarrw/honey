@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -9,20 +8,14 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <style>
-:root{
-  --bg:#0b0d11; --ink:#f4f4ff; --muted:#b9b9d6; --accent:#ffd166; --accent2:#b7a7ff;
-  --glass:rgba(255,255,255,.06); --glass-strong:rgba(255,255,255,.12);
-  --ring:0 0 0 3px rgba(255,209,102,.35);
-  --radius:16px; --shadow:0 10px 30px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.04)
-}
-*{box-sizing:border-box}html,body{height:100%}body{margin:0;background:radial-gradient(1200px 800px at 120% -10%,rgba(255,209,102,.15),transparent),#0b0d11;color:var(--ink);font:500 15px/1.4 system-ui,-apple-system,Segoe UI,Roboto}
+:root{--bg:#0b0d11;--ink:#f4f4ff;--muted:#b9b9d6;--accent:#ffd166;--accent2:#b7a7ff;--glass:rgba(255,255,255,.06);--glass-strong:rgba(255,255,255,.12);--radius:16px;--shadow:0 10px 30px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.04)}
+*{box-sizing:border-box}html,body{height:100%}body{margin:0;background:radial-gradient(1200px 800px at 120% -10%,rgba(255,209,102,.14),transparent),#0b0d11;color:var(--ink);font:500 15px/1.4 system-ui,-apple-system,Segoe UI,Roboto}
 a{color:var(--accent2);text-decoration:none}
 .wrap{max-width:1200px;margin:0 auto;padding:18px}
 .header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
-.logo{width:36px;height:36px;border-radius:10px;background:conic-gradient(from 90deg,#ffe28a,#ffc857,#ffaf36,#ffe28a);box-shadow:0 0 40px rgba(255,209,102,.25)}
+.logo{width:36px;height:36px;border-radius:10px;background:conic-gradient(from 90deg,#ffe28a,#ffc857,#ffaf36,#ffe28a);box-shadow:0 0 40px rgba(255,209,102,.22)}
 .h1{font:700 20px/1.1 system-ui;letter-spacing:.25px}
 .badge{margin-left:auto;display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:var(--glass);color:var(--muted)}
-.badge b{color:#96ffa0}
 .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
 @media (max-width:900px){.grid{grid-template-columns:1fr}}
 .card{background:var(--glass);border:1px solid var(--glass-strong);border-radius:var(--radius);box-shadow:var(--shadow)}
@@ -31,7 +24,7 @@ a{color:var(--accent2);text-decoration:none}
 .playerWrap{position:relative;border-radius:14px;overflow:hidden;background:#111;aspect-ratio:16/9}
 #yt{width:100%;height:100%;display:none;border:0}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:40px;padding:0 14px;border:0;border-radius:10px;background:#2a2d36;color:#fff;cursor:pointer}
-.btn:hover{outline:var(--ring)}
+.btn:hover{outline:0 0 0 3px rgba(255,209,102,.3)}
 .btn.primary{background:#6b5bff}
 .btn.honey{background:#ffb703;color:#161616}
 .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,.2)}
@@ -44,7 +37,14 @@ a{color:var(--accent2);text-decoration:none}
 .pill{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.06);color:var(--muted);font-size:12px}
 .footer{margin-top:14px}
 .fallback{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:24px;text-align:center;color:#ddd}
-.tap{position:absolute;inset:0;margin:auto;height:56px;min-width:200px;border:0;border-radius:999px;padding:0 20px;font:700 15px system-ui;color:#161616;background:linear-gradient(180deg,#ffd166,#ffb703);cursor:pointer;display:none}
+.tap{position:absolute;inset:0;margin:auto;height:56px;min-width:220px;border:0;border-radius:999px;padding:0 22px;font:700 15px system-ui;color:#161616;background:linear-gradient(180deg,#ffd166,#ffb703);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transform:scale(1);transition:transform .08s ease}
+.tap:active{transform:scale(.96)}
+.tapBee{width:18px;height:18px;border-radius:6px;background:radial-gradient(circle at 40% 40%,#ffec9c,#ffbe38);position:relative}
+.tapBee:after,.tapBee:before{content:"";position:absolute;width:10px;height:6px;border-radius:10px;background:#0002;top:-5px}
+.tapBee:after{left:-6px;transform:rotate(-18deg)}.tapBee:before{right:-6px;transform:rotate(18deg)}
+@keyframes beeLoop{0%{transform:translate(-4px,-2px)}25%{transform:translate(6px,-3px)}50%{transform:translate(8px,2px)}75%{transform:translate(-6px,4px)}100%{transform:translate(-4px,-2px)}}
+.tapBee{animation:beeLoop 1.6s infinite linear}
+@media (prefers-reduced-motion:reduce){.tapBee{animation:none}}
 .queue{max-height:440px;overflow:auto;border-top:1px solid var(--glass-strong)}
 .item{display:grid;grid-template-columns:26px 1fr auto;gap:10px;align-items:center;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.06)}
 .drag{width:18px;height:18px;border-radius:6px;background:rgba(255,255,255,.1);display:inline-flex;align-items:center;justify-content:center;cursor:grab}
@@ -60,14 +60,16 @@ hr.sep{border:0;border-top:1px dashed rgba(255,255,255,.15);margin:10px 0}
 .range{width:100%}
 .tiny{font-size:11px;color:#9aa}
 kbd{font:600 12px/1 system-ui;background:#111;border:1px solid #333;border-bottom-width:2px;border-radius:6px;padding:2px 6px}
+.toastHost{position:fixed;inset:auto 12px 12px auto;z-index:9999}
+.toast{margin-top:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(6px);color:#f4f4ff;padding:10px 12px;border-radius:12px;font:600 12px system-ui;opacity:0;transform:translateY(6px);transition:.18s}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="header">
-    <div class="logo"></div>
+    <div class="logo" id="logo"></div>
     <div class="h1">Honey · School</div>
-    <div class="badge"><span id="statusDot">●</span> <span id="statusText">Self-check running…</span></div>
+    <div class="badge"><span id="statusText">Self-check running…</span></div>
   </div>
 
   <div class="grid">
@@ -75,393 +77,154 @@ kbd{font:600 12px/1 system-ui;background:#111;border:1px solid #333;border-botto
       <h2>Player</h2>
       <div class="playerWrap" id="playerWrap">
         <iframe id="yt" title="YouTube player" allow="autoplay; encrypted-media; picture-in-picture; fullscreen; web-share" allowfullscreen></iframe>
-        <button class="tap" id="tapToStart">Tap to start video</button>
-        <div class="fallback" id="fallback">
-          Couldn’t load this video in an embed.<br>
-          <a id="fallbackLink" target="_blank" rel="noopener" class="small" style="margin-top:8px;text-decoration:underline;color:#b7a7ff">Open in YouTube</a>
+        <button class="tap" id="tapToStart"><span class="tapBee"></span><span id="tapLabel">Tap to begin • Honey</span></button>
+        <div class="fallback" id="fallback">This video can’t play here.<br><a id="fallbackLink" target="_blank" rel="noopener" class="small" style="margin-top:8px;text-decoration:underline;color:#b7a7ff">Open in YouTube</a></div>
+      </div>
+
+      <div class="section stack">
+        <div class="row">
+          <button class="btn honey" id="btnPlay">Play</button>
+          <button class="btn" id="btnPause">Pause</button>
+          <button class="btn" id="btnPrev">Prev</button>
+          <button class="btn" id="btnNext">Next</button>
+          <button class="btn" id="btnOpen">Open on YouTube</button>
+          <button class="btn ghost" id="btnLoad7">Load 7</button>
+          <button class="btn ghost" id="btnLoad42">Load 42</button>
+          <button class="btn honey" id="btnShot">Espresso Shot</button>
+          <button class="btn" id="btnNonsense">Nonsense outro</button>
+        </div>
+
+        <div class="meta">
+          <span class="pill" id="titlePill">—</span>
+          <span class="pill" id="channelPill">—</span>
+          <span class="pill" id="durPill">—</span>
+        </div>
+
+        <div class="card section">
+          <div class="row">
+            <div class="stack" style="flex:1">
+              <div class="kv"><div>Tone</div><input class="range" type="range" id="toneHz" min="20" max="400" step="0.01" value="128.00"></div>
+              <div class="kv"><div>Gain</div><input class="range" type="range" id="toneGain" min="0" max="1" step="0.001" value="0.0"></div>
+            </div>
+            <div class="stack" style="min-width:160px">
+              <button class="btn" id="tone128">128.00 Hz</button>
+              <button class="btn" id="tone160">160.00 Hz</button>
+              <button class="btn" id="toneMute">Tone Mute</button>
+            </div>
+          </div>
+          <div class="tiny">Start on iPhone with a tap, then bring tone up slowly.</div>
         </div>
       </div>
 
-```
-  <div class="section stack">
-    <div class="row">
-      <button class="btn honey" id="btnPlay">Play</button>
-      <button class="btn" id="btnPause">Pause</button>
-      <button class="btn" id="btnPrev">Prev</button>
-      <button class="btn" id="btnNext">Next</button>
-      <button class="btn" id="btnOpen">Open on YouTube</button>
-      <button class="btn ghost" id="btnLoad7">Load 7</button>
-      <button class="btn ghost" id="btnLoad42">Load 42</button>
-    </div>
-
-    <div class="meta">
-      <span class="pill" id="titlePill">—</span>
-      <span class="pill" id="channelPill">—</span>
-      <span class="pill" id="durPill">—</span>
+      <div class="footer tiny">Media keys on desktop; iOS needs one tap to unlock playback.</div>
     </div>
 
     <div class="card section">
+      <h2>Queue</h2>
       <div class="row">
-        <div class="stack" style="flex:1">
-          <div class="kv"><div>Tone</div><input class="range" type="range" id="toneHz" min="20" max="400" step="0.01" value="128.00"></div>
-          <div class="kv"><div>Gain</div><input class="range" type="range" id="toneGain" min="0" max="1" step="0.001" value="0.0"></div>
+        <input class="input" id="urlInput" placeholder="Paste YouTube URL or 11-char ID">
+        <button class="btn primary" id="btnAdd">Import</button>
+      </div>
+      <div class="tiny" style="margin-top:6px">Full URLs (incl. <kbd>/shorts</kbd>) or raw IDs work. We extract + validate automatically.</div>
+
+      <div class="queue" id="queue"></div>
+
+      <div class="row" style="margin-top:10px">
+        <button class="btn" id="btnExport">Export JSON</button>
+        <label class="btn" style="cursor:pointer">Import JSON <input type="file" id="importFile" accept="application/json" style="display:none"></label>
+        <button class="btn" id="btnClear">Clear</button>
+      </div>
+
+      <hr class="sep">
+
+      <div class="stack">
+        <h2>Special Honey Pair</h2>
+        <div class="card section stack" style="background:rgba(255,209,102,.08);border-color:rgba(255,209,102,.25)">
+          <div class="kv"><div><b>Me → Sabrina</b></div><input class="input" id="meToSabUrl" placeholder="Paste official YouTube URL / ID"></div>
+          <textarea id="meToSabNote" rows="2" class="input" placeholder="Why this is my message to Sabrina… (saved)"></textarea>
+          <div class="row"><button class="btn honey" id="addMeToSab">Add to Queue</button><span class="small">We validate before play.</span></div>
         </div>
-        <div class="stack" style="min-width:160px">
-          <button class="btn" id="tone128">128.00 Hz</button>
-          <button class="btn" id="tone160">160.00 Hz</button>
-          <button class="btn" id="toneMute">Tone Mute</button>
+        <div class="card section stack" style="background:rgba(183,167,255,.08);border-color:rgba(183,167,255,.25)">
+          <div class="kv"><div><b>Sabrina → Me</b></div><input class="input" id="sabToMeUrl" placeholder="Paste official YouTube URL / ID"></div>
+          <textarea id="sabToMeNote" rows="2" class="input" placeholder="How this feels like Sabrina speaking to me… (saved)"></textarea>
+          <div class="row"><button class="btn primary" id="addSabToMe">Add to Queue</button><span class="small">Pick the upload that feels direct.</span></div>
         </div>
       </div>
-      <div class="tiny">Start video with a tap on iPhone, then bring tone up slowly. Leave gain at 0 if you want silence.</div>
+
+      <hr class="sep">
+
+      <h2>Self-Check</h2>
+      <div class="selfcheck" id="selfcheck"></div>
+      <div class="tiny" style="margin-top:6px">If anything fails, we retry and show what to fix.</div>
     </div>
   </div>
-
-  <div class="footer tiny">Media keys on desktop; iOS requires a tap to start playback.</div>
 </div>
 
-<div class="card section">
-  <h2>Queue</h2>
-  <div class="row">
-    <input class="input" id="urlInput" placeholder="Paste YouTube URL or 11-char ID">
-    <button class="btn primary" id="btnAdd">Import</button>
-  </div>
-  <div class="tiny" style="margin-top:6px">Full URLs (incl. <kbd>/shorts</kbd>) or raw IDs work. We extract + validate automatically.</div>
-
-  <div class="queue" id="queue"></div>
-
-  <div class="row" style="margin-top:10px">
-    <button class="btn" id="btnExport">Export JSON</button>
-    <label class="btn" style="cursor:pointer">Import JSON <input type="file" id="importFile" accept="application/json" style="display:none"></label>
-    <button class="btn" id="btnClear">Clear</button>
-  </div>
-
-  <hr class="sep">
-
-  <div class="stack">
-    <h2>Special Honey Pair</h2>
-    <div class="card section stack" style="background:rgba(255,209,102,.08);border-color:rgba(255,209,102,.25)">
-      <div class="kv"><div><b>Me → Sabrina</b></div><input class="input" id="meToSabUrl" placeholder="Paste official YouTube URL / ID"></div>
-      <textarea id="meToSabNote" rows="2" class="input" placeholder="Why this is my message to Sabrina… (saved)"></textarea>
-      <div class="row">
-        <button class="btn honey" id="addMeToSab">Add to Queue</button>
-        <span class="tiny">You pick the exact official upload; we validate before play.</span>
-      </div>
-    </div>
-
-    <div class="card section stack" style="background:rgba(183,167,255,.08);border-color:rgba(183,167,255,.25)">
-      <div class="kv"><div><b>Sabrina → Me</b></div><input class="input" id="sabToMeUrl" placeholder="Paste official YouTube URL / ID"></div>
-      <textarea id="sabToMeNote" rows="2" class="input" placeholder="How this feels like Sabrina speaking to me… (saved)"></textarea>
-      <div class="row">
-        <button class="btn primary" id="addSabToMe">Add to Queue</button>
-        <span class="tiny">Choose anything that feels like a direct note to you.</span>
-      </div>
-    </div>
-  </div>
-
-  <hr class="sep">
-
-  <h2>Self-Check</h2>
-  <div class="selfcheck" id="selfcheck"></div>
-  <div class="tiny" style="margin-top:6px">If a check fails, the site retries gently and shows what to fix (ID vs URL, tap requirement, region-block, etc.).</div>
-</div>
-```
-
-  </div>
-</div>
+<div class="toastHost" id="toastHost"></div>
 
 <script>
 (function(){
-  const ORIGIN = location.origin;
-  const qs = id => document.getElementById(id);
+  const ORIGIN=location.origin,qs=id=>document.getElementById(id);
+  const STARTER7=[{id:"eVli-tstM5E",title:"Espresso"},{id:"cF1Na4AIecM",title:"Please Please Please"},{id:"kLbn61Z4LDI",title:"Feather"},{id:"YcSP1ZUf1eQ",title:"Nonsense"},{id:"1YUBbF24H44",title:"because i liked a boy"},{id:"uAVUl0cAKpo",title:"Thumbs"},{id:"Gla5AzlHnS4",title:"Fast Times"}];
+  const HONEY42=[{id:"eVli-tstM5E",title:"Espresso",bucket:"Playful"},{id:"cF1Na4AIecM",title:"Please Please Please",bucket:"Playful"},{id:"KEG7b851Ric",title:"Taste",bucket:"Playful"},{id:"aSugSGCC12I",title:"Manchild",bucket:"Playful"},{id:"V9vuCByb6js",title:"Tears",bucket:"Playful"},{id:"x8VkB8ap_FQ",title:"Bed Chem (Lyric)",bucket:"Playful"},{id:"kLbn61Z4LDI",title:"Feather",bucket:"Playful"},{id:"1YUBbF24H44",title:"because i liked a boy",bucket:"Plea"},{id:"-CufSqKfx24",title:"decode (audio)",bucket:"Plea"},{id:"cWyGx881vG8",title:"Read Your Mind (audio)",bucket:"Plea"},{id:"wP4JsTRPSsA",title:"Tornado Warnings",bucket:"Plea"},{id:"uMZ2QqBspIg",title:"Bad for Business (audio)",bucket:"Plea"},{id:"60lgs2aaiRo",title:"opposite (audio)",bucket:"Plea"},{id:"cZg3t5Nu1Lo",title:"Vicious (lyric)",bucket:"Plea"},{id:"Gla5AzlHnS4",title:"Fast Times",bucket:"Empower"},{id:"YcSP1ZUf1eQ",title:"Nonsense",bucket:"Empower"},{id:"COt5MibFxMs",title:"Paris",bucket:"Empower"},{id:"JudqK1hL18w",title:"Almost Love",bucket:"Empower"},{id:"FN3bTP84GCU",title:"In My Bed",bucket:"Empower"},{id:"dxZk3f7LH9I",title:"Pushing 20 (lyric)",bucket:"Empower"},{id:"3gqu8ZTEM1k",title:"Exhale",bucket:"Empower"},{id:"HibDj27DHMI",title:"Can't Blame a Girl for Trying",bucket:"Confession"},{id:"RLcdPpjKKHo",title:"The Middle of Starting Over",bucket:"Confession"},{id:"-bFZg_SMUhM",title:"We'll Be the Stars",bucket:"Confession"},{id:"R4VJyfCcOJc",title:"Eyes Wide Open",bucket:"Confession"},{id:"ZlH78Tm_oUk",title:"Smoke and Fire",bucket:"Confession"},{id:"4qeaBFFq3to",title:"Why",bucket:"Confession"},{id:"ckIM58Ecpcw",title:"On Purpose",bucket:"Confession"},{id:"uAVUl0cAKpo",title:"Thumbs",bucket:"Classic"},{id:"COt5MibFxMs",title:"Paris (dup-safe)",bucket:"Classic"},{id:"lu9Ylxc0IZM",title:"Looking at Me (audio)",bucket:"Classic"},{id:"3gqu8ZTEM1k",title:"Exhale (dup-safe)",bucket:"Classic"},{id:"7w4Udbys4O4",title:"Sue Me",bucket:"Classic"},{id:"4ughEPQGd8w",title:"Alien (with Jonas Blue)",bucket:"Classic"},{id:"dhYOPzcsbGM",title:"On My Way (Alan Walker, Farruko)",bucket:"Classic"},{id:"ZWzpFdr-KDw",title:"santa doesn't know you like i do",bucket:"Wildcard"},{id:"x8VkB8ap_FQ",title:"Bed Chem (dup-safe)",bucket:"Wildcard"},{id:"KEG7b851Ric",title:"Taste (dup-safe)",bucket:"Wildcard"},{id:"8EisGrIHH04",title:"skinny dipping",bucket:"Wildcard"},{id:"kLbn61Z4LDI",title:"Feather (dup-safe)",bucket:"Wildcard"},{id:"eVli-tstM5E",title:"Espresso (dup-safe)",bucket:"Wildcard"},{id:"cF1Na4AIecM",title:"Please Please Please (dup-safe)",bucket:"Wildcard"}];
+  const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(_){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(_){}}};
+  const state={queue:store.get('honey.queue',[]),i:Math.max(0,store.get('honey.i',0)),toneHz:store.get('honey.toneHz',128),toneGain:store.get('honey.toneGain',0),meToSab:store.get('honey.meToSab',{url:'8EisGrIHH04',note:'Letter-style honesty.'}),sabToMe:store.get('honey.sabToMe',{url:'YcSP1ZUf1eQ',note:'Playful mirror.'})};
+  const iframe=qs('yt'),tap=qs('tapToStart'),fallback=qs('fallback'),fallbackLink=qs('fallbackLink'),titlePill=qs('titlePill'),channelPill=qs('channelPill'),durPill=qs('durPill'),queueEl=qs('queue'),urlInput=qs('urlInput'),statusText=qs('statusText'),toastHost=qs('toastHost');
+  const CHECKS=[{key:'storage',label:'localStorage available'},{key:'gesture',label:'User gesture present'},{key:'ytDomain',label:'YouTube domain allowed'},{key:'idValid',label:'Track has valid 11-char ID'},{key:'ytReady',label:'YouTube player ready'},{key:'autoplay',label:'Autoplay policy satisfied'},{key:'audioCtx',label:'AudioContext unlocked'}];
+  const result=Object.fromEntries(CHECKS.map(c=>[c.key,{ok:false,msg:''}])); const selfcheck=qs('selfcheck');
+  function renderChecks(){selfcheck.innerHTML='';CHECKS.forEach(c=>{const r=result[c.key];const d=document.createElement('div');d.className='check';const L=document.createElement('div');L.textContent=c.label;const R=document.createElement('div');R.textContent=r.ok?'OK':(r.msg||'…');R.className=r.ok?'ok':(r.msg?'err':'warn');d.append(L,R);selfcheck.append(d)});const allOK=['storage','ytDomain','idValid','ytReady'].every(k=>result[k].ok);statusText.textContent=allOK?'Ready':'Self-check running…'}
+  function setCheck(k,ok,msg=''){result[k]={ok,msg};renderChecks()}
+  function extractID(s){if(!s)return null;if(/^[\w-]{11}$/.test(s))return s;const m=String(s).match(/(?:v=|\/shorts\/|\/embed\/)([\w-]{11})/);return m?m[1]:null}
+  function showFallback(id){iframe.style.display='none';tap.style.display='none';fallback.style.display='flex';if(id)fallbackLink.href=`https://www.youtube.com/watch?v=${id}`}
+  function currentID(){const m=(iframe.src||'').match(/embed\/([\w-]{11})/);return m?m[1]:null}
+  function post(msg){try{iframe.contentWindow.postMessage(JSON.stringify(msg),'*')}catch(_){}}  
+  let readyListener=false;
+  function loadID(id){try{localStorage.setItem('__t','1');localStorage.removeItem('__t');setCheck('storage',true)}catch(e){setCheck('storage',false,'Disabled')}
+    setCheck('ytDomain',true);const valid=/^[\w-]{11}$/.test(id||'');setCheck('idValid',valid,valid?'':'Paste official URL or ID');if(!valid){showFallback(null);return}
+    const src=`https://www.youtube.com/embed/${id}?enablejsapi=1&playsinline=1&rel=0&modestbranding=1&origin=${encodeURIComponent(ORIGIN)}`;iframe.src=src;iframe.style.display='none';tap.style.display='flex';fallback.style.display='none';fallbackLink.href=`https://www.youtube.com/watch?v=${id}`
+    if(!readyListener){window.addEventListener('message',e=>{try{const d=typeof e.data==='string'?JSON.parse(e.data):e.data;if(!d)return;if(d.event==='onReady'){setCheck('ytReady',true)}if(d.event==='onError'){setCheck('ytReady',false,'Embed blocked / unavailable');showFallback(currentID())}}catch(_){}});readyListener=true}
+    post({event:'listening',id:id});setCheck('autoplay',false,'Tap required')}
+  tap.addEventListener('click',()=>{setCheck('gesture',true);iframe.style.display='block';tap.style.display='none';let replied=false;const timer=setTimeout(()=>{if(!replied){setCheck('ytReady',false,'No response');showFallback(currentID())}},2000);const once=e=>{try{const d=typeof e.data==='string'?JSON.parse(e.data):e.data;if(d&&d.event==='onReady'){replied=true;clearTimeout(timer);setCheck('ytReady',true);window.removeEventListener('message',once)}}catch(_){}};window.addEventListener('message',once);post({event:'listening',id:currentID()});setCheck('autoplay',true);toast(randomTapQuip(true))})
+  function play(){post({event:'command',func:'playVideo'})}function pause(){post({event:'command',func:'pauseVideo'})}function cue(id){loadID(id)}
+  function renderQueue(){queueEl.innerHTML='';state.queue.forEach((it,idx)=>{const row=document.createElement('div');row.className='item';row.draggable=true;const drag=document.createElement('div');drag.className='drag';drag.textContent='≡';const info=document.createElement('div');const title=document.createElement('div');title.className='itemTitle';title.textContent=(it.bucket?emojiFor(it.bucket)+' ':'')+(it.title||it.id||'—');const note=document.createElement('div');note.className='itemNote';note.textContent=it.note||(it.bucket?('Bucket: '+it.bucket):'');info.append(title,note);const tools=document.createElement('div');tools.className='tools';const bPlay=document.createElement('div');bPlay.className='tool';bPlay.title='Play';bPlay.textContent='▶';bPlay.onclick=()=>{state.i=idx;store.set('honey.i',state.i);cue(it.id);fetchMeta(it.id);toast('commitment is hot.')};const bEdit=document.createElement('div');bEdit.className='tool';bEdit.title='Edit note';bEdit.textContent='✎';bEdit.onclick=()=>{const n=prompt('Edit note',it.note||'');if(n!==null){it.note=n;saveQueue();renderQueue();toast('sticky sweet, noted.')}};const bDel=document.createElement('div');bDel.className='tool';bDel.title='Remove';bDel.textContent='✕';bDel.onclick=()=>{state.queue.splice(idx,1);if(state.i>=state.queue.length)state.i=Math.max(0,state.queue.length-1);saveQueue();renderQueue();toast('okay, less sugar.')}};tools.append(bPlay,bEdit,bDel);row.append(drag,info,tools);row.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain',idx)});row.addEventListener('dragover',e=>{e.preventDefault()});row.addEventListener('drop',e=>{e.preventDefault();const from=+e.dataTransfer.getData('text/plain');const to=idx;const item=state.queue.splice(from,1)[0];state.queue.splice(to,0,item);saveQueue();renderQueue();toast('queue got cute.')});queueEl.append(row)})}
+  function saveQueue(){store.set('honey.queue',state.queue)}
+  function addToQueue(raw,note=''){const id=extractID(raw);if(!id){alert('Could not extract an 11-char ID. Paste an official YouTube URL or the ID.');setCheck('idValid',false,'Invalid ID');return}state.queue.push({id,title:'(loading…)',note});saveQueue();renderQueue();fetchMeta(id,m=>{const x=state.queue.find(q=>q.id===id);if(x){x.title=m.title||x.title;saveQueue();renderQueue()}});if(state.queue.length===1){state.i=0;store.set('honey.i',0);cue(id)}toast('sticky sweet, noted.')}
+  async function fetchMeta(id,cb){try{const url=`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${id}&format=json`;const r=await fetch(url,{mode:'cors'});if(!r.ok)throw 0;const j=await r.json();titlePill.textContent=j.title||'—';channelPill.textContent=j.author_name||'—';durPill.textContent=j.provider_name||'YouTube';if(cb)cb({title:j.title,channel:j.author_name})}catch(_){if(cb)cb({})}}
+  qs('btnPlay').onclick=()=>play();qs('btnPause').onclick=()=>pause();qs('btnPrev').onclick=()=>{if(state.queue.length){state.i=(state.i-1+state.queue.length)%state.queue.length;store.set('honey.i',state.i);const it=state.queue[state.i];cue(it.id);fetchMeta(it.id);toast('rewind the honey.')}};qs('btnNext').onclick=()=>{if(state.queue.length){state.i=(state.i+1)%state.queue.length;store.set('honey.i',state.i);const it=state.queue[state.i];cue(it.id);fetchMeta(it.id);toast('new flavor, who dis?')}};qs('btnOpen').onclick=()=>{const id=currentID();if(id)window.open(`https://www.youtube.com/watch?v=${id}`,'_blank')};
+  qs('btnAdd').onclick=()=>{if(!urlInput.value.trim())return;addToQueue(urlInput.value.trim());urlInput.value=''};
+  qs('btnExport').onclick=()=>{const blob=new Blob([JSON.stringify(state.queue,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='honey_queue.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500);toast('responsible AND cute.')};
+  qs('importFile').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;const t=await f.text();try{const arr=JSON.parse(t);if(Array.isArray(arr)){state.queue=arr;saveQueue();renderQueue();if(state.queue.length){state.i=0;store.set('honey.i',0);cue(state.queue[0].id)}}toast('imported. honey up.')}catch(_){alert('Invalid JSON')}});
+  qs('btnClear').onclick=()=>{if(confirm('Clear queue?')){state.queue=[];saveQueue();renderQueue();toast('clean slate.')}};qs('btnLoad7').onclick=()=>{state.queue=STARTER7.map(x=>({...x}));state.i=0;saveQueue();renderQueue();cue(state.queue[0].id);fetchMeta(state.queue[0].id);toast('starter seven served.')};qs('btnLoad42').onclick=()=>{state.queue=HONEY42.map(x=>({...x}));state.i=0;saveQueue();renderQueue();cue(state.queue[0].id);fetchMeta(state.queue[0].id);toast('forty-two flavors unlocked.')};
+  const meToSabUrl=qs('meToSabUrl'),meToSabNote=qs('meToSabNote'),sabToMeUrl=qs('sabToMeUrl'),sabToMeNote=qs('sabToMeNote');
+  meToSabUrl.value=state.meToSab.url||'';meToSabNote.value=state.meToSab.note||'';sabToMeUrl.value=state.sabToMe.url||'';sabToMeNote.value=state.sabToMe.note||'';
+  meToSabUrl.oninput=()=>{state.meToSab.url=meToSabUrl.value;store.set('honey.meToSab',state.meToSab)};meToSabNote.oninput=()=>{state.meToSab.note=meToSabNote.value;store.set('honey.meToSab',state.meToSab)};
+  sabToMeUrl.oninput=()=>{state.sabToMe.url=sabToMeUrl.value;store.set('honey.sabToMe',state.sabToMe)};sabToMeNote.oninput=()=>{state.sabToMe.note=sabToMeNote.value;store.set('honey.sabToMe',state.sabToMe)};
+  qs('addMeToSab').onclick=()=>{if(!meToSabUrl.value.trim())return alert('Paste a URL or ID.');addToQueue(meToSabUrl.value.trim(),'Me → Sabrina: '+(meToSabNote.value||''))};
+  qs('addSabToMe').onclick=()=>{if(!sabToMeUrl.value.trim())return alert('Paste a URL or ID.');addToQueue(sabToMeUrl.value.trim(),'Sabrina → Me: '+(sabToMeNote.value||''))};
+  let AC,osc,gain;function ensureAudio(){try{if(!AC){AC=new (window.AudioContext||window.webkitAudioContext)()}if(!osc){osc=AC.createOscillator();gain=AC.createGain();osc.connect(gain).connect(AC.destination);osc.type='sine';osc.start()}setCheck('audioCtx',true)}catch(e){setCheck('audioCtx',false,'Blocked')}}
+  function setHz(v){ensureAudio();if(osc){osc.frequency.value=v}state.toneHz=v;store.set('honey.toneHz',v);qs('toneHz').value=v.toFixed(2)}
+  function setGain(v){ensureAudio();if(gain){gain.gain.value=v}state.toneGain=v;store.set('honey.toneGain',v);qs('toneGain').value=v}
+  qs('toneHz').addEventListener('input',e=>setHz(parseFloat(e.target.value)));qs('toneGain').addEventListener('input',e=>setGain(parseFloat(e.target.value)));
+  qs('tone128').onclick=()=>setHz(128.00);qs('tone160').onclick=()=>setHz(160.00);qs('toneMute').onclick=()=>setGain(0.0);qs('toneHz').value=Number(state.toneHz||128).toFixed(2);qs('toneGain').value=state.toneGain||0;
+  function selfCheckTick(){const id=state.queue[state.i]?.id||extractID(urlInput.value)||currentID();setCheck('idValid',!!(id&&/^[\w-]{11}$/.test(id)),'Paste official URL / ID');if(id)fetchMeta(id);renderChecks();setTimeout(selfCheckTick,1200)}
+  try{localStorage.setItem('__t','1');localStorage.removeItem('__t');setCheck('storage',true)}catch(e){setCheck('storage',false,'Disabled')}setCheck('ytDomain',true);renderChecks();selfCheckTick();
+  if('mediaSession'in navigator){navigator.mediaSession.setActionHandler('previoustrack',()=>qs('btnPrev').click());navigator.mediaSession.setActionHandler('nexttrack',()=>qs('btnNext').click());navigator.mediaSession.setActionHandler('play',()=>qs('btnPlay').click());navigator.mediaSession.setActionHandler('pause',()=>qs('btnPause').click())}
+  qs('btnPlay').addEventListener('click',()=>ensureAudio(),{once:true});qs('btnPause').addEventListener('click',()=>ensureAudio(),{once:true});
 
-  const STARTER7 = [
-    {id:"eVli-tstM5E", title:"Espresso"},
-    {id:"cF1Na4AIecM", title:"Please Please Please"},
-    {id:"kLbn61Z4LDI", title:"Feather"},
-    {id:"YcSP1ZUf1eQ", title:"Nonsense"},
-    {id:"1YUBbF24H44", title:"because i liked a boy"},
-    {id:"uAVUl0cAKpo", title:"Thumbs"},
-    {id:"Gla5AzlHnS4", title:"Fast Times"}
-  ];
-
-  const HONEY42 = [
-    {id:"eVli-tstM5E", title:"Espresso", bucket:"Playful"},
-    {id:"cF1Na4AIecM", title:"Please Please Please", bucket:"Playful"},
-    {id:"KEG7b851Ric", title:"Taste", bucket:"Playful"},
-    {id:"aSugSGCC12I", title:"Manchild", bucket:"Playful"},
-    {id:"V9vuCByb6js", title:"Tears", bucket:"Playful"},
-    {id:"x8VkB8ap_FQ", title:"Bed Chem (Lyric)", bucket:"Playful"},
-    {id:"kLbn61Z4LDI", title:"Feather", bucket:"Playful"},
-
-    {id:"1YUBbF24H44", title:"because i liked a boy", bucket:"Plea"},
-    {id:"-CufSqKfx24", title:"decode (audio)", bucket:"Plea"},
-    {id:"cWyGx881vG8", title:"Read Your Mind (audio)", bucket:"Plea"},
-    {id:"wP4JsTRPSsA", title:"Tornado Warnings", bucket:"Plea"},
-    {id:"uMZ2QqBspIg", title:"Bad for Business (audio)", bucket:"Plea"},
-    {id:"60lgs2aaiRo", title:"opposite (audio)", bucket:"Plea"},
-    {id:"cZg3t5Nu1Lo", title:"Vicious (lyric)", bucket:"Plea"},
-
-    {id:"Gla5AzlHnS4", title:"Fast Times", bucket:"Empower"},
-    {id:"YcSP1ZUf1eQ", title:"Nonsense", bucket:"Empower"},
-    {id:"COt5MibFxMs", title:"Paris", bucket:"Empower"},
-    {id:"JudqK1hL18w", title:"Almost Love", bucket:"Empower"},
-    {id:"FN3bTP84GCU", title:"In My Bed", bucket:"Empower"},
-    {id:"dxZk3f7LH9I", title:"Pushing 20 (lyric)", bucket:"Empower"},
-    {id:"3gqu8ZTEM1k", title:"Exhale", bucket:"Empower"},
-
-    {id:"HibDj27DHMI", title:"Can't Blame a Girl for Trying", bucket:"Confession"},
-    {id:"RLcdPpjKKHo", title:"The Middle of Starting Over", bucket:"Confession"},
-    {id:"-bFZg_SMUhM", title:"We'll Be the Stars", bucket:"Confession"},
-    {id:"R4VJyfCcOJc", title:"Eyes Wide Open", bucket:"Confession"},
-    {id:"ZlH78Tm_oUk", title:"Smoke and Fire", bucket:"Confession"},
-    {id:"4qeaBFFq3to", title:"Why", bucket:"Confession"},
-    {id:"ckIM58Ecpcw", title:"On Purpose", bucket:"Confession"},
-
-    {id:"uAVUl0cAKpo", title:"Thumbs", bucket:"Classic"},
-    {id:"COt5MibFxMs", title:"Paris (dup-safe)", bucket:"Classic"},
-    {id:"lu9Ylxc0IZM", title:"Looking at Me (audio)", bucket:"Classic"},
-    {id:"3gqu8ZTEM1k", title:"Exhale (dup-safe)", bucket:"Classic"},
-    {id:"7w4Udbys4O4", title:"Sue Me", bucket:"Classic"},
-    {id:"4ughEPQGd8w", title:"Alien (with Jonas Blue)", bucket:"Classic"},
-    {id:"dhYOPzcsbGM", title:"On My Way (Alan Walker, Farruko)", bucket:"Classic"},
-
-    {id:"ZWzpFdr-KDw", title:"santa doesn't know you like i do", bucket:"Wildcard"},
-    {id:"x8VkB8ap_FQ", title:"Bed Chem (dup-safe)", bucket:"Wildcard"},
-    {id:"KEG7b851Ric", title:"Taste (dup-safe)", bucket:"Wildcard"},
-    {id:"8EisGrIHH04", title:"skinny dipping", bucket:"Wildcard"},
-    {id:"kLbn61Z4LDI", title:"Feather (dup-safe)", bucket:"Wildcard"},
-    {id:"eVli-tstM5E", title:"Espresso (dup-safe)", bucket:"Wildcard"},
-    {id:"cF1Na4AIecM", title:"Please Please Please (dup-safe)", bucket:"Wildcard"}
-  ];
-
-  const store = {
-    get(k, d){ try{ const v = localStorage.getItem(k); return v? JSON.parse(v): d }catch(_){ return d }},
-    set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)) }catch(_){} }
-  };
-
-  const state = {
-    queue: store.get('honey.queue', []),
-    i: Math.max(0, store.get('honey.i', 0)),
-    toneHz: store.get('honey.toneHz', 128.00),
-    toneGain: store.get('honey.toneGain', 0),
-    meToSab: store.get('honey.meToSab', {url:'8EisGrIHH04', note:'Letter-style honesty.'}),
-    sabToMe: store.get('honey.sabToMe', {url:'YcSP1ZUf1eQ', note:'Playful, flirty mirror.'})
-  };
-
-  const iframe = qs('yt'), tap = qs('tapToStart'), fallback = qs('fallback'), fallbackLink = qs('fallbackLink');
-  const titlePill = qs('titlePill'), channelPill = qs('channelPill'), durPill = qs('durPill');
-  const queueEl = qs('queue'), urlInput = qs('urlInput');
-  const statusDot = qs('statusDot'), statusText = qs('statusText'), checkEl = qs('selfcheck');
-
-  const CHECKS = [
-    {key:'storage', label:'localStorage available'},
-    {key:'gesture', label:'User gesture present'},
-    {key:'ytDomain', label:'YouTube domain allowed'},
-    {key:'idValid', label:'Track has valid 11-char ID'},
-    {key:'ytReady', label:'YouTube player ready'},
-    {key:'autoplay', label:'Autoplay policy satisfied'},
-    {key:'audioCtx', label:'AudioContext unlocked'}
-  ];
-  const result = Object.fromEntries(CHECKS.map(c => [c.key, {ok:false, msg:''}]));
-
-  function renderChecks(){
-    checkEl.innerHTML = '';
-    CHECKS.forEach(c=>{
-      const r = result[c.key];
-      const div = document.createElement('div'); div.className = 'check';
-      const left = document.createElement('div'); left.textContent = c.label;
-      const right = document.createElement('div'); right.textContent = r.ok ? 'OK' : (r.msg || '…');
-      right.className = r.ok ? 'ok' : (r.msg ? 'err' : 'warn');
-      div.append(left,right); checkEl.append(div);
-    });
-    const allOK = ['storage','ytDomain','idValid','ytReady'].every(k=>result[k].ok);
-    statusDot.style.color = allOK ? '#96ffa0' : '#ffe28a';
-    statusText.textContent = allOK ? 'Ready' : 'Self-check running…';
-  }
-  function setCheck(key, ok, msg=''){ result[key] = {ok, msg}; renderChecks(); }
-
-  function extractID(s){
-    if(!s) return null;
-    if(/^[\w-]{11}$/.test(s)) return s;
-    const m = String(s).match(/(?:v=|\/shorts\/|\/embed\/)([\w-]{11})/);
-    return m ? m[1] : null;
-  }
-
-  let readyListenerAttached = false;
-  function loadID(id){
-    try{ localStorage.setItem('__t','1'); localStorage.removeItem('__t'); setCheck('storage', true) }catch(e){ setCheck('storage', false, 'Disabled') }
-    setCheck('ytDomain', true);
-    const valid = /^[\w-]{11}$/.test(id||''); setCheck('idValid', valid, valid?'':'Paste official URL or ID');
-    if(!valid){ showFallback(null); return; }
-    const src = `https://www.youtube.com/embed/${id}?enablejsapi=1&playsinline=1&rel=0&modestbranding=1&origin=${encodeURIComponent(ORIGIN)}`;
-    iframe.src = src; iframe.style.display = 'none'; tap.style.display = 'block'; fallback.style.display = 'none'; fallbackLink.href = `https://www.youtube.com/watch?v=${id}`;
-    if(!readyListenerAttached){
-      window.addEventListener('message', (e)=>{
-        try{
-          const d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
-          if(!d) return;
-          if(d.event === 'onReady'){ setCheck('ytReady', true); }
-          if(d.event === 'onError'){ setCheck('ytReady', false, 'Embed blocked / unavailable'); showFallback(currentID()); }
-        }catch(_){}
-      });
-      readyListenerAttached = true;
-    }
-    post({ event:'listening', id:id });
-    setCheck('autoplay', false, 'Tap required on iOS');
-  }
-  function showFallback(id){
-    iframe.style.display = 'none'; tap.style.display = 'none'; fallback.style.display = 'flex';
-    if(id) fallbackLink.href = `https://www.youtube.com/watch?v=${id}`;
-  }
-  function currentID(){ const m = (iframe.src||'').match(/embed\/([\w-]{11})/); return m?m[1]:null; }
-  function post(msg){ try{ iframe.contentWindow.postMessage(JSON.stringify(msg),'*') }catch(_){} }
-
-  tap.addEventListener('click', ()=>{
-    setCheck('gesture', true);
-    iframe.style.display = 'block'; tap.style.display = 'none';
-    let replied = false;
-    const timer = setTimeout(()=>{ if(!replied){ setCheck('ytReady', false, 'No response'); showFallback(currentID()); } }, 2000);
-    const once = (e)=>{
-      try{
-        const d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
-        if(d && d.event === 'onReady'){ replied = true; clearTimeout(timer); setCheck('ytReady', true); window.removeEventListener('message', once); }
-      }catch(_){}
-    };
-    window.addEventListener('message', once);
-    post({ event:'listening', id: currentID() });
-    setCheck('autoplay', true);
-  });
-
-  function play(){ post({event:'command',func:'playVideo'}) }
-  function pause(){ post({event:'command',func:'pauseVideo'}) }
-  function cue(id){ loadID(id) }
-
-  function renderQueue(){
-    queueEl.innerHTML = '';
-    state.queue.forEach((it, idx)=>{
-      const row = document.createElement('div'); row.className = 'item'; row.draggable = true;
-      const drag = document.createElement('div'); drag.className = 'drag'; drag.textContent = '≡';
-      const info = document.createElement('div');
-      const title = document.createElement('div'); title.className = 'itemTitle'; title.textContent = it.title || (it.id || '—');
-      const note = document.createElement('div'); note.className = 'itemNote'; note.textContent = it.note || (it.bucket?('Bucket: '+it.bucket):'');
-      info.append(title, note);
-      const tools = document.createElement('div'); tools.className='tools';
-      const bPlay = document.createElement('div'); bPlay.className='tool'; bPlay.title='Play'; bPlay.textContent='▶'; bPlay.onclick=()=>{ state.i = idx; store.set('honey.i', state.i); cue(it.id); fetchMeta(it.id); };
-      const bEdit = document.createElement('div'); bEdit.className='tool'; bEdit.title='Edit note'; bEdit.textContent='✎'; bEdit.onclick=()=>{ const n = prompt('Edit note', it.note||''); if(n!==null){ it.note=n; saveQueue(); renderQueue(); }};
-      const bDel = document.createElement('div'); bDel.className='tool'; bDel.title='Remove'; bDel.textContent='✕'; bDel.onclick=()=>{ state.queue.splice(idx,1); if(state.i>=state.queue.length) state.i = Math.max(0,state.queue.length-1); saveQueue(); renderQueue(); };
-      tools.append(bPlay,bEdit,bDel);
-      row.append(drag,info,tools);
-      row.addEventListener('dragstart', e=>{ e.dataTransfer.setData('text/plain', idx) });
-      row.addEventListener('dragover', e=>{ e.preventDefault() });
-      row.addEventListener('drop', e=>{ e.preventDefault(); const from = +e.dataTransfer.getData('text/plain'); const to = idx; const item = state.queue.splice(from,1)[0]; state.queue.splice(to,0,item); saveQueue(); renderQueue(); });
-      queueEl.append(row);
-    });
-  }
-  function saveQueue(){ store.set('honey.queue', state.queue); }
-  function addToQueue(raw, note=''){
-    const id = extractID(raw);
-    if(!id){ alert('Could not extract an 11-char ID. Paste an official YouTube URL or the ID.'); setCheck('idValid', false, 'Invalid ID'); return; }
-    state.queue.push({id, title:'(loading…)', note});
-    saveQueue(); renderQueue(); fetchMeta(id, (meta)=>{ const last = state.queue.find(q=>q.id===id); if(last){ last.title = meta.title || last.title; saveQueue(); renderQueue(); }});
-    if(state.queue.length===1){ state.i=0; store.set('honey.i',0); cue(id); }
-  }
-
-  async function fetchMeta(id, cb){
-    try{
-      const url = `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${id}&format=json`;
-      const res = await fetch(url, {mode:'cors'}); if(!res.ok) throw 0;
-      const j = await res.json();
-      titlePill.textContent = j.title || '—';
-      channelPill.textContent = j.author_name || '—';
-      durPill.textContent = j.provider_name || 'YouTube';
-      if(cb) cb({title:j.title, channel:j.author_name});
-    }catch(_){ if(cb) cb({}) }
-  }
-
-  qs('btnPlay').onclick = ()=>play();
-  qs('btnPause').onclick = ()=>pause();
-  qs('btnPrev').onclick = ()=>{ if(state.queue.length){ state.i = (state.i-1+state.queue.length)%state.queue.length; store.set('honey.i', state.i); const it=state.queue[state.i]; cue(it.id); fetchMeta(it.id);} };
-  qs('btnNext').onclick = ()=>{ if(state.queue.length){ state.i = (state.i+1)%state.queue.length; store.set('honey.i', state.i); const it=state.queue[state.i]; cue(it.id); fetchMeta(it.id);} };
-  qs('btnOpen').onclick = ()=>{ const id=currentID(); if(id) window.open(`https://www.youtube.com/watch?v=${id}`,'_blank'); };
-
-  qs('btnAdd').onclick = ()=>{ if(!urlInput.value.trim()) return; addToQueue(urlInput.value.trim()); urlInput.value=''; };
-
-  qs('btnExport').onclick = ()=>{
-    const blob = new Blob([JSON.stringify(state.queue,null,2)], {type:'application/json'});
-    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download='honey_queue.json'; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href), 500);
-  };
-  qs('importFile').addEventListener('change', async (e)=>{
-    const f = e.target.files[0]; if(!f) return;
-    const text = await f.text();
-    try{ const arr = JSON.parse(text); if(Array.isArray(arr)){ state.queue = arr; saveQueue(); renderQueue(); if(state.queue.length){ state.i=0; store.set('honey.i',0); cue(state.queue[0].id); } } }catch(_){ alert('Invalid JSON'); }
-  });
-  qs('btnClear').onclick = ()=>{ if(confirm('Clear queue?')){ state.queue = []; saveQueue(); renderQueue(); } };
-  qs('btnLoad7').onclick = ()=>{ state.queue = STARTER7.map(x=>({...x})); state.i=0; saveQueue(); renderQueue(); cue(state.queue[0].id); fetchMeta(state.queue[0].id); };
-  qs('btnLoad42').onclick = ()=>{ state.queue = HONEY42.map(x=>({...x})); state.i=0; saveQueue(); renderQueue(); cue(state.queue[0].id); fetchMeta(state.queue[0].id); };
-
-  const meToSabUrl = qs('meToSabUrl'), meToSabNote = qs('meToSabNote'), sabToMeUrl = qs('sabToMeUrl'), sabToMeNote = qs('sabToMeNote');
-  meToSabUrl.value = state.meToSab.url||''; meToSabNote.value = state.meToSab.note||'';
-  sabToMeUrl.value = state.sabToMe.url||''; sabToMeNote.value = state.sabToMe.note||'';
-  meToSabUrl.oninput = ()=>{ state.meToSab.url = meToSabUrl.value; store.set('honey.meToSab', state.meToSab); };
-  meToSabNote.oninput = ()=>{ state.meToSab.note = meToSabNote.value; store.set('honey.meToSab', state.meToSab); };
-  sabToMeUrl.oninput = ()=>{ state.sabToMe.url = sabToMeUrl.value; store.set('honey.sabToMe', state.sabToMe); };
-  sabToMeNote.oninput = ()=>{ state.sabToMe.note = sabToMeNote.value; store.set('honey.sabToMe', state.sabToMe); };
-  qs('addMeToSab').onclick = ()=>{ if(!meToSabUrl.value.trim()) return alert('Paste a URL or ID.'); addToQueue(meToSabUrl.value.trim(), 'Me → Sabrina: '+(meToSabNote.value||'')); };
-  qs('addSabToMe').onclick = ()=>{ if(!sabToMeUrl.value.trim()) return alert('Paste a URL or ID.'); addToQueue(sabToMeUrl.value.trim(), 'Sabrina → Me: '+(sabToMeNote.value||'')); };
-
-  let AC, osc, gain;
-  function ensureAudio(){
-    try{
-      if(!AC){ AC = new (window.AudioContext||window.webkitAudioContext)(); }
-      if(!osc){ osc = AC.createOscillator(); gain = AC.createGain(); osc.connect(gain).connect(AC.destination); osc.type='sine'; osc.start(); }
-      setCheck('audioCtx', true);
-    }catch(e){ setCheck('audioCtx', false, 'Blocked'); }
-  }
-  function setHz(v){ ensureAudio(); if(osc){ osc.frequency.value = v; } state.toneHz=v; store.set('honey.toneHz',v); qs('toneHz').value=v.toFixed(2); }
-  function setGain(v){ ensureAudio(); if(gain){ gain.gain.value = v; } state.toneGain=v; store.set('honey.toneGain',v); qs('toneGain').value=v; }
-  qs('toneHz').addEventListener('input', e=> setHz(parseFloat(e.target.value)));
-  qs('toneGain').addEventListener('input', e=> setGain(parseFloat(e.target.value)));
-  qs('tone128').onclick = ()=>setHz(128.00);
-  qs('tone160').onclick = ()=>setHz(160.00);
-  qs('toneMute').onclick = ()=>setGain(0.0);
-  qs('toneHz').value = Number(state.toneHz||128).toFixed(2);
-  qs('toneGain').value = state.toneGain||0;
-
-  function selfCheckTick(){
-    const id = state.queue[state.i]?.id || extractID(urlInput.value) || currentID();
-    setCheck('idValid', !!(id && /^[\w-]{11}$/.test(id)), 'Paste official URL / ID');
-    if(id){ fetchMeta(id); }
-    renderChecks();
-    setTimeout(selfCheckTick, 1200);
-  }
-
-  try{ localStorage.setItem('__t','1'); localStorage.removeItem('__t'); setCheck('storage', true) }catch(e){ setCheck('storage', false, 'Disabled') }
-  setCheck('ytDomain', true);
-  renderChecks();
-  selfCheckTick();
-
-  if('mediaSession' in navigator){
-    navigator.mediaSession.setActionHandler('previoustrack', ()=>qs('btnPrev').click());
-    navigator.mediaSession.setActionHandler('nexttrack', ()=>qs('btnNext').click());
-    navigator.mediaSession.setActionHandler('play', ()=>qs('btnPlay').click());
-    navigator.mediaSession.setActionHandler('pause', ()=>qs('btnPause').click());
-  }
-  qs('btnPlay').addEventListener('click', ()=>ensureAudio(), {once:true});
-  qs('btnPause').addEventListener('click', ()=>ensureAudio(), {once:true});
-
-  if(!state.queue.length){
-    state.queue = STARTER7.map(x=>({...x}));
-    state.i = 0;
-    saveQueue(); renderQueue();
-    cue(state.queue[0].id); fetchMeta(state.queue[0].id);
-  } else {
-    renderQueue();
-    state.i = Math.min(state.i, state.queue.length-1);
-    store.set('honey.i', state.i);
-    cue(state.queue[state.i].id); fetchMeta(state.queue[state.i].id);
-  }
+  function emojiFor(b){return {Playful:'🍯',Plea:'💌',Empower:'⚡',Confession:'🌙',Classic:'📼',Wildcard:'🎲'}[b]||'🎵'}
+  const quips=['tap me gently, i’m wearing gloss.','one sip of espresso, promise.','beehave. press play.','sweet things first.','i double-bee dare you.','buzz in. i’ll keep your secret.'];
+  const tapLabel=qs('tapLabel');tapLabel.textContent=quips[Math.floor(Math.random()*quips.length)];
+  function toast(msg){const t=document.createElement('div');t.className='toast';t.textContent=msg;toastHost.appendChild(t);requestAnimationFrame(()=>{t.style.opacity='1';t.style.transform='translateY(0)'});setTimeout(()=>{t.style.opacity='0';t.style.transform='translateY(6px)';setTimeout(()=>t.remove(),180)},1400)}
+  function randomTapQuip(opened){if(opened)return'hi honey.';return quips[Math.floor(Math.random()*quips.length)]}
+  qs('btnNonsense').onclick=()=>{const lines=["that’s my queue, not my cue.","bee honest—did you just blush?","warning: sweetness may linger.","if lost, return to the chorus.","this outro brought to you by honey.","he said ‘next’, i said ‘why?’"];toast(lines[Math.floor(Math.random()*lines.length)])}
+  qs('btnShot').onclick=()=>{const prevHz=state.toneHz||128,prevGain=state.toneGain||0;setHz(160);if(prevGain===0)setGain(.06);toast('zoom! 160 Hz engaged');setTimeout(()=>{setHz(prevHz);toast('smooth finish.')},3000)}
+  const onFirstEmbed=(f=>{let d=false;return()=>{if(!d){d=true;f()}}})(()=>{if(localStorage.getItem('honey.firstEmbed')!=='1'){localStorage.setItem('honey.firstEmbed','1');confettiLite();toast('first pour: hello honey!')}})
+  const obs=new MutationObserver(()=>{if(iframe.style.display!=='none')onFirstEmbed()});obs.observe(iframe,{attributes:true,attributeFilter:['style']})
+  function confettiLite(){const host=document.createElement('div');host.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:9998;overflow:hidden';document.body.appendChild(host);for(let i=0;i<12;i++){const d=document.createElement('div');d.style.cssText='position:absolute;width:8px;height:8px;border-radius:50%;background:rgba(255,209,102,.9);top:-10px;left:'+(Math.random()*100)+'vw;transform:translateY(0);opacity:1';host.appendChild(d);const dx=(Math.random()*2-1)*40;d.animate([{transform:`translate(${dx}px,0)`,opacity:1},{transform:`translate(${dx}px,100vh)`,opacity:0}],{duration:1000+Math.random()*400,easing:'ease-out',fill:'forwards'})}setTimeout(()=>host.remove(),1400)}
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){confettiLite=function(){}}
+  function boot(){if(!state.queue.length){state.queue=STARTER7.map(x=>({...x}));state.i=0;saveQueue();renderQueue();cue(state.queue[0].id);fetchMeta(state.queue[0].id)}else{renderQueue();state.i=Math.min(state.i,state.queue.length-1);store.set('honey.i',state.i);cue(state.queue[state.i].id);fetchMeta(state.queue[state.i].id)}}
+  boot();
 })();
 </script>
-
 </body>
 </html>
