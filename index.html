@@ -4,292 +4,111 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Honey School · Magnetism & Play</title>
+<title>Honey · Tone Self-Test (Auto)</title>
 <meta name="theme-color" content="#0b0d11" media="(prefers-color-scheme: dark)">
 <style>
 :root{
-  --bg:#0a0b10;
-  --ink:#f8f7ff;
-  --muted:#b9b8d6;
-  --amber:#ffd36e;
-  --amber-2:#ffb800;
-  --bee:#ffe895;
-  --glass:rgba(255,255,255,.07);
-  --glass-2:rgba(255,255,255,.12);
-  --rim:rgba(255,255,255,.22);
-  --ok:#6ee7a8;
-  --warn:#ffba6b;
-  --bad:#ff6b6b;
-  --card-radius:18px;
-  --shadow:0 12px 30px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.05);
-  --accent-glow:0 0 0 3px rgba(255,219,120,.35);
+  --bg:#0a0b10;--ink:#f8f7ff;--muted:#b9b8d6;--rim:rgba(255,255,255,.22);
+  --glass:rgba(255,255,255,.07);--glass2:rgba(255,255,255,.12);
+  --bee:#ffe895;--amber:#ffb62a;--ok:#6ee7a8;--bad:#ff6b6b;--warn:#ffba6b;
 }
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0;background:radial-gradient(1200px 800px at 70% -10%,rgba(255,219,120,.08),transparent 60%),linear-gradient(180deg,#090a0e 0%,#0a0b10 100%);
-  color:var(--ink);font:400 16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial;
-  letter-spacing:.2px;
+*{box-sizing:border-box} html,body{height:100%}
+body{margin:0;background:linear-gradient(180deg,#090a0e 0%,#0a0b10 100%);
+  color:var(--ink);font:400 16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
+.container{max-width:920px;margin:0 auto;padding:22px 14px 80px}
+h1{font-size:22px;margin:0 0 8px}
+p{margin:6px 0;color:var(--muted)}
+.card{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.04));
+  border:1px solid var(--rim);border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.04);
+  padding:14px;margin-top:12px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+button,input[type="number"],input[type="range"],label.switch{
+  appearance:none;border:none;outline:none;border-radius:12px;background:var(--glass);color:var(--ink);padding:10px 12px;font-size:14px;border:1px solid var(--rim)
 }
-.container{
-  max-width:980px;margin:0 auto;padding:24px 16px 80px;
-}
-.header{
-  display:flex;align-items:center;gap:14px;margin:6px 0 18px;
-}
-.honey-badge{
-  width:46px;height:46px;border-radius:50%;
-  background: radial-gradient(closest-side, var(--bee), var(--amber) 60%, #e8a700 100%);
-  box-shadow: var(--accent-glow), 0 6px 18px rgba(0,0,0,.45);
-  position:relative;flex:0 0 auto;
-}
-.bee-wings,.bee-wings:before{
-  content:"";position:absolute;border-radius:50%;
-  width:18px;height:12px;background:rgba(255,255,255,.5);filter:blur(.2px);
-  top:-6px;left:4px;transform:rotate(-12deg);animation:wing 1.4s ease-in-out infinite;
-}
-.bee-wings:before{left:auto;right:4px;transform:rotate(12deg)}
-@keyframes wing{0%,100%{opacity:.75;transform:translateY(0) rotate(-12deg)}50%{opacity:.35;transform:translateY(-2px) rotate(-16deg)}}
-.title h1{margin:0;font-size:22px;letter-spacing:.5px}
-.title p{margin:2px 0 0;color:var(--muted);font-size:13px}
-.grid{
-  display:grid;gap:16px;
-  grid-template-columns:repeat(12,1fr);
-}
-.card{
-  grid-column:span 12;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.04));
-  border:1px solid var(--rim);border-radius:var(--card-radius);box-shadow:var(--shadow);padding:16px 14px;
-}
-.card h2{margin:0 0 10px;font-size:16px;letter-spacing:.4px}
-.card p.small{color:var(--muted);margin:8px 0 0;font-size:13px}
-.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
-button,.chip,input[type="text"],input[type="number"],select,textarea{
-  appearance:none;border:none;outline:none;border-radius:12px;
-  background:var(--glass);color:var(--ink);padding:10px 12px;font-size:14px;
-  border:1px solid var(--rim);
-}
-button{
-  background:linear-gradient(180deg,rgba(255,219,120,.18),rgba(255,219,120,.06));
-  border:1px solid rgba(255,219,120,.45);
-  box-shadow:var(--accent-glow);cursor:pointer;transition:transform .06s ease, filter .2s ease;
-}
-button:active{transform:translateY(1px)}
-button.secondary{background:var(--glass)}
+button{cursor:pointer;background:linear-gradient(180deg,rgba(255,219,120,.18),rgba(255,219,120,.06));border-color:rgba(255,219,120,.45)}
 button.ghost{background:transparent;border-style:dashed}
-button.good{border-color:rgba(110,231,168,.5)}
-button.bad{border-color:rgba(255,107,107,.5)}
+.badge{display:inline-block;background:linear-gradient(180deg,#ffe895,#ffb62a);color:#111;font-weight:700;border-radius:10px;padding:2px 8px;font-size:11px}
+.grid{display:grid;gap:12px;grid-template-columns:1fr}
+@media(min-width:760px){.grid{grid-template-columns:1fr 1fr}}
 label{font-size:13px;color:var(--muted)}
-.row{display:flex;gap:10px;flex-wrap:wrap}
-.split{display:grid;grid-template-columns:1fr;gap:10px}
-kbd{
-  background:rgba(255,255,255,.08);padding:3px 6px;border-radius:6px;border:1px solid var(--rim);font-size:12px
-}
-hr.line{border:none;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);margin:12px 0}
-.help{font-size:12px;color:var(--muted)}
-input[type="range"]{width:100%}
-input[type="checkbox"]{width:16px;height:16px;accent-color:#ffd36e}
-textarea{width:100%;min-height:80px;resize:vertical}
+small{color:var(--muted)}
 .table{width:100%;border-collapse:separate;border-spacing:0 8px}
-.table th{font-size:12px;color:var(--muted);font-weight:600;text-align:left;padding:0 8px}
-.table td{
-  background:rgba(255,255,255,.04);border:1px solid var(--rim);padding:10px 8px;
-}
-.table tr td:first-child{border-radius:10px 0 0 10px}
-.table tr td:last-child{border-radius:0 10px 10px 0}
+.table th{font-size:12px;color:var(--muted);text-align:left;padding:0 8px}
+.table td{background:rgba(255,255,255,.04);border:1px solid var(--rim);padding:8px;border-radius:10px}
+.status{display:inline-flex;align-items:center;gap:8px}
+.dot{width:10px;height:10px;border-radius:50%}
+.ok{background:var(--ok)} .bad{background:var(--bad)} .warn{background:var(--warn)}
+.footer{position:fixed;inset:auto 0 0 0;background:linear-gradient(180deg,rgba(10,11,16,0),#0a0b10 35%);border-top:1px solid var(--rim);backdrop-filter:blur(6px)}
+.footer-inner{max-width:920px;margin:0 auto;padding:10px 14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.start{display:inline-flex;align-items:center;gap:8px}
+.bee{width:18px;height:18px;border-radius:50%;background:linear-gradient(180deg,#ffe895,#ffc54f)}
 .kpis{display:flex;gap:10px;flex-wrap:wrap}
-.kpi{
-  flex:1 1 140px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03));
-  border:1px solid var(--rim);border-radius:14px;padding:10px 12px;text-align:center
-}
-.kpi b{display:block;font-size:22px;margin-top:2px}
-.footer{
-  position:fixed;inset:auto 0 0 0;background:linear-gradient(180deg,rgba(10,11,16,.0),#0a0b10 30%);
-  border-top:1px solid var(--rim);backdrop-filter:blur(6px);
-}
-.footer-inner{max-width:980px;margin:0 auto;padding:10px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.start-btn{
-  display:inline-flex;align-items:center;gap:10px;padding:12px 14px;border-radius:14px;
-  background:radial-gradient(closest-side, rgba(255,219,120,.28), rgba(255,219,120,.12));
-  border:1px solid rgba(255,219,120,.5);box-shadow:var(--accent-glow);font-weight:600
-}
-.bee-anim{position:relative;width:22px;height:22px;border-radius:50%;background:linear-gradient(180deg,#ffe895,#ffc54f);box-shadow:0 0 0 2px rgba(255,219,120,.5) inset}
-.bee-anim:before,.bee-anim:after{content:"";position:absolute;background:white;border-radius:50%;width:9px;height:6px;top:-4px}
-.bee-anim:before{left:-1px;transform:rotate(-15deg)}
-.bee-anim:after{right:-1px;transform:rotate(15deg)}
-.pulse{animation:pulse 2s infinite}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,219,120,.45)}70%{box-shadow:0 0 0 10px rgba(255,219,120,0)}100%{box-shadow:0 0 0 0 rgba(255,219,120,0)}}
-.badge{font-size:11px;color:#111;background:linear-gradient(180deg,#ffd36e,#ffb62a);border-radius:10px;padding:2px 8px;font-weight:700}
-.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,219,120,.15);border:1px solid rgba(255,219,120,.45);color:var(--ink);padding:6px 8px;border-radius:999px;font-size:12px}
-.hidden{display:none}
-@media (min-width:760px){
-  .card.span6{grid-column:span 6}
-  .split{grid-template-columns:1fr 1fr}
-}
+.kpi{flex:1 1 140px;background:rgba(255,255,255,.05);border:1px solid var(--rim);border-radius:12px;padding:8px 10px;text-align:center}
+.kpi b{display:block;font-size:18px;margin-top:2px}
+pre{margin:0;white-space:pre-wrap;background:rgba(255,255,255,.04);border:1px dashed var(--rim);padding:10px;border-radius:10px}
 </style>
 </head>
 <body>
-<div class="container" id="app">
-  <header class="header">
-    <div class="honey-badge"><span class="bee-wings"></span></div>
-    <div class="title">
-      <h1>Honey School <span class="badge">Room A · Magnetism</span></h1>
-      <p>Playful discipline. Taste sparks. One-tap tone bed. Keep your center while you attract the swarm.</p>
-    </div>
-  </header>
+<div class="container">
+  <h1>Honey Tone Self-Test <span class="badge">Automatic</span></h1>
+  <p>This page auto-runs a 7-step tone check (WebAudio sine → Gain → optional LFO) and shows pass/fail. It mirrors your Honey setup. Run once with a tap (required by iOS).</p>
 
-  <section class="grid">
-    <!-- Tone & Session -->
-    <div class="card span6" id="toneCard">
-      <h2>One-Tap Start</h2>
-      <div class="split">
-        <div>
-          <div class="row">
-            <button id="startBtn" class="start-btn pulse"><span class="bee-anim"></span> Start Session</button>
-            <button id="stopBtn" class="secondary">Stop</button>
-            <button id="calmBtn" class="ghost">Calm (3m)</button>
-          </div>
-          <p class="small">Starts the Honey bed (128&nbsp;Hz, soft) with gentle fade-in. Screen can be off; stays in background.</p>
-          <hr class="line">
-          <label for="toneHz">Tone (Hz)</label>
-          <input id="toneHz" type="number" min="20" max="500" step="0.01" value="128.00">
-          <div class="row">
-            <button data-preset="128" class="chip">128</button>
-            <button data-preset="160" class="chip">160</button>
-            <button data-preset="256" class="chip">256</button>
-          </div>
-          <p class="help">Tip: 128 = Honey ground, 160 = Mirror lift, 256 = bright clarity.</p>
-        </div>
-        <div>
-          <label for="gain">Volume</label>
-          <input id="gain" type="range" min="0" max="1" step="0.001" value="0.18">
-          <label for="breath">Breathing LFO</label>
-          <input id="breath" type="range" min="0" max="1" step="0.01" value="0.25">
-          <div class="row">
-            <label><input type="checkbox" id="lfoOn" checked> Enable breath</label>
-            <label><input type="checkbox" id="bgOn" checked> Keep playing in background</label>
-          </div>
-          <p class="help">Breath subtly swells volume like inhaling/exhaling. Background keeps audio alive when the phone sleeps.</p>
-        </div>
+  <div class="grid">
+    <div class="card">
+      <h2>Controls</h2>
+      <div class="row">
+        <button id="run">Run Self-Test</button>
+        <button id="start">Start Tone</button>
+        <button id="stop" class="ghost">Stop</button>
+        <label>Hz <input id="hz" type="number" min="20" max="500" step="0.01" value="128.00"></label>
+        <label>Volume <input id="vol" type="range" min="0" max="1" step="0.001" value="0.18"></label>
+        <label class="switch"><input id="lfo" type="checkbox" checked> Breath LFO</label>
+        <label class="switch"><input id="bg" type="checkbox" checked> Background</label>
+        <button data-p="128" class="preset">128</button>
+        <button data-p="160" class="preset">160</button>
+        <button data-p="256" class="preset">256</button>
       </div>
+      <small>Tip: Flip the iPhone mute switch off and set system volume ~60% before testing.</small>
     </div>
 
 ```
-<!-- Taste Sparks -->
-<div class="card span6">
-  <h2>Taste Sparks <span class="tag" id="sparkCountTag">0 / day</span></h2>
-  <div class="row">
-    <input type="text" id="sparkInput" placeholder="Add a spark (e.g., 'lemon lights', 'neon jacket', 'late-sun window')">
-    <button id="addSparkBtn">Add</button>
-    <button id="randomSparkBtn" class="secondary">Random</button>
-    <button id="clearSparksBtn" class="ghost">Clear</button>
-  </div>
-  <p class="small">Collect 3 sparks/day. These are micro-tastes that pull you. They seed offers, captions, and invites.</p>
-  <hr class="line">
-  <div id="sparkList" class="row"></div>
-</div>
-
-<!-- Magnet Test -->
-<div class="card span6">
-  <h2>Magnet Test</h2>
-  <label for="magName">Thing / idea / offer</label>
-  <input id="magName" type="text" placeholder="What are you testing for pull?">
-  <label for="magPull">Pull (0–10)</label>
-  <input id="magPull" type="range" min="0" max="10" step="1" value="5">
-  <div class="row">
-    <button id="magLogBtn">Log Result</button>
-    <button id="magClearBtn" class="ghost">Clear</button>
-  </div>
-  <p class="small">≥7 = good magnet. 4–6 = tweak. ≤3 = drop or move to Bridge School for remix.</p>
-  <hr class="line">
-  <table class="table" id="magTable">
-    <thead><tr><th style="width:34%">Item</th><th>Pull</th><th>Note</th><th style="width:80px">Keep?</th></tr></thead>
+<div class="card">
+  <h2>Results</h2>
+  <table class="table" id="results">
+    <thead><tr><th>#</th><th>Check</th><th>Status</th><th>Detail</th></tr></thead>
     <tbody></tbody>
   </table>
-</div>
-
-<!-- Joy Ledger -->
-<div class="card span6" id="ledgerCard">
-  <h2>Joy Ledger</h2>
-  <label for="joyNote">What did you try?</label>
-  <input type="text" id="joyNote" placeholder="e.g., Posted 'lemon lights' invite on IG">
-  <label for="joyScore">Felt joy (0–10)</label>
-  <input id="joyScore" type="range" min="0" max="10" step="1" value="6">
-  <div class="row">
-    <button id="joyAddBtn" class="good">Log Joy</button>
-    <button id="exportBtn" class="secondary">Export CSV</button>
-    <button id="clearLedgerBtn" class="ghost bad">Clear</button>
+  <div class="kpis">
+    <div class="kpi"><span>Passed</span><b id="passCount">0</b></div>
+    <div class="kpi"><span>Failed</span><b id="failCount">0</b></div>
+    <div class="kpi"><span>Overall</span><b id="overall">—</b></div>
   </div>
-  <hr class="line">
-  <table class="table" id="ledgerTable">
-    <thead><tr><th style="width:130px">Time</th><th>Action</th><th>Joy</th><th>Tag</th></tr></thead>
-    <tbody></tbody>
-  </table>
-  <div class="kpis" id="kpis">
-    <div class="kpi"><span>Joy avg</span><b id="joyAvg">—</b></div>
-    <div class="kpi"><span>Streak</span><b id="streak">0</b></div>
-    <div class="kpi"><span>Entries</span><b id="entries">0</b></div>
-  </div>
-  <p class="small">Goal: 3 micro-offers/week + 1 swarm moment. Keep the streak alive.</p>
-</div>
-
-<!-- Swarm Map -->
-<div class="card span6">
-  <h2>Swarm Map (Allies)</h2>
-  <div class="row">
-    <input type="text" id="allyName" placeholder="Name or handle">
-    <select id="allyStrength">
-      <option value="Honey">Honey</option>
-      <option value="Mirror">Mirror</option>
-      <option value="Voice">Voice</option>
-      <option value="Clarity">Clarity</option>
-      <option value="Bridge">Bridge</option>
-      <option value="Story">Story</option>
-    </select>
-    <button id="addAllyBtn">Add Ally</button>
-    <button id="clearAlliesBtn" class="ghost">Clear</button>
-  </div>
-  <hr class="line">
-  <table class="table" id="allyTable">
-    <thead><tr><th>Ally</th><th>Gift</th><th>Last Touch</th></tr></thead>
-    <tbody></tbody>
-  </table>
-  <p class="small">Make one gentle touch per ally each week (comment, DM, micro-gift). Keep it playful, never heavy.</p>
-</div>
-
-<!-- Self-Check -->
-<div class="card span6">
-  <h2>Self-Check (School Vibe)</h2>
-  <div class="row">
-    <label><input type="checkbox" id="chkOneTap"> One-tap starts without fiddling</label>
-  </div>
-  <div class="row">
-    <label><input type="checkbox" id="chk3Sparks"> Logged 3 Taste Sparks today</label>
-  </div>
-  <div class="row">
-    <label><input type="checkbox" id="chkOffer"> Shipped 1 micro-offer this week</label>
-  </div>
-  <div class="row">
-    <label><input type="checkbox" id="chkCenter"> Kept center (no over-pleasing)</label>
-  </div>
-  <div class="actions">
-    <button id="saveCheck">Save Check</button>
-    <button id="clearCheck" class="ghost">Clear</button>
-  </div>
-  <p class="small" id="checkStatus">Not saved yet.</p>
 </div>
 ```
 
-  </section>
-</div>
+  </div>
 
-<!-- Footer controls -->
+  <div class="card">
+    <h2>What this verifies</h2>
+    <ul>
+      <li>AudioContext is created on a user gesture and runs.</li>
+      <li>Gain ramp produces audible level (>0.01) and the volume slider moves actual gain.</li>
+      <li>Preset buttons change oscillator frequency (128↔160↔256 Hz).</li>
+      <li>“Background Off” triggers a stop on hidden; “Background On” keeps playing.</li>
+      <li>Stop produces a clean fade to near-silence (≤0.001).</li>
+      <li>Settings persist to localStorage and reload.</li>
+    </ul>
+    <details><summary>Debug snapshot</summary>
+      <pre id="snapshot">—</pre>
+    </details>
+  </div>
+</div>
 
 <div class="footer">
   <div class="footer-inner">
-    <button id="footerStart" class="start-btn"><span class="bee-anim"></span> Start</button>
-    <button id="footerStop" class="secondary">Stop</button>
-    <span class="tag" id="sessionTag">Idle</span>
-    <span class="help">Daily rhythm: <b>Ground 1m</b> → <b>Play 8m</b> → <b>Close 3m</b></span>
+    <button id="fStart" class="start"><span class="bee"></span> Start</button>
+    <button id="fStop" class="ghost">Stop</button>
+    <span class="status"><span id="stateDot" class="dot bad"></span><b id="stateTxt">Idle</b></span>
   </div>
 </div>
 
@@ -297,105 +116,53 @@ textarea{width:100%;min-height:80px;resize:vertical}
 (function(){
   "use strict";
 
+  // Shortcuts
   const qs = s => document.querySelector(s);
   const qsa = s => Array.from(document.querySelectorAll(s));
 
-  // Local Storage Keys
-  const K = {
-    toneHz: 'honey:toneHz',
-    gain: 'honey:gain',
-    breath: 'honey:breath',
-    lfoOn: 'honey:lfoOn',
-    bgOn: 'honey:bgOn',
-    sparks: 'honey:sparks',
-    magnet: 'honey:magnet',
-    ledger: 'honey:ledger',
-    allies: 'honey:allies',
-    check: 'honey:selfcheck',
-    streak: 'honey:streak',
-    lastEntryDay: 'honey:lastEntryDay'
-  };
+  // UI
+  const runBtn = qs('#run'), startBtn = qs('#start'), stopBtn = qs('#stop');
+  const fStart = qs('#fStart'), fStop = qs('#fStop');
+  const hzEl = qs('#hz'), volEl = qs('#vol'), lfoEl = qs('#lfo'), bgEl = qs('#bg');
+  const resultsBody = qs('#results tbody'), passCountEl = qs('#passCount'), failCountEl = qs('#failCount'), overallEl = qs('#overall');
+  const stateDot = qs('#stateDot'), stateTxt = qs('#stateTxt'), snapshotPre = qs('#snapshot');
 
-  // Elements
-  const startBtn = qs('#startBtn');
-  const stopBtn = qs('#stopBtn');
-  const calmBtn = qs('#calmBtn');
-  const footerStart = qs('#footerStart');
-  const footerStop = qs('#footerStop');
-  const sessionTag = qs('#sessionTag');
+  // Storage keys
+  const K = { hz:'honey:toneHz', vol:'honey:gain', lfo:'honey:lfo', bg:'honey:bg' };
 
-  const toneHz = qs('#toneHz');
-  const gainEl = qs('#gain');
-  const breathEl = qs('#breath');
-  const lfoOn = qs('#lfoOn');
-  const bgOn = qs('#bgOn');
+  // Audio graph
+  let ctx, osc, gainNode, lfo, lfoGain;
+  let session = 'Idle';
+  let testHiddenOverride = null; // for simulated visibility
 
-  const sparkInput = qs('#sparkInput');
-  const addSparkBtn = qs('#addSparkBtn');
-  const randomSparkBtn = qs('#randomSparkBtn');
-  const clearSparksBtn = qs('#clearSparksBtn');
-  const sparkList = qs('#sparkList');
-  const sparkCountTag = qs('#sparkCountTag');
-
-  const magName = qs('#magName');
-  const magPull = qs('#magPull');
-  const magLogBtn = qs('#magLogBtn');
-  const magClearBtn = qs('#magClearBtn');
-  const magTable = qs('#magTable tbody');
-
-  const joyNote = qs('#joyNote');
-  const joyScore = qs('#joyScore');
-  const joyAddBtn = qs('#joyAddBtn');
-  const exportBtn = qs('#exportBtn');
-  const clearLedgerBtn = qs('#clearLedgerBtn');
-  const ledgerTable = qs('#ledgerTable tbody');
-  const joyAvg = qs('#joyAvg');
-  const streak = qs('#streak');
-  const entries = qs('#entries');
-
-  const allyName = qs('#allyName');
-  const allyStrength = qs('#allyStrength');
-  const addAllyBtn = qs('#addAllyBtn');
-  const clearAlliesBtn = qs('#clearAlliesBtn');
-  const allyTable = qs('#allyTable tbody');
-
-  const chkOneTap = qs('#chkOneTap');
-  const chk3Sparks = qs('#chk3Sparks');
-  const chkOffer = qs('#chkOffer');
-  const chkCenter = qs('#chkCenter');
-  const saveCheck = qs('#saveCheck');
-  const clearCheck = qs('#clearCheck');
-  const checkStatus = qs('#checkStatus');
-
-  // WebAudio
-  let ctx, osc, gainNode, lfo, lfoGain, rafId = 0;
-  let sessionState = 'Idle';
-  let calmTimer = null;
+  function setState(s){
+    session = s;
+    stateTxt.textContent = s;
+    stateDot.className = 'dot ' + (s==='Playing' ? 'ok' : (s.indexOf('Calm')===0 ? 'warn':'bad'));
+  }
 
   function initAudio(){
     if (ctx) return;
     ctx = new (window.AudioContext || window.webkitAudioContext)();
     gainNode = ctx.createGain();
-    osc = ctx.createOscillator();
-    osc.type = 'sine';
-    osc.frequency.value = parseFloat(toneHz.value || '128');
     gainNode.gain.value = 0.0001;
 
-    // LFO chain
+    osc = ctx.createOscillator();
+    osc.type = 'sine';
+    osc.frequency.value = parseFloat(hzEl.value||'128');
+
     lfo = ctx.createOscillator();
     lfo.type = 'sine';
-    lfo.frequency.value = 0.08 + parseFloat(breathEl.value || '0.25') * 0.42; // gentle breathing
+    lfo.frequency.value = 0.18;
     lfoGain = ctx.createGain();
-    lfoGain.gain.value = (lfoOn.checked ? 0.08 : 0);
+    lfoGain.gain.value = lfoEl.checked ? 0.08 : 0;
 
     lfo.connect(lfoGain);
     lfoGain.connect(gainNode.gain);
-
     osc.connect(gainNode);
     gainNode.connect(ctx.destination);
 
-    osc.start();
-    lfo.start();
+    osc.start(); lfo.start();
   }
 
   function fade(target, ms){
@@ -404,299 +171,182 @@ textarea{width:100%;min-height:80px;resize:vertical}
     const v = Math.max(0, Math.min(1, target));
     gainNode.gain.cancelScheduledValues(now);
     gainNode.gain.setValueAtTime(gainNode.gain.value, now);
-    gainNode.gain.linearRampToValueAtTime(v, now + (ms/1000));
+    gainNode.gain.linearRampToValueAtTime(v, now + ms/1000);
   }
 
-  function startSession(){
+  function startTone(){
     initAudio();
+    if (ctx.state !== 'running') ctx.resume();
+    osc.frequency.setValueAtTime(parseFloat(hzEl.value||'128'), ctx.currentTime);
+    fade(parseFloat(volEl.value||'0.18'), 600);
+    setState('Playing');
     saveSettings();
-    fade(parseFloat(gainEl.value || '0.18'), 800);
-    sessionState = 'Playing';
-    updateSessionTag();
-    addPulse(false);
   }
 
-  function stopSession(){
-    if (!ctx || !gainNode) return;
-    fade(0.0001, 500);
-    sessionState = 'Idle';
-    updateSessionTag();
-    addPulse(true);
-    if (calmTimer){ clearTimeout(calmTimer); calmTimer = null; }
+  function stopTone(){
+    if (!ctx) return;
+    fade(0.0001, 400);
+    setState('Idle');
   }
 
-  function calmSession(){
-    startSession();
-    if (calmTimer){ clearTimeout(calmTimer); }
-    calmTimer = setTimeout(() => stopSession(), 3*60*1000);
-    sessionState = 'Calm (3m)';
-    updateSessionTag();
-  }
-
-  function updateSessionTag(){
-    sessionTag.textContent = sessionState;
-  }
-
-  function addPulse(on){
-    const btns = [startBtn, footerStart];
-    btns.forEach(b => {
-      if (!b) return;
-      if (on){ b.classList.add('pulse'); } else { b.classList.remove('pulse'); }
-    });
-  }
-
-  // Settings persistence
   function saveSettings(){
-    localStorage.setItem(K.toneHz, toneHz.value);
-    localStorage.setItem(K.gain, gainEl.value);
-    localStorage.setItem(K.breath, breathEl.value);
-    localStorage.setItem(K.lfoOn, lfoOn.checked ? '1':'0');
-    localStorage.setItem(K.bgOn, bgOn.checked ? '1':'0');
+    localStorage.setItem(K.hz, hzEl.value);
+    localStorage.setItem(K.vol, volEl.value);
+    localStorage.setItem(K.lfo, lfoEl.checked ? '1':'0');
+    localStorage.setItem(K.bg, bgEl.checked ? '1':'0');
+  }
+  function loadSettings(){
+    const a = localStorage.getItem(K.hz); if (a) hzEl.value = a;
+    const b = localStorage.getItem(K.vol); if (b) volEl.value = b;
+    const c = localStorage.getItem(K.lfo); if (c) lfoEl.checked = (c==='1');
+    const d = localStorage.getItem(K.bg); if (d) bgEl.checked = (d==='1');
   }
 
-  function loadSettings(){
-    const v = localStorage.getItem(K.toneHz); if (v) toneHz.value = v;
-    const g = localStorage.getItem(K.gain); if (g) gainEl.value = g;
-    const b = localStorage.getItem(K.breath); if (b) breathEl.value = b;
-    const l = localStorage.getItem(K.lfoOn); if (l) lfoOn.checked = (l==='1');
-    const bg = localStorage.getItem(K.bgOn); if (bg) bgOn.checked = (bg==='1');
+  // Visibility handler (real + simulated)
+  function handleVisibility(){
+    const hidden = (testHiddenOverride !== null) ? testHiddenOverride : document.hidden;
+    if (hidden && !bgEl.checked) stopTone();
   }
+  document.addEventListener('visibilitychange', handleVisibility);
 
   // Wire UI
-  startBtn.addEventListener('click', startSession);
-  footerStart.addEventListener('click', startSession);
-  stopBtn.addEventListener('click', stopSession);
-  footerStop.addEventListener('click', stopSession);
-  calmBtn.addEventListener('click', calmSession);
+  startBtn.addEventListener('click', startTone);
+  fStart.addEventListener('click', startTone);
+  stopBtn.addEventListener('click', stopTone);
+  fStop.addEventListener('click', stopTone);
 
-  toneHz.addEventListener('change', ()=>{
+  hzEl.addEventListener('change', ()=>{
     saveSettings();
-    if (osc) osc.frequency.setValueAtTime(parseFloat(toneHz.value||'128'), ctx.currentTime);
+    if (osc && ctx) osc.frequency.setValueAtTime(parseFloat(hzEl.value||'128'), ctx.currentTime);
   });
-  qsa('[data-preset]').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      const hz = btn.getAttribute('data-preset');
-      toneHz.value = hz;
-      if (osc) osc.frequency.setValueAtTime(parseFloat(hz), ctx.currentTime);
+  volEl.addEventListener('input', ()=>{
+    saveSettings();
+    if (ctx && gainNode){
+      const v = parseFloat(volEl.value||'0.18');
+      gainNode.gain.setTargetAtTime(v, ctx.currentTime, 0.12);
+    }
+  });
+  lfoEl.addEventListener('change', ()=>{
+    saveSettings();
+    if (lfoGain && ctx) lfoGain.gain.setValueAtTime(lfoEl.checked ? 0.08 : 0, ctx.currentTime);
+  });
+  bgEl.addEventListener('change', saveSettings);
+
+  qsa('.preset').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      const p = parseFloat(b.getAttribute('data-p'));
+      hzEl.value = p.toFixed(2);
       saveSettings();
+      if (osc && ctx) osc.frequency.setValueAtTime(p, ctx.currentTime);
     });
   });
 
-  gainEl.addEventListener('input', ()=>{
-    saveSettings();
-    if (ctx && gainNode) {
-      const target = parseFloat(gainEl.value||'0.18');
-      gainNode.gain.setTargetAtTime(target, ctx.currentTime, 0.12);
+  // ---------- Auto Test Runner ----------
+  const checks = [
+    {name:'User-gesture start → audible gain', run: async () => {
+      startTone();
+      await wait(700);
+      const ok = (ctx && ctx.state==='running' && (gainNode.gain.value > 0.01));
+      return ok ? pass() : fail('gain='+(gainNode?gainNode.gain.value:'—'));
+    }},
+    {name:'Volume control moves actual gain', run: async () => {
+      volEl.value = '0.35'; volEl.dispatchEvent(new Event('input'));
+      await wait(250);
+      const g = gainNode?gainNode.gain.value:0;
+      return (g>0.30 && g<0.40) ? pass() : fail('gain='+g.toFixed(3));
+    }},
+    {name:'Preset pitch change (128↔160)', run: async () => {
+      hzEl.value='160.00'; hzEl.dispatchEvent(new Event('change')); await wait(120);
+      const a = Math.abs(osc.frequency.value-160) < 0.01;
+      hzEl.value='128.00'; hzEl.dispatchEvent(new Event('change')); await wait(120);
+      const b = Math.abs(osc.frequency.value-128) < 0.01;
+      return (a && b) ? pass() : fail('freq='+osc.frequency.value.toFixed(2));
+    }},
+    {name:'Background OFF → stop on hidden', run: async () => {
+      bgEl.checked = false; saveSettings();
+      startTone(); await wait(200);
+      testHiddenOverride = true; handleVisibility(); await wait(200);
+      const g = gainNode?gainNode.gain.value:1;
+      testHiddenOverride = null;
+      return (g <= 0.002) ? pass() : fail('gain='+g.toFixed(3));
+    }},
+    {name:'Background ON → keep playing hidden', run: async () => {
+      bgEl.checked = true; saveSettings();
+      startTone(); await wait(200);
+      const before = gainNode?gainNode.gain.value:0;
+      testHiddenOverride = true; handleVisibility(); await wait(250);
+      const after = gainNode?gainNode.gain.value:0;
+      testHiddenOverride = null;
+      return (after >= before-0.01) ? pass() : fail('gain_before='+before.toFixed(3)+' after='+after.toFixed(3));
+    }},
+    {name:'Stop → clean fade to near-silence', run: async () => {
+      stopTone(); await wait(500);
+      const g = gainNode?gainNode.gain.value:1;
+      return (g <= 0.0015) ? pass() : fail('gain='+g.toFixed(4));
+    }},
+    {name:'Settings persist (localStorage)', run: async () => {
+      hzEl.value='256.00'; volEl.value='0.22'; lfoEl.checked=false; saveSettings();
+      hzEl.value=''; volEl.value=''; lfoEl.checked=true;
+      loadSettings();
+      const ok = (hzEl.value==='256.00' && Math.abs(parseFloat(volEl.value)-0.22)<0.001 && lfoEl.checked===false);
+      return ok ? pass() : fail('hz='+hzEl.value+' vol='+volEl.value+' lfo='+lfoEl.checked);
+    }},
+  ];
+
+  runBtn.addEventListener('click', async ()=>{
+    clearResults();
+    loadSettings();
+    const out = [];
+    for (let i=0;i<checks.length;i++){
+      const r = await checks[i].run();
+      out.push(renderRow(i+1, checks[i].name, r.ok, r.detail));
     }
-  });
-  breathEl.addEventListener('input', ()=>{
-    saveSettings();
-    if (lfo) lfo.frequency.setValueAtTime(0.08 + parseFloat(breathEl.value||'0.25')*0.42, ctx.currentTime);
-  });
-  lfoOn.addEventListener('change', ()=>{
-    saveSettings();
-    if (lfoGain) lfoGain.gain.setValueAtTime(lfoOn.checked?0.08:0, ctx.currentTime);
-  });
-
-  // Background lock (best-effort on mobile)
-  document.addEventListener('visibilitychange', ()=>{
-    if (!bgOn.checked && document.hidden){ stopSession(); }
-  });
-
-  // Sparks
-  function sparks(){ return JSON.parse(localStorage.getItem(K.sparks) || '[]'); }
-  function saveSparks(arr){ localStorage.setItem(K.sparks, JSON.stringify(arr)); renderSparks(); }
-
-  function renderSparks(){
-    const arr = sparks();
-    sparkList.innerHTML = '';
-    arr.forEach((t,i)=>{
-      const chip = document.createElement('button');
-      chip.className = 'chip';
-      chip.textContent = t;
-      chip.title = 'Click to copy';
-      chip.addEventListener('click', ()=> copyText(t));
-      chip.addEventListener('contextmenu', e=>{
-        e.preventDefault();
-        const next = arr.filter((_,idx)=> idx!==i);
-        saveSparks(next);
-      });
-      sparkList.appendChild(chip);
-    });
-    updateSparkCount();
-  }
-  function updateSparkCount(){
-    const today = new Date().toISOString().slice(0,10);
-    const arr = sparks();
-    const todayCount = arr.filter(x => x.startsWith(today+' ')).length;
-    sparkCountTag.textContent = todayCount + " / day";
-  }
-  function addSpark(text){
-    if (!text) return;
-    const stamp = new Date().toISOString().slice(0,10) + ' ' + text.trim();
-    saveSparks([stamp, ...sparks()].slice(0,120));
-  }
-  function randomSparkSeed(){
-    const seeds = ['sun-honey window','neon jacket','citrus fizz','mirror confetti','butterfly nap','pearl gloss','sparkle caption','late bus giggle','lemon letter','tiny dance'];
-    return seeds[Math.floor(Math.random()*seeds.length)];
-  }
-  addSparkBtn.addEventListener('click', ()=>{ addSpark(sparkInput.value); sparkInput.value=''; });
-  randomSparkBtn.addEventListener('click', ()=> addSpark(randomSparkSeed()));
-  clearSparksBtn.addEventListener('click', ()=> saveSparks([]));
-
-  // Magnet
-  function magnets(){ return JSON.parse(localStorage.getItem(K.magnet) || '[]'); }
-  function saveMagnets(arr){ localStorage.setItem(K.magnet, JSON.stringify(arr)); renderMagnets(); }
-  function renderMagnets(){
-    const rows = magnets().map(m=>{
-      const keep = m.pull>=7?'Yes':(m.pull<=3?'No':'Tweak');
-      const keepClr = keep==='Yes'?'var(--ok)':(keep==='No'?'var(--bad)':'var(--warn)');
-      return `<tr>
-        <td>${escapeHTML(m.name)}</td>
-        <td>${m.pull}</td>
-        <td>${escapeHTML(m.note||'')}</td>
-        <td style="color:${keepClr};font-weight:700">${keep}</td>
-      </tr>`;
-    }).join('');
-    magTable.innerHTML = rows || '';
-  }
-  magLogBtn.addEventListener('click', ()=>{
-    const name = (magName.value||'').trim();
-    if (!name) return;
-    const pull = parseInt(magPull.value||'0',10);
-    const note = pull>=7?'Ship it':'—';
-    saveMagnets([{name,pull,note,ts:Date.now()}, ...magnets()].slice(0,60));
-    magName.value='';
-  });
-  magClearBtn.addEventListener('click', ()=> saveMagnets([]));
-
-  // Ledger
-  function ledger(){ return JSON.parse(localStorage.getItem(K.ledger) || '[]'); }
-  function saveLedger(arr){
-    localStorage.setItem(K.ledger, JSON.stringify(arr));
-    renderLedger();
-    updateStreak(arr);
-  }
-  function renderLedger(){
-    const rows = ledger().map(it=>{
-      const d = new Date(it.ts);
-      const t = d.toLocaleDateString()+ ' ' + d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
-      const tag = it.score>=7?'Honey':'—';
-      return `<tr>
-        <td>${t}</td>
-        <td>${escapeHTML(it.note)}</td>
-        <td>${it.score}</td>
-        <td>${tag}</td>
-      </tr>`;
-    }).join('');
-    ledgerTable.innerHTML = rows || '';
-    const arr = ledger();
-    entries.textContent = arr.length.toString();
-    joyAvg.textContent = arr.length ? (arr.reduce((a,b)=>a+b.score,0)/arr.length).toFixed(1) : '—';
-  }
-  function updateStreak(arr){
-    if (!arr.length){ streak.textContent = '0'; return; }
-    const today = new Date().toISOString().slice(0,10);
-    const last = localStorage.getItem(K.lastEntryDay);
-    const latestDay = new Date(arr[0].ts).toISOString().slice(0,10);
-    if (latestDay !== last){
-      // new day entry came in
-      const s = parseInt(localStorage.getItem(K.streak)||'0',10);
-      localStorage.setItem(K.streak, (s + 1).toString());
-      localStorage.setItem(K.lastEntryDay, latestDay);
-    }
-    streak.textContent = localStorage.getItem(K.streak) || '1';
-    if (arr.some(it => new Date(it.ts).toISOString().slice(0,10) === today) === false){
-      // no entry today -> don't increment
-    }
-  }
-  joyAddBtn.addEventListener('click', ()=>{
-    const note = (joyNote.value||'').trim();
-    const score = parseInt(joyScore.value||'0',10);
-    if (!note) return;
-    saveLedger([{note,score,ts:Date.now()}, ...ledger()].slice(0,200));
-    joyNote.value='';
-  });
-  exportBtn.addEventListener('click', ()=>{
-    const arr = ledger();
-    const header = 'time,note,joy\n';
-    const rows = arr.map(it=>{
-      const t = new Date(it.ts).toISOString();
-      return `"${t.replace(/"/g,'""')}","${(it.note||'').replace(/"/g,'""')}",${it.score}`;
-    }).join('\n');
-    const blob = new Blob([header+rows], {type:'text/csv'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url; a.download = 'honey_joy_ledger.csv';
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(()=> URL.revokeObjectURL(url), 500);
-  });
-  clearLedgerBtn.addEventListener('click', ()=> saveLedger([]));
-
-  // Allies
-  function allies(){ return JSON.parse(localStorage.getItem(K.allies) || '[]'); }
-  function saveAllies(arr){ localStorage.setItem(K.allies, JSON.stringify(arr)); renderAllies(); }
-  function renderAllies(){
-    const rows = allies().map(a=>{
-      return `<tr>
-        <td>${escapeHTML(a.name)}</td>
-        <td>${escapeHTML(a.strength)}</td>
-        <td>${a.touch ? new Date(a.touch).toLocaleDateString() : '—'}</td>
-      </tr>`;
-    }).join('');
-    allyTable.innerHTML = rows || '';
-  }
-  addAllyBtn.addEventListener('click', ()=>{
-    const name = (allyName.value||'').trim();
-    if (!name) return;
-    const strength = allyStrength.value;
-    saveAllies([{name,strength,touch:Date.now()}, ...allies()].slice(0,80));
-    allyName.value='';
-  });
-  clearAlliesBtn.addEventListener('click', ()=> saveAllies([]));
-
-  // Self Check
-  function loadCheck(){
-    const obj = JSON.parse(localStorage.getItem(K.check) || '{}');
-    chkOneTap.checked = !!obj.one;
-    chk3Sparks.checked = !!obj.sparks;
-    chkOffer.checked = !!obj.offer;
-    chkCenter.checked = !!obj.center;
-    checkStatus.textContent = obj.when ? ('Saved · ' + new Date(obj.when).toLocaleString()) : 'Not saved yet.';
-  }
-  saveCheck.addEventListener('click', ()=>{
-    const obj = {one:chkOneTap.checked, sparks:chk3Sparks.checked, offer:chkOffer.checked, center:chkCenter.checked, when:Date.now()};
-    localStorage.setItem(K.check, JSON.stringify(obj));
-    checkStatus.textContent = 'Saved · ' + new Date(obj.when).toLocaleString();
-  });
-  clearCheck.addEventListener('click', ()=>{
-    localStorage.removeItem(K.check);
-    chkOneTap.checked = chk3Sparks.checked = chkOffer.checked = chkCenter.checked = false;
-    checkStatus.textContent = 'Not saved yet.';
+    resultsBody.innerHTML = out.join('');
+    summarize();
+    snapshot();
   });
 
   // Helpers
-  function copyText(t){
-    const ta = document.createElement('textarea');
-    ta.value = t; document.body.appendChild(ta);
-    ta.select(); ta.setSelectionRange(0, t.length);
-    document.execCommand('copy');
-    ta.remove();
+  function wait(ms){ return new Promise(r=>setTimeout(r,ms)); }
+  function pass(detail='OK'){ return {ok:true, detail}; }
+  function fail(detail='Failed'){ return {ok:false, detail}; }
+  function renderRow(i,name,ok,detail){
+    const cls = ok?'ok':'bad';
+    return `<tr>
+      <td>${i}</td>
+      <td>${escape(name)}</td>
+      <td><span class="status"><span class="dot ${cls}"></span>${ok?'Pass':'Fail'}</span></td>
+      <td>${escape(detail)}</td>
+    </tr>`;
   }
-  function escapeHTML(s){ return (s||'').replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m])); }
+  function clearResults(){ resultsBody.innerHTML=''; passCountEl.textContent='0'; failCountEl.textContent='0'; overallEl.textContent='—'; }
+  function summarize(){
+    const rows = resultsBody.querySelectorAll('tr');
+    let p=0,f=0; rows.forEach(r=>{ const s = r.children[2].innerText.trim(); if (s==='Pass') p++; else f++; });
+    passCountEl.textContent = p; failCountEl.textContent = f;
+    overallEl.textContent = f===0 ? '✅ Ready' : (p>=5 ? '⚠️ Partial' : '❌ Blocked');
+  }
+  function snapshot(){
+    const snap = {
+      ctx: ctx?ctx.state:'none',
+      freq: osc?osc.frequency.value:null,
+      gain: gainNode?Number(gainNode.gain.value.toFixed(4)):null,
+      lfoDepth: lfoGain?Number(lfoGain.gain.value.toFixed(4)):null,
+      lfoOn: lfoEl.checked,
+      bg: bgEl.checked,
+      stored: {
+        hz: localStorage.getItem(K.hz),
+        vol: localStorage.getItem(K.vol),
+        lfo: localStorage.getItem(K.lfo),
+        bg: localStorage.getItem(K.bg)
+      }
+    };
+    snapshotPre.textContent = JSON.stringify(snap,null,2);
+  }
+  function escape(s){ return (s||'').replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]); }
 
   // Boot
   loadSettings();
-  loadCheck();
-  renderSparks();
-  renderMagnets();
-  renderLedger();
-  renderAllies();
-
-  // One-tap semantic: footer mirrors header
-  footerStart.addEventListener('click', ()=> startBtn.click());
-  footerStop.addEventListener('click', ()=> stopBtn.click());
-
 })();
 </script>
 
