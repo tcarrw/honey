@@ -1,0 +1,354 @@
+{
+  "meta": {
+    "program": "Honey School",
+    "modules": ["Playful", "Plea", "Empower", "Confession", "Classic", "Wildcard"],
+    "notes": "Each lesson pairs a track with a micro-objective, short drill, 1 action, tone guidance, and a check question."
+  },
+  "lessons": {
+    "eVli-tstM5E": {
+      "module": "Playful",
+      "objective": "Spark lightness on cue without forcing; keep the energy buoyant and warm. Espresso cue: quick sparkle, then breathe.",
+      "drill": ["shoulders down, jaw soft", "half-smile with breath", "one playful line out loud"],
+      "action": "Add a tiny playful tag to a routine message today.",
+      "tone": "160 Hz for short bursts, land at 128 Hz",
+      "check": "Did it read as cute and confident (not try-hard)?"
+    },
+    "cF1Na4AIecM": {
+      "module": "Playful",
+      "objective": "Spark lightness on cue without forcing; keep the energy buoyant and warm. Ask once; let silence do the flirting.",
+      "drill": ["shoulders down, jaw soft", "half-smile with breath", "one playful line out loud"],
+      "action": "Add a tiny playful tag to a routine message today.",
+      "tone": "160 Hz for short bursts, land at 128 Hz",
+      "check": "Did it read as cute and confident (not try-hard)?"
+    },
+    "KEG7b851Ric": {
+      "module": "Playful",
+      "objective": "Spark lightness on cue without forcing; keep the energy buoyant and warm. Let curiosity lead; one playful bite.",
+      "drill": ["shoulders down, jaw soft", "half-smile with breath", "one playful line out loud"],
+      "action": "Add a tiny playful tag to a routine message today.",
+      "tone": "160 Hz for short bursts, land at 128 Hz",
+      "check": "Did it read as cute and confident (not try-hard)?"
+    },
+    "aSugSGCC12I": {
+      "module": "Playful",
+      "objective": "Spark lightness on cue without forcing; keep the energy buoyant and warm. Humor first; no fixing.",
+      "drill": ["shoulders down, jaw soft", "half-smile with breath", "one playful line out loud"],
+      "action": "Add a tiny playful tag to a routine message today.",
+      "tone": "160 Hz for short bursts, land at 128 Hz",
+      "check": "Did it read as cute and confident (not try-hard)?"
+    },
+    "V9vuCByb6js": {
+      "module": "Playful",
+      "objective": "Spark lightness on cue without forcing; keep the energy buoyant and warm. Let the face soften; no rush.",
+      "drill": ["shoulders down, jaw soft", "half-smile with breath", "one playful line out loud"],
+      "action": "Add a tiny playful tag to a routine message today.",
+      "tone": "160 Hz for short bursts, land at 128 Hz",
+      "check": "Did it read as cute and confident (not try-hard)?"
+    },
+    "x8VkB8ap_FQ": {
+      "module": "Playful",
+      "objective": "Spark lightness on cue without forcing; keep the energy buoyant and warm. Tease lightly; keep gain low.",
+      "drill": ["shoulders down, jaw soft", "half-smile with breath", "one playful line out loud"],
+      "action": "Add a tiny playful tag to a routine message today.",
+      "tone": "160 Hz for short bursts, land at 128 Hz",
+      "check": "Did it read as cute and confident (not try-hard)?"
+    },
+    "kLbn61Z4LDI": {
+      "module": "Playful",
+      "objective": "Spark lightness on cue without forcing; keep the energy buoyant and warm. Glide; keep shoulders floating.",
+      "drill": ["shoulders down, jaw soft", "half-smile with breath", "one playful line out loud"],
+      "action": "Add a tiny playful tag to a routine message today.",
+      "tone": "160 Hz for short bursts, land at 128 Hz",
+      "check": "Did it read as cute and confident (not try-hard)?"
+    },
+
+    "1YUBbF24H44": {
+      "module": "Plea",
+      "objective": "Make a clear ask while staying relaxed; own desire without defense.",
+      "drill": ["hand to sternum, inhale 4 / exhale 6", "say one clean ask once", "1s silence after"],
+      "action": "Make one simple ask today without over-explaining.",
+      "tone": "128 Hz grounding (optionally pop to 160 for the chorus)",
+      "check": "Was the ask clean and finite (no scrambling)?"
+    },
+    "-CufSqKfx24": {
+      "module": "Plea",
+      "objective": "Make a clear ask while staying relaxed; own desire without defense. Keep eyes soft; no over-analysis.",
+      "drill": ["hand to sternum, inhale 4 / exhale 6", "say one clean ask once", "1s silence after"],
+      "action": "Make one simple ask today without over-explaining.",
+      "tone": "128 Hz grounding (optionally pop to 160 for the chorus)",
+      "check": "Was the ask clean and finite (no scrambling)?"
+    },
+    "cWyGx881vG8": {
+      "module": "Plea",
+      "objective": "Make a clear ask while staying relaxed; own desire without defense.",
+      "drill": ["hand to sternum, inhale 4 / exhale 6", "say one clean ask once", "1s silence after"],
+      "action": "Make one simple ask today without over-explaining.",
+      "tone": "128 Hz grounding (optionally pop to 160 for the chorus)",
+      "check": "Was the ask clean and finite (no scrambling)?"
+    },
+    "wP4JsTRPSsA": {
+      "module": "Plea",
+      "objective": "Make a clear ask while staying relaxed; own desire without defense. Override the swirl: count 1-and-2.",
+      "drill": ["hand to sternum, inhale 4 / exhale 6", "say one clean ask once", "1s silence after"],
+      "action": "Make one simple ask today without over-explaining.",
+      "tone": "128 Hz grounding (optionally pop to 160 for the chorus)",
+      "check": "Was the ask clean and finite (no scrambling)?"
+    },
+    "uMZ2QqBspIg": {
+      "module": "Plea",
+      "objective": "Make a clear ask while staying relaxed; own desire without defense. Name the cost once; stay calm.",
+      "drill": ["hand to sternum, inhale 4 / exhale 6", "say one clean ask once", "1s silence after"],
+      "action": "Make one simple ask today without over-explaining.",
+      "tone": "128 Hz grounding (optionally pop to 160 for the chorus)",
+      "check": "Was the ask clean and finite (no scrambling)?"
+    },
+    "60lgs2aaiRo": {
+      "module": "Plea",
+      "objective": "Make a clear ask while staying relaxed; own desire without defense.",
+      "drill": ["hand to sternum, inhale 4 / exhale 6", "say one clean ask once", "1s silence after"],
+      "action": "Make one simple ask today without over-explaining.",
+      "tone": "128 Hz grounding (optionally pop to 160 for the chorus)",
+      "check": "Was the ask clean and finite (no scrambling)?"
+    },
+    "cZg3t5Nu1Lo": {
+      "module": "Plea",
+      "objective": "Make a clear ask while staying relaxed; own desire without defense. Drop the spin; one clear line.",
+      "drill": ["hand to sternum, inhale 4 / exhale 6", "say one clean ask once", "1s silence after"],
+      "action": "Make one simple ask today without over-explaining.",
+      "tone": "128 Hz grounding (optionally pop to 160 for the chorus)",
+      "check": "Was the ask clean and finite (no scrambling)?"
+    },
+
+    "Gla5AzlHnS4": {
+      "module": "Empower",
+      "objective": "Move forward with upbeat self-possession; decisive, not rushed. Pace fast mind with slow body.",
+      "drill": ["long spine, weight mid-foot", "count 1-and-2 under breath", "name one choice out loud"],
+      "action": "Choose one thing fully; decline one thing kindly.",
+      "tone": "160 Hz for momentum; glide back to 128 Hz to settle",
+      "check": "Did your pace feel owned and breathable?"
+    },
+    "YcSP1ZUf1eQ": {
+      "module": "Empower",
+      "objective": "Practice playful misdirection (Sabrina wit). Keep it cute, clear, and kind.",
+      "drill": ["hips unlock, weight mid-foot", "speak a nonsense outro to the room; end with straight face", "add one wink in your tone (not face)"],
+      "action": "Tag a routine message with one playful ‘nonsense’ line.",
+      "tone": "160 Hz in 10s bursts during chorus; land at 128 Hz",
+      "check": "Did it land as warm play (not snark)?",
+      "pairRole": "Sabrina→Me",
+      "tags": ["playful", "wit", "message"]
+    },
+    "COt5MibFxMs": {
+      "module": "Empower",
+      "objective": "Move forward with upbeat self-possession; decisive, not rushed. Elegant posture; chin level.",
+      "drill": ["long spine, weight mid-foot", "count 1-and-2 under breath", "name one choice out loud"],
+      "action": "Choose one thing fully; decline one thing kindly.",
+      "tone": "160 Hz for momentum; glide back to 128 Hz to settle",
+      "check": "Did your pace feel owned and breathable?"
+    },
+    "JudqK1hL18w": {
+      "module": "Empower",
+      "objective": "Move forward with upbeat self-possession; decisive, not rushed.",
+      "drill": ["long spine, weight mid-foot", "count 1-and-2 under breath", "name one choice out loud"],
+      "action": "Choose one thing fully; decline one thing kindly.",
+      "tone": "160 Hz for momentum; glide back to 128 Hz to settle",
+      "check": "Did your pace feel owned and breathable?"
+    },
+    "FN3bTP84GCU": {
+      "module": "Empower",
+      "objective": "Move forward with upbeat self-possession; decisive, not rushed.",
+      "drill": ["long spine, weight mid-foot", "count 1-and-2 under breath", "name one choice out loud"],
+      "action": "Choose one thing fully; decline one thing kindly.",
+      "tone": "160 Hz for momentum; glide back to 128 Hz to settle",
+      "check": "Did your pace feel owned and breathable?"
+    },
+    "dxZk3f7LH9I": {
+      "module": "Empower",
+      "objective": "Move forward with upbeat self-possession; decisive, not rushed.",
+      "drill": ["long spine, weight mid-foot", "count 1-and-2 under breath", "name one choice out loud"],
+      "action": "Choose one thing fully; decline one thing kindly.",
+      "tone": "160 Hz for momentum; glide back to 128 Hz to settle",
+      "check": "Did your pace feel owned and breathable?"
+    },
+    "3gqu8ZTEM1k": {
+      "module": "Empower",
+      "objective": "Move forward with upbeat self-possession; decisive, not rushed. Larger exhale than inhale.",
+      "drill": ["long spine, weight mid-foot", "count 1-and-2 under breath", "name one choice out loud"],
+      "action": "Choose one thing fully; decline one thing kindly.",
+      "tone": "160 Hz for momentum; glide back to 128 Hz to settle",
+      "check": "Did your pace feel owned and breathable?"
+    },
+
+    "HibDj27DHMI": {
+      "module": "Confession",
+      "objective": "Offer honest truth with steadiness; soft eyes, clear voice. Keep it simple; stop at ‘trying’.",
+      "drill": ["inhale honesty, exhale tension", "say one true line, period", "micro-nod to self"],
+      "action": "Speak one small truth today (no justification).",
+      "tone": "128 Hz steady; keep gain low",
+      "check": "Did the truth land gentle and complete?"
+    },
+    "RLcdPpjKKHo": {
+      "module": "Confession",
+      "objective": "Offer honest truth with steadiness; soft eyes, clear voice. Release old breath; reset stance.",
+      "drill": ["inhale honesty, exhale tension", "say one true line, period", "micro-nod to self"],
+      "action": "Speak one small truth today (no justification).",
+      "tone": "128 Hz steady; keep gain low",
+      "check": "Did the truth land gentle and complete?"
+    },
+    "-bFZg_SMUhM": {
+      "module": "Confession",
+      "objective": "Offer honest truth with steadiness; soft eyes, clear voice. Soft chest; longer vowels.",
+      "drill": ["inhale honesty, exhale tension", "say one true line, period", "micro-nod to self"],
+      "action": "Speak one small truth today (no justification).",
+      "tone": "128 Hz steady; keep gain low",
+      "check": "Did the truth land gentle and complete?"
+    },
+    "R4VJyfCcOJc": {
+      "module": "Confession",
+      "objective": "Offer honest truth with steadiness; soft eyes, clear voice. Wider peripheral vision; relax jaw.",
+      "drill": ["inhale honesty, exhale tension", "say one true line, period", "micro-nod to self"],
+      "action": "Speak one small truth today (no justification).",
+      "tone": "128 Hz steady; keep gain low",
+      "check": "Did the truth land gentle and complete?"
+    },
+    "ZlH78Tm_oUk": {
+      "module": "Confession",
+      "objective": "Offer honest truth with steadiness; soft eyes, clear voice.",
+      "drill": ["inhale honesty, exhale tension", "say one true line, period", "micro-nod to self"],
+      "action": "Speak one small truth today (no justification).",
+      "tone": "128 Hz steady; keep gain low",
+      "check": "Did the truth land gentle and complete?"
+    },
+    "4qeaBFFq3to": {
+      "module": "Confession",
+      "objective": "Offer honest truth with steadiness; soft eyes, clear voice. Ask once, then breathe.",
+      "drill": ["inhale honesty, exhale tension", "say one true line, period", "micro-nod to self"],
+      "action": "Speak one small truth today (no justification).",
+      "tone": "128 Hz steady; keep gain low",
+      "check": "Did the truth land gentle and complete?"
+    },
+    "ckIM58Ecpcw": {
+      "module": "Confession",
+      "objective": "Offer honest truth with steadiness; soft eyes, clear voice. Place words; land the period.",
+      "drill": ["inhale honesty, exhale tension", "say one true line, period", "micro-nod to self"],
+      "action": "Speak one small truth today (no justification).",
+      "tone": "128 Hz steady; keep gain low",
+      "check": "Did the truth land gentle and complete?"
+    },
+
+    "uAVUl0cAKpo": {
+      "module": "Classic",
+      "objective": "Polished cadence and camera-ready presence; rhythm over speed. Lock groove; let cadence carry you.",
+      "drill": ["tap 2-and-4 with foot", "read one sentence to the beat", "end on breath not on strain"],
+      "action": "Deliver one line today with deliberate rhythm.",
+      "tone": "128 Hz low or off; let rhythm lead",
+      "check": "Did rhythm make you calmer and clearer?"
+    },
+    "COt5MibFxMs": {
+      "module": "Classic",
+      "objective": "Polished cadence and camera-ready presence; rhythm over speed.",
+      "drill": ["tap 2-and-4 with foot", "read one sentence to the beat", "end on breath not on strain"],
+      "action": "Deliver one line today with deliberate rhythm.",
+      "tone": "128 Hz low or off; let rhythm lead",
+      "check": "Did rhythm make you calmer and clearer?"
+    },
+    "lu9Ylxc0IZM": {
+      "module": "Classic",
+      "objective": "Polished cadence and camera-ready presence; rhythm over speed. Camera-ready neck and shoulders.",
+      "drill": ["tap 2-and-4 with foot", "read one sentence to the beat", "end on breath not on strain"],
+      "action": "Deliver one line today with deliberate rhythm.",
+      "tone": "128 Hz low or off; let rhythm lead",
+      "check": "Did rhythm make you calmer and clearer?"
+    },
+    "3gqu8ZTEM1k": {
+      "module": "Classic",
+      "objective": "Polished cadence and camera-ready presence; rhythm over speed.",
+      "drill": ["tap 2-and-4 with foot", "read one sentence to the beat", "end on breath not on strain"],
+      "action": "Deliver one line today with deliberate rhythm.",
+      "tone": "128 Hz low or off; let rhythm lead",
+      "check": "Did rhythm make you calmer and clearer?"
+    },
+    "7w4Udbys4O4": {
+      "module": "Classic",
+      "objective": "Polished cadence and camera-ready presence; rhythm over speed. Boundary delivered with a smile.",
+      "drill": ["tap 2-and-4 with foot", "read one sentence to the beat", "end on breath not on strain"],
+      "action": "Deliver one line today with deliberate rhythm.",
+      "tone": "128 Hz low or off; let rhythm lead",
+      "check": "Did rhythm make you calmer and clearer?"
+    },
+    "4ughEPQGd8w": {
+      "module": "Classic",
+      "objective": "Polished cadence and camera-ready presence; rhythm over speed. Travel posture: long spine, soft knees.",
+      "drill": ["tap 2-and-4 with foot", "read one sentence to the beat", "end on breath not on strain"],
+      "action": "Deliver one line today with deliberate rhythm.",
+      "tone": "128 Hz low or off; let rhythm lead",
+      "check": "Did rhythm make you calmer and clearer?"
+    },
+    "dhYOPzcsbGM": {
+      "module": "Classic",
+      "objective": "Polished cadence and camera-ready presence; rhythm over speed. Travel posture: long spine, soft knees.",
+      "drill": ["tap 2-and-4 with foot", "read one sentence to the beat", "end on breath not on strain"],
+      "action": "Deliver one line today with deliberate rhythm.",
+      "tone": "128 Hz low or off; let rhythm lead",
+      "check": "Did rhythm make you calmer and clearer?"
+    },
+
+    "ZWzpFdr-KDw": {
+      "module": "Wildcard",
+      "objective": "Adaptive mischief and quick reframes; improv lightly. Playful seasonal wink; keep it light.",
+      "drill": ["loosen hips, eyes smiling", "improv one witty tag", "hold a neutral face at end"],
+      "action": "Reframe one hiccup with humor within 5s.",
+      "tone": "Pulse 160 Hz for 5–10s; return to 128 Hz",
+      "check": "Did the reframe diffuse tension without sarcasm?"
+    },
+    "x8VkB8ap_FQ": {
+      "module": "Wildcard",
+      "objective": "Adaptive mischief and quick reframes; improv lightly.",
+      "drill": ["loosen hips, eyes smiling", "improv one witty tag", "hold a neutral face at end"],
+      "action": "Reframe one hiccup with humor within 5s.",
+      "tone": "Pulse 160 Hz for 5–10s; return to 128 Hz",
+      "check": "Did the reframe diffuse tension without sarcasm?"
+    },
+    "KEG7b851Ric": {
+      "module": "Wildcard",
+      "objective": "Adaptive mischief and quick reframes; improv lightly.",
+      "drill": ["loosen hips, eyes smiling", "improv one witty tag", "hold a neutral face at end"],
+      "action": "Reframe one hiccup with humor within 5s.",
+      "tone": "Pulse 160 Hz for 5–10s; return to 128 Hz",
+      "check": "Did the reframe diffuse tension without sarcasm?"
+    },
+    "8EisGrIHH04": {
+      "module": "Wildcard",
+      "objective": "Say the soft thing cleanly. Confess without defense; let warmth carry the line.",
+      "drill": ["hand to sternum, inhale 4 / exhale 6", "say (once): “i like what i like.” then 1s silence", "relax jaw; half-smile only in voice"],
+      "action": "Send one honest line today (no explanation).",
+      "tone": "128 Hz steady for calm; +160 Hz pulse for 5s if you feel stuck",
+      "check": "Did the truth land soft (no justification)?",
+      "pairRole": "Me→Sabrina",
+      "tags": ["confession", "soft-truth", "message"]
+    },
+    "kLbn61Z4LDI": {
+      "module": "Wildcard",
+      "objective": "Adaptive mischief and quick reframes; improv lightly. Glide; keep shoulders floating.",
+      "drill": ["loosen hips, eyes smiling", "improv one witty tag", "hold a neutral face at end"],
+      "action": "Reframe one hiccup with humor within 5s.",
+      "tone": "Pulse 160 Hz for 5–10s; return to 128 Hz",
+      "check": "Did the reframe diffuse tension without sarcasm?"
+    },
+    "eVli-tstM5E": {
+      "module": "Wildcard",
+      "objective": "Adaptive mischief and quick reframes; improv lightly. Espresso cue: quick sparkle, then breathe.",
+      "drill": ["loosen hips, eyes smiling", "improv one witty tag", "hold a neutral face at end"],
+      "action": "Reframe one hiccup with humor within 5s.",
+      "tone": "Pulse 160 Hz for 5–10s; return to 128 Hz",
+      "check": "Did the reframe diffuse tension without sarcasm?"
+    },
+    "cF1Na4AIecM": {
+      "module": "Wildcard",
+      "objective": "Adaptive mischief and quick reframes; improv lightly. Ask once; let silence do the flirting.",
+      "drill": ["loosen hips, eyes smiling", "improv one witty tag", "hold a neutral face at end"],
+      "action": "Reframe one hiccup with humor within 5s.",
+      "tone": "Pulse 160 Hz for 5–10s; return to 128 Hz",
+      "check": "Did the reframe diffuse tension without sarcasm?"
+    }
+  }
+}
