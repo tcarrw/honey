@@ -3,36 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Illumina 3D Lattice — WebGL (no libs)</title>
+<title>Illumina 3D Lattice — Compact Fit</title>
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0b0d11">
 <style>
-  :root{--bg:#0a0b10;--ink:#eef1ff;--muted:#aeb2c8}
+  :root{--bg:#0a0b10;--ink:#eef1ff}
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html,body{height:100%}
-  body{margin:0;background:
+  body{
+    margin:0;background:
     radial-gradient(1200px 900px at 70% -10%,rgba(183,167,255,.10),transparent 60%),
     radial-gradient(900px 700px at 10% 110%,rgba(255,154,199,.08),transparent 60%),#0a0b10;
-    font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--ink);overflow:hidden}
-  .hud{position:fixed;left:50%;top:14px;transform:translateX(-50%);letter-spacing:.18em;font-weight:800;font-size:12px;color:#cfd3ff;opacity:.95;pointer-events:none}
-  .legend{position:fixed;right:12px;bottom:12px;background:rgba(255,255,255,.06);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:10px 12px;color:var(--ink);font-size:12px}
-  .legend div{display:flex;align-items:center;gap:8px;margin:2px 0}
-  .dot{width:12px;height:12px;border-radius:50%}
+    font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--ink);overflow:hidden
+  }
+  .hud{position:fixed;left:50%;top:12px;transform:translateX(-50%);letter-spacing:.16em;font-weight:800;font-size:11px;color:#cfd3ff;opacity:.95;pointer-events:none}
   canvas{display:block;width:100vw;height:100vh;outline:none}
 </style>
 </head>
 <body>
-<div class="hud">ILLUMINA · WEBGL · drag / pinch / wheel to orbit</div>
+<div class="hud">ILLUMINA · WEBGL · drag / pinch / wheel · compact</div>
 <canvas id="gl"></canvas>
-<div class="legend">
-  <div><span class="dot" style="background:linear-gradient(180deg,#d9def9,#8aa0ff)"></span>Illumina</div>
-  <div><span class="dot" style="background:linear-gradient(180deg,#b7a7ff,#ff9ac7)"></span>MirrorHoney</div>
-  <div><span class="dot" style="background:linear-gradient(180deg,#ffd38a,#ffbfbf)"></span>Honey</div>
-  <div><span class="dot" style="background:linear-gradient(180deg,#c5eeff,#9fd3ff)"></span>Clarity</div>
-  <div><span class="dot" style="background:linear-gradient(180deg,#78c7ff,#2a6fbf)"></span>MirrorSea</div>
-  <div><span class="dot" style="background:linear-gradient(180deg,#9aa0ad,#d7d9e6)"></span>Tunes</div>
-  <div><span class="dot" style="background:linear-gradient(180deg,#ffb39c,#c49cff)"></span>Froot</div>
-</div>
 <script>
 const canvas=document.getElementById('gl');
 let gl;
@@ -40,58 +30,51 @@ function fit(){canvas.width=innerWidth;canvas.height=innerHeight}
 fit();addEventListener('resize',fit);
 gl=canvas.getContext('webgl',{alpha:false,antialias:true,depth:true,stencil:false,powerPreference:'high-performance'});
 
-// ---------- shaders (rim-lit glassy spheres + lines) ----------
-const vsSphere=`
-attribute vec3 aPos;
-attribute vec3 aNormal;
+// ---------- shaders ----------
+const vs=`
+attribute vec3 aPos, aNormal;
 uniform mat4 uMVP, uModel, uNormalMat;
-varying vec3 vN;
-varying vec3 vPos;
+varying vec3 vN, vPos;
 void main(){
   vec4 wp = uModel*vec4(aPos,1.0);
   vPos = wp.xyz;
   vN = normalize((uNormalMat*vec4(aNormal,0.0)).xyz);
   gl_Position = uMVP*vec4(aPos,1.0);
 }`;
-const fsSphere=`
+const fs=`
 precision mediump float;
-varying vec3 vN;
-varying vec3 vPos;
+varying vec3 vN, vPos;
 uniform vec3 uColorA, uColorB, uEye;
 uniform float uAlpha;
 void main(){
   vec3 V = normalize(uEye - vPos);
-  float ndv = 1.0 - max(dot(normalize(vN), V), 0.0);
-  float rim = pow(ndv, 2.2);
-  float fres = pow(1.0 - max(dot(normalize(vN), V),0.0), 3.0);
-  vec3 base = mix(uColorA,uColorB,0.55 + 0.45*(vPos.y*0.15));
-  vec3 col = base * (0.55 + 0.45*rim) + vec3(0.9,0.95,1.0)*fres*0.35;
+  float ndv = max(dot(normalize(vN), V), 0.0);
+  float rim = pow(1.0-ndv, 2.1);
+  vec3 base = mix(uColorA,uColorB,0.55 + 0.45*clamp(vPos.y*0.12, -1.0, 1.0));
+  vec3 col = base*(0.58 + 0.42*rim) + vec3(0.95)*pow(1.0-ndv,3.0)*0.35;
   gl_FragColor = vec4(col, uAlpha);
 }`;
-
-const vsLine=`
+const vsl=`
 attribute vec3 aPos;
 uniform mat4 uMVP;
-void main(){gl_Position = uMVP*vec4(aPos,1.0);}
-`;
-const fsLine=`
+void main(){ gl_Position = uMVP*vec4(aPos,1.0); }`;
+const fsl=`
 precision mediump float;
 uniform vec4 uColor;
-void main(){gl_FragColor = uColor;}
-`;
+void main(){ gl_FragColor = uColor; }`;
 
-function program(vs,fs){
+function prog(vsSrc,fsSrc){
   const p=gl.createProgram();
-  function sh(type,src){const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);return s}
-  const v=sh(gl.VERTEX_SHADER,vs), f=sh(gl.FRAGMENT_SHADER,fs);
+  const v=gl.createShader(gl.VERTEX_SHADER), f=gl.createShader(gl.FRAGMENT_SHADER);
+  gl.shaderSource(v,vsSrc); gl.compileShader(v);
+  gl.shaderSource(f,fsSrc); gl.compileShader(f);
   gl.attachShader(p,v); gl.attachShader(p,f); gl.linkProgram(p);
   return p;
 }
-const progSphere=program(vsSphere,fsSphere);
-const progLine=program(vsLine,fsLine);
+const pSphere=prog(vs,fs), pLine=prog(vsl,fsl);
 
 // ---------- geometry ----------
-function sphereGeom(lat=24,lon=24){
+function sphere(lat=22,lon=22){
   const pos=[], nor=[], idx=[];
   for(let y=0;y<=lat;y++){
     const v=y/lat, phi=v*Math.PI;
@@ -107,167 +90,144 @@ function sphereGeom(lat=24,lon=24){
       idx.push(i,i+lon+1,i+1, i+1,i+lon+1,i+lon+2);
     }
   }
-  return {pos:new Float32Array(pos), nor:new Float32Array(nor), idx:new Uint16Array(idx)};
+  return {
+    pos:new Float32Array(pos),
+    nor:new Float32Array(nor),
+    idx:new Uint16Array(idx)
+  };
 }
-const sph=sphereGeom(28,28);
-function makeBuffer(type,data){const b=gl.createBuffer();gl.bindBuffer(type,b);gl.bufferData(type,data,gl.STATIC_DRAW);return b}
-const bPos=makeBuffer(gl.ARRAY_BUFFER,sph.pos);
-const bNor=makeBuffer(gl.ARRAY_BUFFER,sph.nor);
-const bIdx=makeBuffer(gl.ELEMENT_ARRAY_BUFFER,sph.idx);
+const sph=sphere(24,24);
+function buf(type,data){const b=gl.createBuffer();gl.bindBuffer(type,b);gl.bufferData(type,data,gl.STATIC_DRAW);return b}
+const bPos=buf(gl.ARRAY_BUFFER,sph.pos);
+const bNor=buf(gl.ARRAY_BUFFER,sph.nor);
+const bIdx=buf(gl.ELEMENT_ARRAY_BUFFER,sph.idx);
 
-function lineBuffer(points){
-  return makeBuffer(gl.ARRAY_BUFFER,new Float32Array(points.flat()));
+function m4mul(a,b){const o=new Float32Array(16);for(let i=0;i<4;i++)for(let j=0;j<4;j++)o[i*4+j]=a[i*4+0]*b[0*4+j]+a[i*4+1]*b[1*4+j]+a[i*4+2]*b[2*4+j]+a[i*4+3]*b[3*4+j];return o}
+function m4id(){const m=new Float32Array(16);m[0]=m[5]=m[10]=m[15]=1;return m}
+function m4t(x,y,z){const m=m4id();m[12]=x;m[13]=y;m[14]=z;return m}
+function m4s(s){const m=m4id();m[0]=m[5]=m[10]=s;return m}
+function m4rx(a){const c=Math.cos(a),s=Math.sin(a),m=m4id();m[5]=c;m[6]=s;m[9]=-s;m[10]=c;return m}
+function m4ry(a){const c=Math.cos(a),s=Math.sin(a),m=m4id();m[0]=c;m[2]=s;m[8]=-s;m[10]=c;return m}
+function m4pers(fov,asp,n,f){const t=1/Math.tan(fov/2),m=new Float32Array(16);m[0]=t/asp;m[5]=t;m[10]=(f+n)/(n-f);m[11]=-1;m[14]=(2*f*n)/(n-f);return m}
+function m4look(eye,tgt,up){const zx=eye[0]-tgt[0],zy=eye[1]-tgt[1],zz=eye[2]-tgt[2];const zl=1/Math.hypot(zx,zy,zz);const z=[zx*zl,zy*zl,zz*zl];let x=[up[1]*z[2]-up[2]*z[1],up[2]*z[0]-up[0]*z[2],up[0]*z[1]-up[1]*z[0]];const xl=1/Math.hypot(x[0],x[1],x[2]);x=[x[0]*xl,x[1]*xl,x[2]*xl];const y=[z[1]*x[2]-z[2]*x[1],z[2]*x[0]-z[0]*x[2],z[0]*x[1]-z[1]*x[0]];const m=m4id();m[0]=x[0];m[4]=x[1];m[8]=x[2];m[1]=y[0];m[5]=y[1];m[9]=y[2];m[2]=z[0];m[6]=z[1];m[10]=z[2];m[12]=-(x[0]*eye[0]+x[1]*eye[1]+x[2]*eye[2]);m[13]=-(y[0]*eye[0]+y[1]*eye[1]+y[2]*eye[2]);m[14]=-(z[0]*eye[0]+z[1]*eye[1]+z[2]*eye[2]);return m}
+function m4inv(a){const i=new Float32Array(16);i[0]=a[5]*a[10]*a[15]-a[5]*a[11]*a[14]-a[9]*a[6]*a[15]+a[9]*a[7]*a[14]+a[13]*a[6]*a[11]-a[13]*a[7]*a[10];i[4]=-a[4]*a[10]*a[15]+a[4]*a[11]*a[14]+a[8]*a[6]*a[15]-a[8]*a[7]*a[14]-a[12]*a[6]*a[11]+a[12]*a[7]*a[10];i[8]=a[4]*a[9]*a[15]-a[4]*a[11]*a[13]-a[8]*a[5]*a[15]+a[8]*a[7]*a[13]+a[12]*a[5]*a[11]-a[12]*a[7]*a[9];i[12]=-a[4]*a[9]*a[14]+a[4]*a[10]*a[13]+a[8]*a[1]*a[14]-a[8]*a[2]*a[13]-a[12]*a[1]*a[10]+a[12]*a[2]*a[9];i[1]=-a[1]*a[10]*a[15]+a[1]*a[11]*a[14]+a[9]*a[2]*a[15]-a[9]*a[3]*a[14]-a[13]*a[2]*a[11]+a[13]*a[3]*a[10];i[5]=a[0]*a[10]*a[15]-a[0]*a[11]*a[14]-a[8]*a[2]*a[15]+a[8]*a[3]*a[14]+a[12]*a[2]*a[11]-a[12]*a[3]*a[10];i[9]=-a[0]*a[9]*a[15]+a[0]*a[11]*a[13]+a[8]*a[1]*a[15]-a[8]*a[3]*a[13]-a[12]*a[1]*a[11]+a[12]*a[3]*a[9];i[13]=a[0]*a[9]*a[14]-a[0]*a[10]*a[13]-a[8]*a[1]*a[14]+a[8]*a[2]*a[13]+a[12]*a[1]*a[10]-a[12]*a[2]*a[9];i[2]=a[1]*a[6]*a[15]-a[1]*a[7]*a[14]-a[5]*a[2]*a[15]+a[5]*a[3]*a[14]+a[13]*a[2]*a[7]-a[13]*a[3]*a[6];i[6]=-a[0]*a[6]*a[15]+a[0]*a[7]*a[14]+a[4]*a[2]*a[15]-a[4]*a[3]*a[14]-a[12]*a[2]*a[7]+a[12]*a[3]*a[6];i[10]=a[0]*a[5]*a[15]-a[0]*a[7]*a[13]-a[4]*a[1]*a[15]+a[4]*a[3]*a[13]+a[12]*a[1]*a[7]-a[12]*a[3]*a[5];i[14]=-a[0]*a[5]*a[14]+a[0]*a[6]*a[13]+a[4]*a[1]*a[14]-a[4]*a[2]*a[13]-a[12]*a[1]*a[6]+a[12]*a[2]*a[5];i[3]=-a[1]*a[6]*a[11]+a[1]*a[7]*a[10]+a[5]*a[2]*a[11]-a[5]*a[3]*a[10]-a[9]*a[2]*a[7]+a[9]*a[3]*a[6];i[7]=a[0]*a[6]*a[11]-a[0]*a[7]*a[10]-a[4]*a[2]*a[11]+a[4]*a[3]*a[10]+a[8]*a[2]*a[7]-a[8]*a[3]*a[6];i[11]=-a[0]*a[5]*a[11]+a[0]*a[7]*a[9]+a[4]*a[1]*a[11]-a[4]*a[3]*a[9]-a[8]*a[1]*a[7]+a[8]*a[3]*a[5];i[15]=a[0]*a[5]*a[10]-a[0]*a[6]*a[9]-a[4]*a[1]*a[10]+a[4]*a[2]*a[9]+a[8]*a[1]*a[6]-a[8]*a[2]*a[5];let d=a[0]*i[0]+a[1]*i[4]+a[2]*i[8]+a[3]*i[12];d=1/d;for(let k=0;k<16;k++)i[k]*=d;return i}
+function m4tr(m){const o=new Float32Array(16);for(let i=0;i<4;i++)for(let j=0;j<4;j++)o[i*4+j]=m[j*4+i];return o}
+
+// ---------- compact layout ----------
+function palette(a,b){return {a,b}}
+const colors={
+  illumina:palette([0.85,0.87,1.00],[0.53,0.63,1.00]),
+  mirrorhoney:palette([0.72,0.66,1.00],[1.00,0.60,0.78]),
+  honey:palette([1.00,0.83,0.54],[1.00,0.74,0.74]),
+  clarity:palette([0.77,0.93,1.00],[0.63,0.83,1.00]),
+  mirrorsea:palette([0.47,0.78,1.00],[0.16,0.44,0.75]),
+  tunes:palette([0.60,0.63,0.68],[0.85,0.85,0.90]),
+  froot:palette([1.00,0.70,0.61],[0.77,0.62,1.00])
+};
+
+// scale down based on shorter side for tight fit
+function scaleBase(){
+  const s=Math.min(innerWidth,innerHeight);
+  // base radius smaller on phones
+  return (s<700)? 1.45 : 1.75;
 }
+let R=scaleBase();
 
-// ---------- scene nodes ----------
-const R=2.3;
+// smaller spheres
 const NODES=[
-  {name:'Illumina',  pos:[0,0,0],             r:0.46,  colA:[0.85,0.87,1.00], colB:[0.53,0.63,1.00], a:0.85},
-  {name:'MirrorHoney',pos:[0, R, 0],          r:0.36,  colA:[0.72,0.66,1.00], colB:[1.00,0.60,0.78], a:0.78},
-  {name:'Clarity',    pos:[ R*0.9,0.18, R*0.6],r:0.33, colA:[0.77,0.93,1.00], colB:[0.63,0.83,1.00], a:0.75},
-  {name:'Honey',      pos:[-R*0.95,0.10, R*0.55],r:0.33,colA:[1.00,0.83,0.54], colB:[1.00,0.74,0.74], a:0.75},
-  {name:'MirrorSea',  pos:[0.2,-R*0.85,-R*0.8], r:0.33,colA:[0.47,0.78,1.00], colB:[0.16,0.44,0.75], a:0.72},
-  {name:'Tunes',      pos:[-R*0.9,-0.2,-R*0.5], r:0.30,colA:[0.60,0.63,0.68], colB:[0.85,0.85,0.90], a:0.7},
-  {name:'Froot',      pos:[ R*0.95,-0.1,-R*0.45],r:0.31,colA:[1.00,0.70,0.61], colB:[0.77,0.62,1.00], a:0.75}
+  {name:'Illumina',pos:[0,0,0],r:0.30,col:colors.illumina,alpha:0.85},
+  {name:'MirrorHoney',pos:[0,R,0],r:0.22,col:colors.mirrorhoney,alpha:0.8},
+  {name:'Clarity',pos:[ R*0.82,0.10, R*0.52],r:0.20,col:colors.clarity,alpha:0.78},
+  {name:'Honey',pos:[-R*0.82,0.08, R*0.50],r:0.20,col:colors.honey,alpha:0.78},
+  {name:'MirrorSea',pos:[0.15,-R*0.72,-R*0.65],r:0.20,col:colors.mirrorsea,alpha:0.76},
+  {name:'Tunes',pos:[-R*0.78,-0.15,-R*0.40],r:0.18,col:colors.tunes,alpha:0.72},
+  {name:'Froot',pos:[ R*0.78,-0.12,-R*0.38],r:0.19,col:colors.froot,alpha:0.78}
 ];
 const EDGES=[[0,1],[0,2],[0,3],[0,4],[0,5],[0,6]];
 
-const linePoints=[];
-for(const [a,b] of EDGES){
-  const A=NODES[a].pos, B=NODES[b].pos;
-  linePoints.push(A,B);
-}
-const bLines=lineBuffer(linePoints);
-
-// ---------- matrices ----------
-function m4mul(a,b){const o=new Float32Array(16);for(let i=0;i<4;i++)for(let j=0;j<4;j++){o[i*4+j]=a[i*4+0]*b[0*4+j]+a[i*4+1]*b[1*4+j]+a[i*4+2]*b[2*4+j]+a[i*4+3]*b[3*4+j]}return o}
-function m4ident(){const m=new Float32Array(16);m[0]=m[5]=m[10]=m[15]=1;return m}
-function m4translate(x,y,z){const m=m4ident();m[12]=x;m[13]=y;m[14]=z;return m}
-function m4scale(s){const m=m4ident();m[0]=m[5]=m[10]=s;return m}
-function m4rotX(a){const c=Math.cos(a),s=Math.sin(a),m=m4ident();m[5]=c;m[6]=s;m[9]=-s;m[10]=c;return m}
-function m4rotY(a){const c=Math.cos(a),s=Math.sin(a),m=m4ident();m[0]=c;m[2]=s;m[8]=-s;m[10]=c;return m}
-function m4persp(fov,aspect,near,far){const f=1/Math.tan(fov/2),m=new Float32Array(16);m[0]=f/aspect;m[5]=f;m[10]=(far+near)/(near-far);m[11]=-1;m[14]=(2*far*near)/(near-far);return m}
-function m4look(eye,target,up){
-  const zx=eye[0]-target[0],zy=eye[1]-target[1],zz=eye[2]-target[2];
-  const zl=1/Math.hypot(zx,zy,zz);const z=[zx*zl,zy*zl,zz*zl];
-  let x=[up[1]*z[2]-up[2]*z[1],up[2]*z[0]-up[0]*z[2],up[0]*z[1]-up[1]*z[0]];
-  const xl=1/Math.hypot(x[0],x[1],x[2]);x=[x[0]*xl,x[1]*xl,x[2]*xl];
-  const y=[z[1]*x[2]-z[2]*x[1],z[2]*x[0]-z[0]*x[2],z[0]*x[1]-z[1]*x[0]];
-  const m=m4ident();
-  m[0]=x[0];m[4]=x[1];m[8]=x[2];
-  m[1]=y[0];m[5]=y[1];m[9]=y[2];
-  m[2]=z[0];m[6]=z[1];m[10]=z[2];
-  m[12]=-(x[0]*eye[0]+x[1]*eye[1]+x[2]*eye[2]);
-  m[13]=-(y[0]*eye[0]+y[1]*eye[1]+y[2]*eye[2]);
-  m[14]=-(z[0]*eye[0]+z[1]*eye[1]+z[2]*eye[2]);
-  return m;
-}
-function m4invert(m){const a=m,inv=new Float32Array(16);
-  inv[0]=a[5]*a[10]*a[15]-a[5]*a[11]*a[14]-a[9]*a[6]*a[15]+a[9]*a[7]*a[14]+a[13]*a[6]*a[11]-a[13]*a[7]*a[10];
-  inv[4]=-a[4]*a[10]*a[15]+a[4]*a[11]*a[14]+a[8]*a[6]*a[15]-a[8]*a[7]*a[14]-a[12]*a[6]*a[11]+a[12]*a[7]*a[10];
-  inv[8]=a[4]*a[9]*a[15]-a[4]*a[11]*a[13]-a[8]*a[5]*a[15]+a[8]*a[7]*a[13]+a[12]*a[5]*a[11]-a[12]*a[7]*a[9];
-  inv[12]=-a[4]*a[9]*a[14]+a[4]*a[10]*a[13]+a[8]*a[5]*a[14]-a[8]*a[6]*a[13]-a[12]*a[5]*a[10]+a[12]*a[6]*a[9];
-  inv[1]=-a[1]*a[10]*a[15]+a[1]*a[11]*a[14]+a[9]*a[2]*a[15]-a[9]*a[3]*a[14]-a[13]*a[2]*a[11]+a[13]*a[3]*a[10];
-  inv[5]=a[0]*a[10]*a[15]-a[0]*a[11]*a[14]-a[8]*a[2]*a[15]+a[8]*a[3]*a[14]+a[12]*a[2]*a[11]-a[12]*a[3]*a[10];
-  inv[9]=-a[0]*a[9]*a[15]+a[0]*a[11]*a[13]+a[8]*a[1]*a[15]-a[8]*a[3]*a[13]-a[12]*a[1]*a[11]+a[12]*a[3]*a[9];
-  inv[13]=a[0]*a[9]*a[14]-a[0]*a[10]*a[13]-a[8]*a[1]*a[14]+a[8]*a[2]*a[13]+a[12]*a[1]*a[10]-a[12]*a[2]*a[9];
-  inv[2]=a[1]*a[6]*a[15]-a[1]*a[7]*a[14]-a[5]*a[2]*a[15]+a[5]*a[3]*a[14]+a[13]*a[2]*a[7]-a[13]*a[3]*a[6];
-  inv[6]=-a[0]*a[6]*a[15]+a[0]*a[7]*a[14]+a[4]*a[2]*a[15]-a[4]*a[3]*a[14]-a[12]*a[2]*a[7]+a[12]*a[3]*a[6];
-  inv[10]=a[0]*a[5]*a[15]-a[0]*a[7]*a[13]-a[4]*a[1]*a[15]+a[4]*a[3]*a[13]+a[12]*a[1]*a[7]-a[12]*a[3]*a[5];
-  inv[14]=-a[0]*a[5]*a[14]+a[0]*a[6]*a[13]+a[4]*a[1]*a[14]-a[4]*a[2]*a[13]-a[12]*a[1]*a[6]+a[12]*a[2]*a[5];
-  inv[3]=-a[1]*a[6]*a[11]+a[1]*a[7]*a[10]+a[5]*a[2]*a[11]-a[5]*a[3]*a[10]-a[9]*a[2]*a[7]+a[9]*a[3]*a[6];
-  inv[7]=a[0]*a[6]*a[11]-a[0]*a[7]*a[10]-a[4]*a[2]*a[11]+a[4]*a[3]*a[10]+a[8]*a[2]*a[7]-a[8]*a[3]*a[6];
-  inv[11]=-a[0]*a[5]*a[11]+a[0]*a[7]*a[9]+a[4]*a[1]*a[11]-a[4]*a[3]*a[9]-a[8]*a[1]*a[7]+a[8]*a[3]*a[5];
-  inv[15]=a[0]*a[5]*a[10]-a[0]*a[6]*a[9]-a[4]*a[1]*a[10]+a[4]*a[2]*a[9]+a[8]*a[1]*a[6]-a[8]*a[2]*a[5];
-  let det=a[0]*inv[0]+a[1]*inv[4]+a[2]*inv[8]+a[3]*inv[12]; det=1/det; for(let i=0;i<16;i++) inv[i]*=det; return inv;
-}
-function m4transpose(m){const o=new Float32Array(16);for(let i=0;i<4;i++)for(let j=0;j<4;j++)o[i*4+j]=m[j*4+i];return o}
+// ---------- buffers ----------
+const lineData=[]; for(const [a,b] of EDGES){lineData.push(...NODES[a].pos,...NODES[b].pos)}
+const bLines=buf(gl.ARRAY_BUFFER,new Float32Array(lineData));
 
 // ---------- controls ----------
-let ax=0.6, ay=0.8, dist=7.0;
-let dragging=false, px=0, py=0, vx=0, vy=0;
+let ax=0.5, ay=0.7, dist=(innerWidth<700?5.8:6.6);
+let dragging=false, px=0, py=0;
 canvas.addEventListener('mousedown',e=>{dragging=true;px=e.clientX;py=e.clientY});
-addEventListener('mousemove',e=>{if(!dragging)return; vx=(e.clientX-px)/300; vy=(e.clientY-py)/300; ay+=vx; ax+=vy; px=e.clientX; py=e.clientY});
+addEventListener('mousemove',e=>{if(!dragging)return; ay+=(e.clientX-px)/300; ax+=(e.clientY-py)/300; px=e.clientX; py=e.clientY});
 addEventListener('mouseup',()=>dragging=false);
-canvas.addEventListener('wheel',e=>{dist=Math.max(4,Math.min(12,dist+e.deltaY*0.002))},{passive:true});
-canvas.addEventListener('touchstart',e=>{if(e.touches.length==1){dragging=true;px=e.touches[0].clientX;py=e.touches[0].clientY}}, {passive:true});
-canvas.addEventListener('touchmove',e=>{if(!dragging)return;const t=e.touches[0];vx=(t.clientX-px)/300;vy=(t.clientY-py)/300;ay+=vx;ax+=vy;px=t.clientX;py=t.clientY},{passive:true});
+canvas.addEventListener('wheel',e=>{
+  dist=Math.max(4.2,Math.min(9.5,dist+e.deltaY*0.002));
+},{passive:true});
+canvas.addEventListener('touchstart',e=>{if(e.touches.length==1){dragging=true;px=e.touches[0].clientX;py=e.touches[0].clientY}},{passive:true});
+canvas.addEventListener('touchmove',e=>{if(!dragging)return;const t=e.touches[0];ay+=(t.clientX-px)/300;ax+=(t.clientY-py)/300;px=t.clientX;py=t.clientY},{passive:true});
 canvas.addEventListener('touchend',()=>dragging=false);
 
-// ---------- uniforms/attribs ----------
+// ---------- draw ----------
 gl.enable(gl.DEPTH_TEST);
+gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
 function useSphere(){
-  gl.useProgram(progSphere);
-  const aPos=gl.getAttribLocation(progSphere,'aPos');
-  const aNor=gl.getAttribLocation(progSphere,'aNormal');
-  gl.bindBuffer(gl.ARRAY_BUFFER,bPos);gl.vertexAttribPointer(aPos,3,gl.FLOAT,false,0,0);gl.enableVertexAttribArray(aPos);
-  gl.bindBuffer(gl.ARRAY_BUFFER,bNor);gl.vertexAttribPointer(aNor,3,gl.FLOAT,false,0,0);gl.enableVertexAttribArray(aNor);
+  gl.useProgram(pSphere);
+  const aPos=gl.getAttribLocation(pSphere,'aPos');
+  const aNor=gl.getAttribLocation(pSphere,'aNormal');
+  gl.bindBuffer(gl.ARRAY_BUFFER,bPos); gl.vertexAttribPointer(aPos,3,gl.FLOAT,false,0,0); gl.enableVertexAttribArray(aPos);
+  gl.bindBuffer(gl.ARRAY_BUFFER,bNor); gl.vertexAttribPointer(aNor,3,gl.FLOAT,false,0,0); gl.enableVertexAttribArray(aNor);
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,bIdx);
 }
-function useLines(){
-  gl.useProgram(progLine);
-  const aPos=gl.getAttribLocation(progLine,'aPos');
-  gl.bindBuffer(gl.ARRAY_BUFFER,bLines);gl.vertexAttribPointer(aPos,3,gl.FLOAT,false,0,0);gl.enableVertexAttribArray(aPos);
+function useLine(){
+  gl.useProgram(pLine);
+  const aPos=gl.getAttribLocation(pLine,'aPos');
+  gl.bindBuffer(gl.ARRAY_BUFFER,bLines); gl.vertexAttribPointer(aPos,3,gl.FLOAT,false,0,0); gl.enableVertexAttribArray(aPos);
 }
-function draw(){
+
+function render(){
   gl.viewport(0,0,canvas.width,canvas.height);
   gl.clearColor(0.04,0.05,0.07,1); gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
 
-  if(!dragging){ ay+=0.0028; ax+=0.0012 }
+  // gentle auto-rotate
+  if(!dragging){ ay+=0.0025; ax+=0.0011 }
 
-  const aspect=canvas.width/canvas.height;
-  const proj=m4persp(45*Math.PI/180,aspect,0.1,50);
-  const rot=m4mul(m4rotY(ay),m4rotX(ax));
-  const eye=[Math.sin(ay)*dist*Math.cos(ax*0.4), 1.4+Math.sin(ax)*1.0, Math.cos(ay)*dist];
+  const asp=canvas.width/canvas.height;
+  const proj=m4pers(42*Math.PI/180,asp,0.1,50);
+  const rot=m4mul(m4ry(ay),m4rx(ax));
+  const eye=[Math.sin(ay)*dist*Math.cos(ax*0.35), 1.2+Math.sin(ax)*0.9, Math.cos(ay)*dist];
   const view=m4look(eye,[0,0,0],[0,1,0]);
   const viewProj=m4mul(proj,view);
-  const normalMat=m4transpose(m4invert(rot));
+  const normalMat=m4tr(m4inv(rot));
 
-  // ring (approximate)
-  useLines();
-  const uMVPL=gl.getUniformLocation(progLine,'uMVP');
-  const uColor=gl.getUniformLocation(progLine,'uColor');
-  const ringM=m4mul(rot,m4scale(R*0.98));
-  gl.uniformMatrix4fv(uMVPL,false,m4mul(viewProj,ringM));
-  gl.uniform4f(uColor,1,1,1,0.14);
-  gl.drawArrays(gl.LINE_LOOP,0,linePoints.length);
-
-  // edges from center
-  const edgeBuf=[];
-  for(const [a,b] of EDGES){edgeBuf.push(...NODES[a].pos,...NODES[b].pos)}
-  gl.bindBuffer(gl.ARRAY_BUFFER, bLines);
-  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(edgeBuf),gl.DYNAMIC_DRAW);
+  // edges
+  useLine();
+  const uMVPL=gl.getUniformLocation(pLine,'uMVP');
+  const uColor=gl.getUniformLocation(pLine,'uColor');
   gl.uniformMatrix4fv(uMVPL,false,m4mul(viewProj,rot));
-  gl.uniform4f(uColor,1,1,1,0.20);
-  gl.drawArrays(gl.LINES,0,edgeBuf.length/3);
+  gl.uniform4f(uColor,1,1,1,0.18);
+  gl.drawArrays(gl.LINES,0,lineData.length/3);
 
-  // spheres
+  // spheres (small, compact)
   useSphere();
-  const uMVP=gl.getUniformLocation(progSphere,'uMVP');
-  const uModel=gl.getUniformLocation(progSphere,'uModel');
-  const uNormalMat=gl.getUniformLocation(progSphere,'uNormalMat');
-  const uColorA=gl.getUniformLocation(progSphere,'uColorA');
-  const uColorB=gl.getUniformLocation(progSphere,'uColorB');
-  const uEye=gl.getUniformLocation(progSphere,'uEye');
-  const uAlpha=gl.getUniformLocation(progSphere,'uAlpha');
+  const uMVP=gl.getUniformLocation(pSphere,'uMVP');
+  const uModel=gl.getUniformLocation(pSphere,'uModel');
+  const uNormalMat=gl.getUniformLocation(pSphere,'uNormalMat');
+  const uColorA=gl.getUniformLocation(pSphere,'uColorA');
+  const uColorB=gl.getUniformLocation(pSphere,'uColorB');
+  const uEye=gl.getUniformLocation(pSphere,'uEye');
+  const uAlpha=gl.getUniformLocation(pSphere,'uAlpha');
   gl.uniform3f(uEye,eye[0],eye[1],eye[2]);
 
-  gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-
   for(const n of NODES){
-    let model=m4mul(rot,m4mul(m4translate(n.pos[0],n.pos[1],n.pos[2]),m4scale(n.r)));
+    const model=m4mul(rot,m4mul(m4t(n.pos[0],n.pos[1],n.pos[2]),m4s(n.r)));
     gl.uniformMatrix4fv(uModel,false,model);
     gl.uniformMatrix4fv(uNormalMat,false,normalMat);
     gl.uniformMatrix4fv(uMVP,false,m4mul(viewProj,model));
-    gl.uniform3f(uColorA,n.colA[0],n.colA[1],n.colA[2]);
-    gl.uniform3f(uColorB,n.colB[0],n.colB[1],n.colB[2]);
-    gl.uniform1f(uAlpha,n.a);
+    gl.uniform3f(uColorA,n.col.a[0],n.col.a[1],n.col.a[2]);
+    gl.uniform3f(uColorB,n.col.b[0],n.col.b[1],n.col.b[2]);
+    gl.uniform1f(uAlpha,n.alpha);
     gl.drawElements(gl.TRIANGLES,sph.idx.length,gl.UNSIGNED_SHORT,0);
   }
 
-  requestAnimationFrame(draw);
+  requestAnimationFrame(render);
 }
-requestAnimationFrame(draw);
+requestAnimationFrame(render);
 </script>
 </body>
 </html>
