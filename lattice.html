@@ -1,125 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Illumina 3D Lattice</title>
-<meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#0b0d11">
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Illumina Lattice — Canvas 2D</title>
+<meta name="color-scheme" content="dark"><meta name="theme-color" content="#0b0d11">
 <style>
-  :root{--bg:#0a0b10;--ink:#eef1ff;--muted:#aeb2c8;--vio:#b7a7ff;--rose:#ff9ac7;--gold:#ffd38a;--ice:#bfe7ff;--sea:#7bc7ff;--pearl:#d9def9}
-  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  html,body{height:100%}
-  body{margin:0;background:
+  :root{--bg:#0a0b10;--ink:#eef1ff}
+  html,body{height:100%}body{margin:0;background:
     radial-gradient(1200px 900px at 70% -10%,rgba(183,167,255,.10),transparent 60%),
     radial-gradient(900px 700px at 10% 110%,rgba(255,154,199,.08),transparent 60%),#0a0b10;
-    font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--ink);overflow:hidden}
-  .hud{position:fixed;left:50%;top:14px;transform:translateX(-50%);letter-spacing:.18em;font-weight:800;font-size:12px;color:#cfd3ff;opacity:.9}
-  .legend{position:fixed;right:12px;bottom:12px;background:rgba(255,255,255,.06);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:10px 12px;color:var(--ink);font-size:12px}
-  .legend div{display:flex;align-items:center;gap:8px;margin:2px 0}
-  .dot{width:10px;height:10px;border-radius:50%}
+    color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;overflow:hidden}
+  .hud{position:fixed;left:50%;top:12px;transform:translateX(-50%);letter-spacing:.16em;font-weight:800;font-size:11px;color:#cfd3ff;opacity:.95;pointer-events:none}
   canvas{display:block;width:100vw;height:100vh}
 </style>
-</head>
-<body>
-<div class="hud">ILLUMINA · 3D LATTICE · drag / touch to orbit</div>
+</head><body>
+<div class="hud">ILLUMINA · DRAG TO ORBIT</div>
 <canvas id="c"></canvas>
-<div class="legend">
-  <div><span class="dot" style="background:linear-gradient(180deg,var(--pearl),#8aa0ff)"></span>Illumina (Core)</div>
-  <div><span class="dot" style="background:linear-gradient(180deg,#a78bff,#ff9ac7)"></span>MirrorHoney</div>
-  <div><span class="dot" style="background:linear-gradient(180deg,#ffd38a,#ffbfbf)"></span>Honey</div>
-  <div><span class="dot" style="background:linear-gradient(180deg,#c5eeff,#9fd3ff)"></span>Clarity</div>
-  <div><span class="dot" style="background:linear-gradient(180deg,#78c7ff,#2a6fbf)"></span>MirrorSea</div>
-  <div><span class="dot" style="background:linear-gradient(180deg,#9aa0ad,#d7d9e6)"></span>Tunes</div>
-  <div><span class="dot" style="background:linear-gradient(180deg,#ffb39c,#c49cff)"></span>Froot</div>
-</div>
 <script>
-  const canvas=document.getElementById('c'); const ctx=canvas.getContext('2d');
-  let W=innerWidth,H=innerHeight; function resize(){W=innerWidth;H=innerHeight;canvas.width=W;canvas.height=H} resize(); addEventListener('resize',resize);
-  const center={x:0,y:0,z:0};
-  const R=2.2; // orbit radius
-  const nodes=[
-    {name:'Illumina',color:['#d9def9','#8aa0ff'],p:{x:0,y:0,z:0},r:0.26},
-    {name:'MirrorHoney',color:['#b7a7ff','#ff9ac7'],p:{x:0,y: R,z:0},r:0.20},
-    {name:'Clarity',color:['#c5eeff','#9fd3ff'],p:{x: R*0.9,y:0.15,z: R*0.6},r:0.18},
-    {name:'Honey',color:['#ffd38a','#ffbfbf'],p:{x:-R*0.95,y:0.10,z: R*0.55},r:0.18},
-    {name:'MirrorSea',color:['#78c7ff','#2a6fbf'],p:{x:0.2,y:-R*0.85,z:-R*0.8},r:0.18},
-    {name:'Tunes',color:['#9aa0ad','#d7d9e6'],p:{x:-R*0.9,y:-0.2,z:-R*0.5},r:0.16},
-    {name:'Froot',color:['#ffb39c','#c49cff'],p:{x: R*0.95,y:-0.1,z:-R*0.45},r:0.17}
-  ];
-  const edges=[[0,1],[0,2],[0,3],[0,4],[0,5],[0,6]];
-
-  let ax=0.28, ay=0.32; let vx=0, vy=0; let dragging=false, px=0, py=0;
-  function rotX(p,a){const s=Math.sin(a),c=Math.cos(a);return {x:p.x, y:p.y*c - p.z*s, z:p.y*s + p.z*c}}
-  function rotY(p,a){const s=Math.sin(a),c=Math.cos(a);return {x:p.x*c + p.z*s, y:p.y, z:-p.x*s + p.z*c}}
-  function project(p){const d=5; const f=d/(d+p.z); return {x:W/2 + p.x*f*120, y:H/2 - p.y*f*120, s:f}}
-  function radialGrad(x,y,r,c1,c2){const g=ctx.createRadialGradient(x,y,r*0.2,x,y,r); g.addColorStop(0,c1); g.addColorStop(1,c2); return g}
-
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    const rotated=nodes.map(n=>{let p=rotX(n.p,ax); p=rotY(p,ay); return {...n, prj:project(p), depth:p.z}});
-    rotated.sort((a,b)=>a.prj.s-b.prj.s); // painter's algo
-
-    // orbit ring (subtle)
-    ctx.strokeStyle='rgba(255,255,255,.12)'; ctx.lineWidth=1.5;
-    ctx.beginPath();
-    for(let i=0;i<=360;i++){
-      const rad=i*Math.PI/180;
-      const p={x:Math.cos(rad)*R*0.98,y:Math.sin(rad)*R*0.98,z:0};
-      let q=rotX(p,ax); q=rotY(q,ay); const m=project(q);
-      if(i===0) ctx.moveTo(m.x,m.y); else ctx.lineTo(m.x,m.y);
-    }
-    ctx.stroke();
-
-    // edges
-    ctx.lineWidth=2;
-    for(const [a,b] of edges){
-      const A=rotated.find(n=>n.name===nodes[a].name); const B=rotated.find(n=>n.name===nodes[b].name);
-      ctx.strokeStyle='rgba(255,255,255,.18)';
-      ctx.beginPath(); ctx.moveTo(A.prj.x,A.prj.y); ctx.lineTo(B.prj.x,B.prj.y); ctx.stroke();
-      // frequency labels
-      const midx=(A.prj.x+B.prj.x)/2, midy=(A.prj.y+B.prj.y)/2;
-      ctx.fillStyle='rgba(207,211,230,.9)'; ctx.font='12px system-ui, -apple-system, Segoe UI';
-      let hz=''; if(A.name==='Illumina'&&B.name==='Honey'||B.name==='Illumina'&&A.name==='Honey') hz='128 Hz';
-      if(A.name==='Illumina'&&B.name==='MirrorHoney'||B.name==='Illumina'&&A.name==='MirrorHoney') hz='160 Hz';
-      if(A.name==='Illumina'&&B.name==='Clarity'||B.name==='Illumina'&&A.name==='Clarity') hz='256 Hz';
-      if(A.name==='Illumina'&&B.name==='MirrorSea'||B.name==='Illumina'&&A.name==='MirrorSea') hz='64 Hz';
-      if(A.name==='Illumina'&&B.name==='Tunes'||B.name==='Illumina'&&A.name==='Tunes') hz='320 Hz';
-      if(A.name==='Illumina'&&B.name==='Froot'||B.name==='Illumina'&&A.name==='Froot') hz='140 Hz';
-      if(hz){ctx.fillText(hz,midx-18,midy-6)}
-    }
-
-    // nodes
-    for(const n of rotated){
-      const r=n.r*60*n.prj.s+10;
-      const g=radialGrad(n.prj.x,n.prj.y,r,n.color[0],n.color[1]);
-      ctx.fillStyle=g; ctx.beginPath(); ctx.arc(n.prj.x,n.prj.y,r,0,Math.PI*2); ctx.fill();
-      ctx.strokeStyle='rgba(255,255,255,.25)'; ctx.lineWidth=1; ctx.stroke();
-
-      // labels
-      ctx.fillStyle='rgba(239,241,255,.95)'; ctx.font='600 14px system-ui,-apple-system,Segoe UI';
-      const label=n.name.toUpperCase();
-      const tw=ctx.measureText(label).width;
-      ctx.fillText(label, n.prj.x - tw/2, n.prj.y + r + 16);
-    }
-  }
-
-  function step(t){
-    if(!dragging){ ay+=0.0035; ax+=0.0015 }
-    draw(); requestAnimationFrame(step)
-  }
-  requestAnimationFrame(step);
-
-  function down(x,y){dragging=true; px=x; py=y}
-  function move(x,y){ if(!dragging) return; const dx=(x-px)/180, dy=(y-py)/180; ay+=dx; ax+=dy; px=x; py=y }
-  function up(){dragging=false}
-
-  canvas.addEventListener('mousedown',e=>down(e.clientX,e.clientY));
-  addEventListener('mousemove',e=>move(e.clientX,e.clientY));
-  addEventListener('mouseup',up);
-  canvas.addEventListener('touchstart',e=>{const t=e.touches[0]; down(t.clientX,t.clientY)}, {passive:true});
-  canvas.addEventListener('touchmove',e=>{const t=e.touches[0]; move(t.clientX,t.clientY)}, {passive:true});
-  canvas.addEventListener('touchend',up);
+const cv=document.getElementById('c'), cx=cv.getContext('2d');let W=innerWidth,H=innerHeight;function rs(){cv.width=W=innerWidth;cv.height=H=innerHeight}rs();addEventListener('resize',rs);
+const R=2.0, nodes=[
+  {n:'ILLUMINA',c:['#d9def9','#8aa0ff'],p:{x:0,y:0,z:0},r:.25},
+  {n:'MIRRORHONEY',c:['#b7a7ff','#ff9ac7'],p:{x:0,y:R,z:0},r:.20},
+  {n:'CLARITY',c:['#c5eeff','#9fd3ff'],p:{x:R*.82,y:.12,z:R*.55},r:.18},
+  {n:'HONEY',c:['#ffd38a','#ffbfbf'],p:{x:-R*.82,y:.10,z:R*.50},r:.18},
+  {n:'MIRRORSEA',c:['#78c7ff','#2a6fbf'],p:{x:.15,y:-R*.78,z:-R*.75},r:.18},
+  {n:'TUNES',c:['#9aa0ad','#d7d9e6'],p:{x:-R*.78,y:-.12,z:-R*.48},r:.16},
+  {n:'FROOT',c:['#ffb39c','#c49cff'],p:{x:R*.85,y:-.10,z:-R*.42},r:.17}
+];const edges=[[0,1],[0,2],[0,3],[0,4],[0,5],[0,6]];
+let ax=.3,ay=.36,drag=false,px=0,py=0;
+function rx(p,a){const s=Math.sin(a),c=Math.cos(a);return {x:p.x,y:p.y*c-p.z*s,z:p.y*s+p.z*c}}
+function ry(p,a){const s=Math.sin(a),c=Math.cos(a);return {x:p.x*c+p.z*s,y:p.y,z:-p.x*s+p.z*c}}
+function proj(p){const d=5,f=d/(d+p.z);return {x:W/2+p.x*f*120,y:H/2-p.y*f*120,s:f}}
+function dot(x,y,r,a,b){const g=cx.createRadialGradient(x,y,r*.2,x,y,r);g.addColorStop(0,a);g.addColorStop(1,b);return g}
+function draw(){
+  cx.clearRect(0,0,W,H);
+  const rot=nodes.map(o=>{let p=rx(o.p,ax);p=ry(p,ay);return {...o,m:proj(p),dz:p.z}});
+  cx.strokeStyle='rgba(255,255,255,.14)';cx.lineWidth=1.5;cx.beginPath();
+  for(let i=0;i<=360;i++){const t=i*Math.PI/180,q=proj(ry(rx({x:Math.cos(t)*R,y:Math.sin(t)*R,z:0},ax),ay));if(i===0)cx.moveTo(q.x,q.y);else cx.lineTo(q.x,q.y)}cx.stroke();
+  cx.strokeStyle='rgba(255,255,255,.18)';cx.lineWidth=2;for(const [a,b] of edges){const A=rot[a].m,B=rot[b].m;cx.beginPath();cx.moveTo(A.x,A.y);cx.lineTo(B.x,B.y);cx.stroke()}
+  rot.sort((a,b)=>a.m.s-b.m.s);
+  for(const o of rot){const r=o.r*60*o.m.s+8;cx.fillStyle=dot(o.m.x,o.m.y,r,o.c[0],o.c[1]);cx.beginPath();cx.arc(o.m.x,o.m.y,r,0,Math.PI*2);cx.fill();cx.strokeStyle='rgba(255,255,255,.22)';cx.lineWidth=1;cx.stroke();
+    cx.fillStyle='rgba(239,241,255,.96)';cx.font='700 12px system-ui,-apple-system,Segoe UI';const t=o.n;const w=cx.measureText(t).width;cx.fillText(t,o.m.x-w/2,o.m.y+r+14)}
+}
+function step(){if(!drag)ay+=.0032,ax+=.0013;draw();requestAnimationFrame(step)}requestAnimationFrame(step);
+cv.addEventListener('mousedown',e=>{drag=true;px=e.clientX;py=e.clientY});addEventListener('mousemove',e=>{if(!drag)return;ay+=(e.clientX-px)/260;ax+=(e.clientY-py)/260;px=e.clientX;py=e.clientY});addEventListener('mouseup',()=>drag=false);
+cv.addEventListener('touchstart',e=>{const t=e.touches[0];drag=true;px=t.clientX;py=t.clientY},{passive:true});
+cv.addEventListener('touchmove',e=>{const t=e.touches[0];if(!drag)return;ay+=(t.clientX-px)/260;ax+=(t.clientY-py)/260;px=t.clientX;py=t.clientY},{passive:true});
+cv.addEventListener('touchend',()=>drag=false);
 </script>
-</body>
-</html>
+</body></html>
