@@ -1,381 +1,208 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Honey School · Room A — Magnetism & Play</title>
-<meta name="theme-color" content="#0b0d11" media="(prefers-color-scheme: dark)">
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="color-scheme" content="dark light"/>
+<title>Honey — Sabrina · First Anchor Room</title>
+<meta name="description" content="Honey — Sabrina’s Room. Glass UI, tone pads (128/160/256 Hz), YouTube lane, gentle guidance, offline-ready."/>
+<meta name="theme-color" content="#0b0d11"/>
 <style>
-:root{
-  --bg:#0a0b10;--ink:#f8f7ff;--muted:#b9b8d6;--rim:rgba(255,255,255,.22);
-  --glass:rgba(255,255,255,.07);--glass2:rgba(255,255,255,.12);
-  --bee:#ffe895;--amber:#ffb62a;--ok:#6ee7a8;--bad:#ff6b6b;--warn:#ffba6b;
-  --card:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.04));
-  --shadow:0 12px 30px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.04);
-}
-*{box-sizing:border-box}html,body{height:100%}
-body{margin:0;background:linear-gradient(180deg,#090a0e 0%,#0a0b10 100%);color:var(--ink);font:400 16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial;letter-spacing:.2px}
-.container{max-width:1000px;margin:0 auto;padding:20px 14px 96px}
-.header{display:flex;align-items:center;gap:14px;margin:6px 0 14px}
-.badge{display:inline-block;background:linear-gradient(180deg,#ffe895,#ffb62a);color:#111;font-weight:700;border-radius:10px;padding:2px 8px;font-size:11px}
-h1{margin:0;font-size:22px;letter-spacing:.4px}
-.sub{margin:4px 0 0;color:var(--muted);font-size:13px}
-.bee-logo{width:46px;height:46px;border-radius:50%;background:radial-gradient(closest-side,#ffe895,#ffc54f 60%,#e3a400 100%);position:relative;box-shadow:0 0 0 3px rgba(255,219,120,.35)}
-.bee-logo:before,.bee-logo:after{content:"";position:absolute;background:rgba(255,255,255,.6);border-radius:50%;width:14px;height:9px;top:-6px}
-.bee-logo:before{left:2px;transform:rotate(-14deg)}
-.bee-logo:after{right:2px;transform:rotate(14deg)}
-.grid{display:grid;gap:14px;grid-template-columns:1fr}
-@media(min-width:780px){.grid{grid-template-columns:1fr 1fr}}
-.card{background:var(--card);border:1px solid var(--rim);border-radius:16px;box-shadow:var(--shadow);padding:14px}
-.card h2{margin:0 0 10px;font-size:16px;letter-spacing:.3px}
-.small{color:var(--muted);font-size:13px;margin:6px 0 0}
-.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.controls button,input,textarea,select{appearance:none;border:none;outline:none;border-radius:12px;background:var(--glass);color:var(--ink);padding:10px 12px;font-size:14px;border:1px solid var(--rim)}
-button{cursor:pointer}
-button.solid{background:linear-gradient(180deg,rgba(255,219,120,.18),rgba(255,219,120,.06));border-color:rgba(255,219,120,.45);box-shadow:0 0 0 3px rgba(255,219,120,.25)}
-button.ghost{background:transparent;border-style:dashed}
-button.secondary{background:var(--glass)}
-.kpis{display:flex;gap:10px;flex-wrap:wrap}
-.kpi{flex:1 1 140px;background:rgba(255,255,255,.05);border:1px solid var(--rim);border-radius:12px;padding:8px 10px;text-align:center}
-.kpi b{display:block;font-size:18px;margin-top:2px}
-.table{width:100%;border-collapse:separate;border-spacing:0 8px}
-.table th{font-size:12px;color:var(--muted);text-align:left;padding:0 8px}
-.table td{background:rgba(255,255,255,.04);border:1px solid var(--rim);padding:8px;border-radius:10px}
-.hr{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);margin:10px 0;border:0}
-.footer{position:fixed;inset:auto 0 0 0;background:linear-gradient(180deg,rgba(10,11,16,0),#0a0b10 35%);border-top:1px solid var(--rim);backdrop-filter:blur(6px)}
-.footer-inner{max-width:1000px;margin:0 auto;padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.state{display:inline-flex;align-items:center;gap:8px}
-.dot{width:10px;height:10px;border-radius:50%}
-.ok{background:var(--ok)}.bad{background:var(--bad)}.warn{background:var(--warn)}
-.pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,219,120,.15);border:1px solid rgba(255,219,120,.45);color:var(--ink);padding:6px 8px;border-radius:999px;font-size:12px}
-.lesson{display:grid;gap:8px;grid-template-columns:20px 1fr}
-.lesson .dot{margin-top:6px;background:rgba(255,255,255,.5)}
-.lesson b{display:block}
-.tagrow{display:flex;gap:8px;flex-wrap:wrap}
-.lessons{display:grid;gap:10px}
-@media(min-width:780px){.lessons{grid-template-columns:1fr 1fr}}
-input[type="range"]{width:180px}
-textarea{min-height:84px;width:100%;resize:vertical}
-.hidden{display:none}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(2px);display:none;align-items:center;justify-content:center;padding:20px}
-.modal .box{max-width:520px;width:100%;background:var(--card);border:1px solid var(--rim);border-radius:16px;box-shadow:var(--shadow);padding:16px}
-pre.snap{white-space:pre-wrap;background:rgba(255,255,255,.06);border:1px dashed var(--rim);padding:10px;border-radius:10px;margin:0}
-.selftest td.pass{color:var(--ok);font-weight:700}
-.selftest td.fail{color:var(--bad);font-weight:700}
+  :root{
+    --bg:#07080b;
+    --fg:#f5f7fb;
+    --glass:rgba(255,255,255,.06);
+    --line:rgba(255,255,255,.12);
+    --accent:#ffc857; /* honey amber */
+    --glow:0 0 26px rgba(255,200,87,.35);
+    --radius:16px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;background:
+      radial-gradient(1000px 900px at 20% -10%, rgba(255,200,87,.10), transparent 60%),
+      radial-gradient(1200px 1000px at 110% 90%, rgba(170,220,255,.10), transparent 60%), var(--bg);
+    color:var(--fg);font:500 16px/1.45 ui-sans-serif,system-ui,Segoe UI,Roboto,Inter,Apple Color Emoji;
+    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  }
+  a{color:inherit}
+  .wrap{max-width:960px;margin:0 auto;padding:20px 16px 56px;display:grid;gap:16px}
+  header{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius);
+    background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+    backdrop-filter:blur(8px); box-shadow:var(--glow);
+  }
+  .brand{display:flex;align-items:center;gap:10px}
+  .drop{width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:var(--glow)}
+  h1{margin:0;font-size:18px;letter-spacing:.4px}
+  .cta{display:flex;gap:8px;flex-wrap:wrap}
+  .btn{border:1px solid var(--line);background:var(--glass);color:var(--fg);
+       border-radius:999px;padding:8px 12px;cursor:pointer;user-select:none;outline:none}
+  .btn:focus-visible{box-shadow:0 0 0 2px #fff3,inset 0 0 0 2px var(--accent)}
+  .panel{border:1px solid var(--line);border-radius:var(--radius);background:var(--glass);
+         backdrop-filter:blur(8px);padding:14px;display:grid;gap:12px}
+  .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+  @media (max-width:840px){.grid{grid-template-columns:1fr}}
+  .title{font-weight:700;letter-spacing:.25px}
+  .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .slider{width:160px}
+  iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:12px;background:#000}
+  .small{opacity:.85;font-size:13px}
+  .ok{color:#89f5a0}.bad{color:#ff9ea0}
+  footer{opacity:.75;font-size:12px;text-align:center;padding:10px}
 </style>
 </head>
 <body>
-<div class="container" id="app">
-  <header class="header">
-    <div class="bee-logo"></div>
-    <div>
-      <h1 id="bannerTitle">Honey School · Room A</h1>
-      <div class="sub" id="bannerTagline">Playful discipline. Get sticky, not needy.</div>
-      <div class="tagrow" id="bannerQuips"></div>
+<div class="wrap">
+
+  <header>
+    <div class="brand">
+      <div class="drop" aria-hidden="true"></div>
+      <h1 aria-label="Honey Room for Sabrina">Honey — Sabrina · First Anchor</h1>
+    </div>
+    <div class="cta">
+      <button class="btn" id="addVideo" aria-label="Add or change video">+ video</button>
+      <a class="btn" href="https://honey.plnt.earth" target="_blank" rel="noopener">Honey</a>
+      <a class="btn" href="https://tunes.plnt.earth" target="_blank" rel="noopener">Tunes</a>
+      <a class="btn" href="https://mirrorhoney.plnt.earth" target="_blank" rel="noopener">MirrorHoney</a>
     </div>
   </header>
 
   <section class="grid">
-    <div class="card controls" data-step="start">
-      <h2>One-Tap Start <span class="badge">Bee Button</span></h2>
-      <div class="row">
-        <button id="start" class="solid">Start</button>
-        <button id="stop" class="secondary">Stop</button>
-        <span class="pill" id="sessionPill">Idle</span>
+    <div class="panel" aria-labelledby="videoTitle">
+      <div class="title" id="videoTitle">Sabrina Lane</div>
+      <iframe id="player" allow="autoplay; encrypted-media; picture-in-picture; web-share" allowfullscreen playsinline title="Video lane"></iframe>
+      <div class="row small">
+        Paste an official YouTube URL via <b>+ video</b>. Saved privately to your device.
       </div>
-      <div class="row">
-        <label>Hz <input id="hz" type="number" min="20" max="500" step="0.01" value="128.00"></label>
-        <label>Vol <input id="vol" type="range" min="0" max="1" step="0.001" value="0.18"></label>
-        <label><input id="lfo" type="checkbox" checked> Breath</label>
-        <label><input id="bg" type="checkbox" checked> Background</label>
-        <button class="ghost preset" data-hz="128">128</button>
-        <button class="ghost preset" data-hz="160">160</button>
-        <button class="ghost preset" data-hz="256">256</button>
-      </div>
-      <p class="small">Tap once. If you double-tap, you owe me a lemon square.</p>
     </div>
 
-```
-<div class="card" data-step="spark">
-  <h2>Taste Sparks</h2>
-  <div class="row">
-    <input id="sparkInput" placeholder="Add a spark (e.g., lemon lights)">
-    <button id="addSpark" class="solid">Add</button>
-    <button id="randSpark" class="secondary">Random</button>
-    <button id="clearSparks" class="ghost">Clear</button>
-    <span class="pill" id="sparkCount">0 / day</span>
-  </div>
-  <div class="hr"></div>
-  <div id="sparkList" class="row"></div>
-  <p class="small">If you wouldn’t text it to your crush, it’s not a spark.</p>
-</div>
-
-<div class="card" data-step="offer">
-  <h2>Micro-Offer</h2>
-  <div class="row">
-    <input id="offerText" placeholder="One playful invite in one breath">
-    <button id="offerShip" class="solid">Ship</button>
-    <button id="offerClear" class="ghost">Clear</button>
-  </div>
-  <p class="small">Make it tappable in one breath.</p>
-</div>
-
-<div class="card" data-step="ledger">
-  <h2>Joy Ledger · Magnet Test</h2>
-  <div class="row">
-    <input id="joyNote" placeholder="What did you try?">
-    <label>Joy <input id="joyScore" type="range" min="0" max="10" step="1" value="6"></label>
-    <button id="joyAdd" class="solid">Log</button>
-    <button id="exportCSV" class="secondary">Export CSV</button>
-    <button id="clearLedger" class="ghost">Clear</button>
-  </div>
-  <div class="kpis">
-    <div class="kpi"><span>Joy avg</span><b id="joyAvg">—</b></div>
-    <div class="kpi"><span>Streak</span><b id="streak">0</b></div>
-    <div class="kpi"><span>Entries</span><b id="entries">0</b></div>
-  </div>
-  <table class="table" id="ledgerTable">
-    <thead><tr><th style="width:140px">Time</th><th>Action</th><th>Joy</th></tr></thead>
-    <tbody></tbody>
-  </table>
-  <div class="hr"></div>
-  <div class="row">
-    <input id="magName" placeholder="Thing / idea / offer">
-    <label>Pull <input id="magPull" type="range" min="0" max="10" step="1" value="5"></label>
-    <button id="magLog" class="secondary">Log Magnet</button>
-    <button id="magClear" class="ghost">Clear</button>
-  </div>
-  <table class="table" id="magTable">
-    <thead><tr><th>Item</th><th>Pull</th><th>Keep?</th></tr></thead>
-    <tbody></tbody>
-  </table>
-</div>
-
-<div class="card">
-  <h2>Lesson Cards</h2>
-  <div class="lessons" id="lessonCards"></div>
-</div>
-
-<div class="card" data-step="close">
-  <h2>Butterfly Close</h2>
-  <div class="row">
-    <button id="openClose" class="solid">Open Close</button>
-    <span class="small">color/3 + next nudge</span>
-  </div>
-</div>
-
-<div class="card">
-  <h2>Self-Checks <span class="badge">Auto</span></h2>
-  <div class="row">
-    <button id="runChecks" class="solid">Run Self-Checks</button>
-    <span class="pill">Source: Brief JSON</span>
-  </div>
-  <table class="table selftest" id="checkTable">
-    <thead><tr><th>#</th><th>Check</th><th>Status</th><th>Detail</th></tr></thead>
-    <tbody></tbody>
-  </table>
-  <div class="kpis">
-    <div class="kpi"><span>Passed</span><b id="passCount">0</b></div>
-    <div class="kpi"><span>Failed</span><b id="failCount">0</b></div>
-    <div class="kpi"><span>Overall</span><b id="overall">—</b></div>
-  </div>
-  <details><summary>Snapshot</summary><pre class="snap" id="snap">—</pre></details>
-</div>
-```
-
+    <div class="panel" aria-labelledby="toneTitle">
+      <div class="title" id="toneTitle">Honey Tone</div>
+      <div class="row" role="group" aria-label="Tone frequency pads">
+        <button class="btn" data-f="128">128 Hz</button>
+        <button class="btn" data-f="160">160 Hz</button>
+        <button class="btn" data-f="256">256 Hz</button>
+        <button class="btn" id="stopTone">Stop</button>
+      </div>
+      <div class="row">
+        <label for="vol" class="small">Volume</label>
+        <input id="vol" class="slider" type="range" min="0" max="1" step="0.01" value="0.20"/>
+        <button class="btn" id="unlockAudio" aria-label="Enable audio">Enable Audio</button>
+      </div>
+      <div class="panel small" style="margin-top:4px">
+        <div><b>Self-check</b></div>
+        <div>Audio: <span id="chkAudio" class="bad">locked</span> · Video: <span id="chkVid" class="bad">idle</span> · Storage: <span id="chkStore" class="bad">unset</span></div>
+      </div>
+      <div class="small">Honey mantra: soften jaw → widen breath → let the chest float. small, kind, patient.</div>
+    </div>
   </section>
-</div>
 
-<div class="footer">
-  <div class="footer-inner">
-    <button id="footStart" class="solid">Start</button>
-    <button id="footStop" class="secondary">Stop</button>
-    <span class="state"><span id="stateDot" class="dot bad"></span><b id="stateTxt">Idle</b></span>
-    <span class="pill" id="dailyStrip">3 Taste Sparks • 1 Micro-Offer • 1 Joy Log</span>
-  </div>
+  <footer>Offline-ready. Tone & video state persist locally.</footer>
 </div>
-
-<div class="modal" id="closeModal">
-  <div class="box">
-    <h2>Butterfly Close</h2>
-    <div class="row">
-      <select id="colorPick">
-        <option value="violet">Violet</option><option value="pearl">Pearl</option><option value="honey">Honey</option><option value="neon">Neon</option>
-      </select>
-      <input id="verbPick" placeholder="verb (e.g., soften)">
-    </div>
-    <div class="row">
-      <input id="nextNudge" placeholder="one next nudge">
-      <button id="saveClose" class="solid">Save</button>
-      <button id="cancelClose" class="ghost">Cancel</button>
-    </div>
-    <p class="small" id="closeStatus">—</p>
-  </div>
-</div>
-
-<script id="brief" type="application/json">
-{
-  "school": "honey",
-  "room": "A",
-  "banner": {
-    "title": "Honey School · Magnetism",
-    "tagline": "Playful discipline. Get sticky, not needy.",
-    "quips": [
-      "Tap once. If you double-tap, you owe me a lemon square.",
-      "If it needs a paragraph to explain, it’s homework."
-    ]
-  },
-  "loop": ["start","spark","offer","ledger","close"],
-  "lessons": [
-    {"id":"taste","title":"Taste","goal":"Collect 3 sparks/day","prompt":"What pulled you today?"},
-    {"id":"timing","title":"Timing","goal":"Find your window","prompt":"When did people bite?"},
-    {"id":"offer","title":"Offer","goal":"1 playful micro-invite","prompt":"How can someone join in 1 tap?"},
-    {"id":"boundaries","title":"Boundaries","goal":"Protect your center","prompt":"What keeps this fun for you?"},
-    {"id":"swarm","title":"Swarm","goal":"Light ally touch","prompt":"Who gets a gentle ping?"}
-  ],
-  "weekly": [
-    {"week":1,"theme":"Taste Calibration","targets":["3 sparks/day","remove 1 bland habit"]},
-    {"week":2,"theme":"Timing","targets":["3 posts at different hours","pick best window"]},
-    {"week":3,"theme":"Offers","targets":["write 7","ship 3"]},
-    {"week":4,"theme":"Boundaries","targets":["add 1 constraint that protects play"]},
-    {"week":5,"theme":"Swarm","targets":["5 ally touches","map 1 swarm moment"]},
-    {"week":6,"theme":"Remix","targets":["keep/tweak/drop","publish Honey Mini-Set (3)"]}
-  ],
-  "metrics": {"streak": true, "joy_avg": true, "engagement_goal": 10},
-  "ui": {
-    "beeButton":"one-tap-only",
-    "tone":"optional-overlay",
-    "butterflyClose":"color/3 + next nudge"
-  }
-}
-</script>
 
 <script>
 (function(){
-  "use strict";
-  const qs=s=>document.querySelector(s), qsa=s=>Array.from(document.querySelectorAll(s));
-  const brief = JSON.parse(qs('#brief').textContent);
-  const K={hz:'honey:hz',vol:'honey:vol',lfo:'honey:lfo',bg:'honey:bg',sparks:'honey:sparks',ledger:'honey:ledger',magnets:'honey:magnets',close:'honey:close',streak:'honey:streak',lastDay:'honey:lastDay'};
-  const el={title:qs('#bannerTitle'),tag:qs('#bannerTagline'),quips:qs('#bannerQuips'),lessonCards:qs('#lessonCards'),sparkList:qs('#sparkList'),sparkCount:qs('#sparkCount'),sessionPill:qs('#sessionPill'),stateDot:qs('#stateDot'),stateTxt:qs('#stateTxt'),joyAvg:qs('#joyAvg'),streak:qs('#streak'),entries:qs('#entries'),ledgerTable:qs('#ledgerTable tbody'),magTable:qs('#magTable tbody'),snap:qs('#snap'),checkTable:qs('#checkTable tbody'),passCount:qs('#passCount'),failCount:qs('#failCount'),overall:qs('#overall'),closeModal:qs('#closeModal'),closeStatus:qs('#closeStatus')};
-  const ui={start:qs('#start'),stop:qs('#stop'),footStart:qs('#footStart'),footStop:qs('#footStop'),hz:qs('#hz'),vol:qs('#vol'),lfo:qs('#lfo'),bg:qs('#bg'),presets:qsa('.preset'),sparkInput:qs('#sparkInput'),addSpark:qs('#addSpark'),randSpark:qs('#randSpark'),clearSparks:qs('#clearSparks'),offerText:qs('#offerText'),offerShip:qs('#offerShip'),offerClear:qs('#offerClear'),joyNote:qs('#joyNote'),joyScore:qs('#joyScore'),joyAdd:qs('#joyAdd'),exportCSV:qs('#exportCSV'),clearLedger:qs('#clearLedger'),magName:qs('#magName'),magPull:qs('#magPull'),magLog:qs('#magLog'),magClear:qs('#magClear'),openClose:qs('#openClose'),saveClose:qs('#saveClose'),cancelClose:qs('#cancelClose'),colorPick:qs('#colorPick'),verbPick:qs('#verbPick'),nextNudge:qs('#nextNudge'),runChecks:qs('#runChecks')};
+  let ctx, gain, osc;
+  const stateKey = "honey_sabrina_video_id";
 
-  el.title.textContent = brief.banner.title;
-  el.tag.textContent = brief.banner.tagline;
-  brief.banner.quips.forEach(q=>{const s=document.createElement('span');s.className='pill';s.textContent=q;el.quips.appendChild(s);});
-
-  brief.lessons.forEach(o=>{
-    const card=document.createElement('div');card.className='lesson';
-    const d=document.createElement('div');d.className='dot';
-    const b=document.createElement('div');b.innerHTML='<b>'+escape(o.title)+'</b><span class="small">'+escape(o.goal)+'</span><div class="small">'+escape(o.prompt)+'</div>';
-    card.appendChild(d);card.appendChild(b);el.lessonCards.appendChild(card);
-  });
-
-  let ctx,osc,gain,lfo,lfoGain,started=false,session='Idle';
-  function initAudio(){if(ctx) return;ctx=new (window.AudioContext||window.webkitAudioContext)();gain=ctx.createGain();gain.gain.value=0.0001;osc=ctx.createOscillator();osc.type='sine';osc.frequency.value=parseFloat(ui.hz.value||'128');lfo=ctx.createOscillator();lfo.type='sine';lfo.frequency.value=0.18;lfoGain=ctx.createGain();lfoGain.gain.value=ui.lfo.checked?0.08:0;lfo.connect(lfoGain);lfoGain.connect(gain.gain);osc.connect(gain);gain.connect(ctx.destination);osc.start();lfo.start();}
-  function fade(to,ms){if(!ctx||!gain)return;const t=ctx.currentTime;gain.gain.cancelScheduledValues(t);gain.gain.setValueAtTime(gain.gain.value,t);gain.gain.linearRampToValueAtTime(Math.max(0,Math.min(1,to)),t+ms/1000);}
-  function setState(s){session=s;qs('#stateTxt').textContent=s;el.sessionPill.textContent=s;qs('#stateDot').className='dot '+(s==='Playing'?'ok':(s==='Calm'?'warn':'bad'));}
-  function saveAudioPrefs(){localStorage.setItem(K.hz,ui.hz.value);localStorage.setItem(K.vol,ui.vol.value);localStorage.setItem(K.lfo,ui.lfo.checked?'1':'0');localStorage.setItem(K.bg,ui.bg.checked?'1':'0');}
-  function loadAudioPrefs(){const a=localStorage.getItem(K.hz);if(a)ui.hz.value=a;const b=localStorage.getItem(K.vol);if(b)ui.vol.value=b;const c=localStorage.getItem(K.lfo);if(c)ui.lfo.checked=(c==='1');const d=localStorage.getItem(K.bg);if(d)ui.bg.checked=(d==='1');}
-  function start(){if(started)return;started=true;initAudio();if(ctx.state!=='running')ctx.resume();osc.frequency.setValueAtTime(parseFloat(ui.hz.value||'128'),ctx.currentTime);fade(parseFloat(ui.vol.value||'0.18'),700);setState('Playing');saveAudioPrefs();}
-  function stop(){if(!ctx)return;fade(0.0001,400);setState('Idle');setTimeout(()=>{started=false;},450);}
-
-  ui.start.addEventListener('click',start);
-  ui.footStart.addEventListener('click',start);
-  ui.stop.addEventListener('click',stop);
-  ui.footStop.addEventListener('click',stop);
-  ui.hz.addEventListener('change',()=>{saveAudioPrefs();if(osc&&ctx)osc.frequency.setValueAtTime(parseFloat(ui.hz.value||'128'),ctx.currentTime);});
-  ui.vol.addEventListener('input',()=>{saveAudioPrefs();if(gain&&ctx)gain.gain.setTargetAtTime(parseFloat(ui.vol.value||'0.18'),ctx.currentTime,0.12);});
-  ui.lfo.addEventListener('change',()=>{saveAudioPrefs();if(lfoGain&&ctx)lfoGain.gain.setValueAtTime(ui.lfo.checked?0.08:0,ctx.currentTime);});
-  ui.presets.forEach(b=>b.addEventListener('click',()=>{const v=b.getAttribute('data-hz');ui.hz.value=(parseFloat(v)).toFixed(2);saveAudioPrefs();if(osc&&ctx)osc.frequency.setValueAtTime(parseFloat(v),ctx.currentTime);}));
-  document.addEventListener('visibilitychange',()=>{if(document.hidden && !ui.bg.checked) stop();});
-
-  loadAudioPrefs();
-
-  function sparks(){return JSON.parse(localStorage.getItem(K.sparks)||'[]');}
-  function saveSparks(a){localStorage.setItem(K.sparks,JSON.stringify(a));renderSparks();}
-  function renderSparks(){const arr=sparks();el.sparkList.innerHTML='';arr.forEach((t,i)=>{const b=document.createElement('button');b.className='secondary';b.textContent=t.text;b.addEventListener('click',()=>copy(t.text));b.addEventListener('contextmenu',e=>{e.preventDefault();const n=arr.filter((_,k)=>k!==i);saveSparks(n);});el.sparkList.appendChild(b);});updateSparkCount();}
-  function updateSparkCount(){const today=new Date().toISOString().slice(0,10);const n=sparks().filter(s=>s.day===today).length;el.sparkCount.textContent=n+' / day';}
-  function addSpark(text){if(!text)return;const day=new Date().toISOString().slice(0,10);saveSparks([{text,day},...sparks()].slice(0,120));}
-  function randSpark(){const seed=['sun-honey window','neon jacket','citrus fizz','mirror confetti','pearl gloss','tiny dance'];return seed[Math.floor(Math.random()*seed.length)];}
-  ui.addSpark.addEventListener('click',()=>{addSpark(ui.sparkInput.value.trim());ui.sparkInput.value='';});
-  ui.randSpark.addEventListener('click',()=>addSpark(randSpark()));
-  ui.clearSparks.addEventListener('click',()=>saveSparks([]));
-
-  function ledger(){return JSON.parse(localStorage.getItem(K.ledger)||'[]');}
-  function saveLedger(a){localStorage.setItem(K.ledger,JSON.stringify(a));renderLedger();streakUpdate(a);}
-  function renderLedger(){const arr=ledger();el.entries.textContent=arr.length.toString();el.joyAvg.textContent=arr.length?(arr.reduce((x,y)=>x+y.score,0)/arr.length).toFixed(1):'—';el.ledgerTable.innerHTML=arr.map(it=>{const d=new Date(it.ts);return '<tr><td>'+escape(d.toLocaleDateString()+' '+d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}))+'</td><td>'+escape(it.note)+'</td><td>'+it.score+'</td></tr>';}).join('');}
-  function streakUpdate(arr){const latestDay=arr.length?new Date(arr[0].ts).toISOString().slice(0,10):null;const last=localStorage.getItem(K.lastDay);if(latestDay && latestDay!==last){const s=parseInt(localStorage.getItem(K.streak)||'0',10)+1;localStorage.setItem(K.streak,String(s));localStorage.setItem(K.lastDay,latestDay);}
-    el.streak.textContent=localStorage.getItem(K.streak)||'0';}
-  ui.joyAdd.addEventListener('click',()=>{const note=ui.joyNote.value.trim();if(!note)return;const score=parseInt(ui.joyScore.value||'0',10);saveLedger([{note,score,ts:Date.now()},...ledger()].slice(0,200));ui.joyNote.value='';});
-  ui.clearLedger.addEventListener('click',()=>saveLedger([]));
-  ui.exportCSV.addEventListener('click',()=>{const arr=ledger();const header='time,note,joy\n';const rows=arr.map(it=>'"'+new Date(it.ts).toISOString().replace(/"/g,'""')+'","'+(it.note||'').replace(/"/g,'""')+'",'+it.score).join('\n');const blob=new Blob([header+rows],{type:'text/csv'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='honey_joy_ledger.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),500);});
-
-  function magnets(){return JSON.parse(localStorage.getItem(K.magnets)||'[]');}
-  function saveMagnets(a){localStorage.setItem(K.magnets,JSON.stringify(a));renderMagnets();}
-  function renderMagnets(){el.magTable.innerHTML=magnets().map(m=>{const keep=m.pull>=7?'Yes':(m.pull<=3?'No':'Tweak');return '<tr><td>'+escape(m.name)+'</td><td>'+m.pull+'</td><td>'+keep+'</td></tr>';}).join('');}
-  ui.magLog.addEventListener('click',()=>{const name=ui.magName.value.trim();if(!name)return;const pull=parseInt(ui.magPull.value||'0',10);saveMagnets([{name,pull,ts:Date.now()},...magnets()].slice(0,80));ui.magName.value='';});
-  ui.magClear.addEventListener('click',()=>saveMagnets([]));
-
-  function openClose(){el.closeModal.style.display='flex';}
-  function closeClose(){el.closeModal.style.display='none';}
-  ui.openClose.addEventListener('click',openClose);
-  ui.cancelClose.addEventListener('click',closeClose);
-  ui.saveClose.addEventListener('click',()=>{const obj={color:ui.colorPick.value,verb:ui.verbPick.value.trim(),nudge:ui.nextNudge.value.trim(),ts:Date.now()};localStorage.setItem(K.close,JSON.stringify(obj));el.closeStatus.textContent='Saved · '+new Date(obj.ts).toLocaleString();setTimeout(closeClose,200);});
-
-  function renderAll(){renderSparks();renderLedger();renderMagnets();}
-  renderAll();
-
-  function copy(t){const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();ta.setSelectionRange(0,t.length);document.execCommand('copy');ta.remove();}
-
-  function escape(s){return (s||'').replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]));}
-
-  function check(name,fn){return fn().then(x=>({name,ok:x.ok,detail:x.detail}));}
-  function pass(d){return {ok:true,detail:d||'OK'};}
-  function fail(d){return {ok:false,detail:d||'Failed'};}
-  function row(i,n,ok,d){const cls=ok?'pass':'fail';return '<tr><td>'+i+'</td><td>'+escape(n)+'</td><td class="'+cls+'">'+(ok?'Pass':'Fail')+'</td><td>'+escape(d)+'</td></tr>'; }
-  function summary(){const rows=el.checkTable.querySelectorAll('tr');let p=0,f=0;rows.forEach(r=>{const t=r.children[2].textContent.trim();if(t==='Pass')p++;else f++;});el.passCount.textContent=p;el.failCount.textContent=f;el.overall.textContent=f===0?'✅ Ready':(p>=7?'⚠️ Partial':'❌ Blocked');}
-
-  const checks = [
-    ['Brief → banner applied', async()=>{const ok=qs('#bannerTitle').textContent===brief.banner.title && qs('#bannerTagline').textContent===brief.banner.tagline;return ok?pass():fail('banner mismatch');}],
-    ['Brief.loop mapped to steps', async()=>{const present=brief.loop.every(id=>qs('[data-step="'+id+'"]'));return present?pass():fail('missing sections');}],
-    ['Lesson cards from brief', async()=>{const ok=brief.lessons.length===el.lessonCards.children.length;return ok?pass():fail('expected '+brief.lessons.length+' got '+el.lessonCards.children.length);}],
-    ['One-tap start enforces single start', async()=>{started=false;let c=0;const once=()=>{c++;}; ui.start.addEventListener('click',once,{once:true}); ui.start.click(); ui.start.click(); const ok=c===1; return ok?pass():fail('double fired');}],
-    ['Tone start/stop changes state', async()=>{stop();ui.start.click();await wait(700);const a=session==='Playing'&&gain&&gain.gain.value>0.01;ui.stop.click();await wait(500);const b=session==='Idle'&&gain&&gain.gain.value<=0.002;return (a&&b)?pass():fail('start/stop state');}],
-    ['Presets change frequency', async()=>{initAudio();ui.hz.value='128.00';ui.presets[1].click();await wait(120);const a=Math.abs(osc.frequency.value-160)<0.02;ui.presets[0].click();await wait(120);const b=Math.abs(osc.frequency.value-128)<0.02;return (a&&b)?pass():fail('freq='+osc.frequency.value.toFixed(2));}],
-    ['Spark goal visible', async()=>{const s=qs('#sparkCount').textContent.includes('/');return s?pass():fail('no counter');}],
-    ['Ledger appends and computes avg', async()=>{const n0=ledger().length;ui.joyNote.value='test';ui.joyScore.value='7';ui.joyAdd.click();await wait(50);const arr=ledger();const ok=arr.length===n0+1 && parseFloat(el.joyAvg.textContent)>=0;return ok?pass():fail('no ledger add');}],
-    ['Streak increments on new day', async()=>{const before=parseInt(localStorage.getItem(K.streak)||'0',10);const fakeTs=Date.now()-(36*3600*1000);const arr=ledger();arr.unshift({note:'yesterday',score:6,ts:fakeTs});saveLedger(arr);ui.joyNote.value='today';ui.joyScore.value='6';ui.joyAdd.click();await wait(40);const after=parseInt(localStorage.getItem(K.streak)||'0',10);return after>before?pass():fail('streak same');}],
-    ['Magnet keep/tweak/no keeps render', async()=>{saveMagnets([{name:'A',pull:8},{name:'B',pull:5},{name:'C',pull:2}]);await wait(20);const t=el.magTable.textContent;const ok=t.includes('Yes')&&t.includes('Tweak')&&t.includes('No');return ok?pass():fail('labels');}],
-    ['Export CSV creates blob', async()=>{let done=false;const a=document.createElement('a');const old=document.body.appendChild;document.body.appendChild=function(x){done=true;return old.call(document.body,x)};ui.exportCSV.click();await wait(50);document.body.appendChild=old;return done?pass():fail('no export');}],
-    ['Butterfly Close saves color/verb/nudge', async()=>{openClose();ui.colorPick.value='honey';ui.verbPick.value='soften';ui.nextNudge.value='post invite';ui.saveClose.click();await wait(50);const o=JSON.parse(localStorage.getItem(K.close)||'{}');const ok=o.color==='honey'&&!!o.verb&&!!o.nudge;return ok?pass():fail('not saved');}],
-    ['Visibility stop when background OFF', async()=>{ui.bg.checked=false;saveAudioPrefs();start();await wait(200);document.dispatchEvent(new Event('visibilitychange'));stop();ui.bg.checked=true;saveAudioPrefs();return pass();}]
-  ];
-
-  function wait(ms){return new Promise(r=>setTimeout(r,ms));}
-
-  ui.runChecks.addEventListener('click', async ()=>{
-    el.checkTable.innerHTML='';
-    const out=[];
-    for(let i=0;i<checks.length;i++){
-      const r=await check(checks[i][0],checks[i][1]);
-      out.push(row(i+1,checks[i][0],r.ok,r.detail));
+  function ensureCtx(){
+    if(!ctx){
+      ctx = new (window.AudioContext||window.webkitAudioContext)({latencyHint:"interactive"});
+      gain = ctx.createGain(); gain.gain.value = parseFloat(vol.value);
+      gain.connect(ctx.destination);
     }
-    el.checkTable.innerHTML=out.join('');
-    summary();
-    snapshot();
-  });
-
-  function snapshot(){
-    const snap={banner:{t:qs('#bannerTitle').textContent,tag:qs('#bannerTagline').textContent},counts:{lessons:el.lessonCards.children.length,loop:brief.loop.length},audio:{ctx:ctx?ctx.state:'none',freq:osc?Number(osc.frequency.value.toFixed(2)):null,gain:gain?Number(gain.gain.value.toFixed(3)):null},prefs:{hz:localStorage.getItem(K.hz),vol:localStorage.getItem(K.vol),lfo:localStorage.getItem(K.lfo),bg:localStorage.getItem(K.bg)}};
-    el.snap.textContent=JSON.stringify(snap,null,2);
+    return ctx;
+  }
+  function startTone(f){
+    ensureCtx();
+    stopTone();
+    osc = ctx.createOscillator();
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(f, ctx.currentTime);
+    osc.connect(gain);
+    osc.start();
+  }
+  function stopTone(){
+    if(osc){ try{osc.stop();}catch(_){ } osc.disconnect(); osc=null; }
   }
 
-  function dailyStripFromBrief(){return '3 Taste Sparks • 1 Micro-Offer • 1 Joy Log';}
-  qs('#dailyStrip').textContent=dailyStripFromBrief();
+  const player = document.getElementById('player');
+  const addVideo = document.getElementById('addVideo');
+  const vol = document.getElementById('vol');
+  const unlockBtn = document.getElementById('unlockAudio');
+  const stopBtn = document.getElementById('stopTone');
+  const chkAudio = document.getElementById('chkAudio');
+  const chkVid = document.getElementById('chkVid');
+  const chkStore = document.getElementById('chkStore');
 
+  function setVideo(id){
+    if(!id){ chkVid.textContent="idle"; chkVid.className="bad"; return; }
+    const src = "https://www.youtube-nocookie.com/embed/"+id+"?autoplay=0&mute=0&playsinline=1&rel=0&modestbranding=1";
+    player.src = src;
+    chkVid.textContent = "ready"; chkVid.className = "ok";
+  }
+
+  function extractYouTubeID(url){
+    try{
+      const u = new URL(url);
+      if(u.hostname.includes("youtu.be")) return u.pathname.slice(1);
+      if(u.searchParams.get("v")) return u.searchParams.get("v");
+      const m = u.pathname.match(/\/embed\/([A-Za-z0-9_-]{5,})/);
+      if(m) return m[1];
+    }catch(_){}
+    if(/^[A-Za-z0-9_-]{5,}$/.test(url)) return url;
+    return null;
+  }
+
+  const saved = localStorage.getItem(stateKey);
+  if(saved){ setVideo(saved); chkStore.textContent="saved"; chkStore.className="ok"; }
+  else { chkStore.textContent="unset"; chkStore.className="bad"; }
+
+  addVideo.addEventListener('click', function(){
+    const v = prompt("Paste official YouTube URL (or ID) for Sabrina:");
+    if(!v) return;
+    const id = extractYouTubeID(v);
+    if(!id){ alert("Could not parse that. Try a full YouTube URL or the video ID."); return; }
+    localStorage.setItem(stateKey, id);
+    setVideo(id);
+    chkStore.textContent="saved"; chkStore.className="ok";
+  });
+
+  unlockBtn.addEventListener('click', async function(){
+    ensureCtx();
+    if(ctx.state === "suspended"){ try{await ctx.resume();}catch(_){ } }
+    chkAudio.textContent = (ctx && ctx.state==="running") ? "running" : ctx.state;
+    chkAudio.className = (ctx && ctx.state==="running") ? "ok" : "bad";
+  });
+
+  vol.addEventListener('input', function(){
+    if(gain){ gain.gain.setValueAtTime(parseFloat(vol.value), ctx.currentTime || 0); }
+  });
+
+  stopBtn.addEventListener('click', stopTone);
+
+  document.querySelectorAll('[data-f]').forEach(b=>{
+    b.addEventListener('click', ()=> startTone(parseFloat(b.getAttribute('data-f'))));
+  });
+
+  if('serviceWorker' in navigator){
+    const swCode = `
+      self.addEventListener('install', e=>{ self.skipWaiting(); e.waitUntil(caches.open('honey-sabrina-v1').then(c=>c.addAll(['./']))); });
+      self.addEventListener('activate', e=> self.clients.claim());
+      self.addEventListener('fetch', e=>{
+        e.respondWith(
+          caches.match(e.request).then(r=> r || fetch(e.request).catch(()=> caches.match('./')))
+        );
+      });
+    `;
+    const blob = new Blob([swCode], {type:'text/javascript'});
+    const swURL = URL.createObjectURL(blob);
+    navigator.serviceWorker.register(swURL).catch(()=>{});
+  }
 })();
 </script>
-
 </body>
 </html>
