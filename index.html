@@ -3,206 +3,60 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<meta name="color-scheme" content="dark light"/>
-<title>Honey — Sabrina · First Anchor Room</title>
-<meta name="description" content="Honey — Sabrina’s Room. Glass UI, tone pads (128/160/256 Hz), YouTube lane, gentle guidance, offline-ready."/>
-<meta name="theme-color" content="#0b0d11"/>
+<title>honey.plnt.earth — The Bee Domain</title>
 <style>
-  :root{
-    --bg:#07080b;
-    --fg:#f5f7fb;
-    --glass:rgba(255,255,255,.06);
-    --line:rgba(255,255,255,.12);
-    --accent:#ffc857; /* honey amber */
-    --glow:0 0 26px rgba(255,200,87,.35);
-    --radius:16px;
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0;background:
-      radial-gradient(1000px 900px at 20% -10%, rgba(255,200,87,.10), transparent 60%),
-      radial-gradient(1200px 1000px at 110% 90%, rgba(170,220,255,.10), transparent 60%), var(--bg);
-    color:var(--fg);font:500 16px/1.45 ui-sans-serif,system-ui,Segoe UI,Roboto,Inter,Apple Color Emoji;
-    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
-  }
-  a{color:inherit}
-  .wrap{max-width:960px;margin:0 auto;padding:20px 16px 56px;display:grid;gap:16px}
-  header{
-    display:flex;align-items:center;justify-content:space-between;gap:12px;
-    padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius);
-    background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-    backdrop-filter:blur(8px); box-shadow:var(--glow);
-  }
-  .brand{display:flex;align-items:center;gap:10px}
-  .drop{width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:var(--glow)}
-  h1{margin:0;font-size:18px;letter-spacing:.4px}
-  .cta{display:flex;gap:8px;flex-wrap:wrap}
-  .btn{border:1px solid var(--line);background:var(--glass);color:var(--fg);
-       border-radius:999px;padding:8px 12px;cursor:pointer;user-select:none;outline:none}
-  .btn:focus-visible{box-shadow:0 0 0 2px #fff3,inset 0 0 0 2px var(--accent)}
-  .panel{border:1px solid var(--line);border-radius:var(--radius);background:var(--glass);
-         backdrop-filter:blur(8px);padding:14px;display:grid;gap:12px}
-  .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
-  @media (max-width:840px){.grid{grid-template-columns:1fr}}
-  .title{font-weight:700;letter-spacing:.25px}
-  .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-  .slider{width:160px}
-  iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:12px;background:#000}
-  .small{opacity:.85;font-size:13px}
-  .ok{color:#89f5a0}.bad{color:#ff9ea0}
-  footer{opacity:.75;font-size:12px;text-align:center;padding:10px}
+html,body{
+  margin:0;height:100%;
+  background:radial-gradient(circle at 50% 40%, #fff9e8 0%, #fddf9f 100%);
+  font-family:'Segoe UI',sans-serif;color:#000;text-align:center;
+  overflow:hidden;
+}
+h1{margin-top:4vh;font-weight:400;letter-spacing:.08em;}
+#bee{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  font-size:6vw;animation:pulse 5s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.9;}
+  50%{transform:translate(-50%,-50%) scale(1.08);opacity:1;}
+}
+#text{
+  position:absolute;top:63%;left:50%;transform:translateX(-50%);
+  width:82%;max-width:520px;font-size:1em;line-height:1.5em;opacity:.9;
+}
+#footer{
+  position:absolute;bottom:3%;left:50%;transform:translateX(-50%);
+  font-size:.8em;opacity:.6;
+}
+#footer a{color:#000;text-decoration:none;opacity:.6;}
+#footer a:hover{opacity:1;}
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <header>
-    <div class="brand">
-      <div class="drop" aria-hidden="true"></div>
-      <h1 aria-label="Honey Room for Sabrina">Honey — Sabrina · First Anchor</h1>
-    </div>
-    <div class="cta">
-      <button class="btn" id="addVideo" aria-label="Add or change video">+ video</button>
-      <a class="btn" href="https://honey.plnt.earth" target="_blank" rel="noopener">Honey</a>
-      <a class="btn" href="https://tunes.plnt.earth" target="_blank" rel="noopener">Tunes</a>
-      <a class="btn" href="https://mirrorhoney.plnt.earth" target="_blank" rel="noopener">MirrorHoney</a>
-    </div>
-  </header>
+<h1>🍯 honey.plnt.earth — The Bee Domain</h1>
 
-  <section class="grid">
-    <div class="panel" aria-labelledby="videoTitle">
-      <div class="title" id="videoTitle">Sabrina Lane</div>
-      <iframe id="player" allow="autoplay; encrypted-media; picture-in-picture; web-share" allowfullscreen playsinline title="Video lane"></iframe>
-      <div class="row small">
-        Paste an official YouTube URL via <b>+ video</b>. Saved privately to your device.
-      </div>
-    </div>
+<div id="bee">🐝</div>
 
-    <div class="panel" aria-labelledby="toneTitle">
-      <div class="title" id="toneTitle">Honey Tone</div>
-      <div class="row" role="group" aria-label="Tone frequency pads">
-        <button class="btn" data-f="128">128 Hz</button>
-        <button class="btn" data-f="160">160 Hz</button>
-        <button class="btn" data-f="256">256 Hz</button>
-        <button class="btn" id="stopTone">Stop</button>
-      </div>
-      <div class="row">
-        <label for="vol" class="small">Volume</label>
-        <input id="vol" class="slider" type="range" min="0" max="1" step="0.01" value="0.20"/>
-        <button class="btn" id="unlockAudio" aria-label="Enable audio">Enable Audio</button>
-      </div>
-      <div class="panel small" style="margin-top:4px">
-        <div><b>Self-check</b></div>
-        <div>Audio: <span id="chkAudio" class="bad">locked</span> · Video: <span id="chkVid" class="bad">idle</span> · Storage: <span id="chkStore" class="bad">unset</span></div>
-      </div>
-      <div class="small">Honey mantra: soften jaw → widen breath → let the chest float. small, kind, patient.</div>
-    </div>
-  </section>
-
-  <footer>Offline-ready. Tone & video state persist locally.</footer>
+<div id="text">
+  <p><strong>Sabrina Carpenter — Honey Key</strong></p>
+  <p><em>“Every sweetness is a story in motion.”</em></p>
+  <p>
+    The Bee gathers warmth and carries it across the field.<br/>
+    Honey is the memory of sunlight—stored, shared, given.<br/>
+    Here sweetness becomes language, and language becomes gold.
+  </p>
+  <p>
+    <small>tone · 528 Hz  |  element · Fire → Spirit → Sweetness  |  phase · Cycle 1 Continuation</small>
+  </p>
 </div>
 
-<script>
-(function(){
-  let ctx, gain, osc;
-  const stateKey = "honey_sabrina_video_id";
+<div id="footer">
+  <a href="https://center.plnt.earth" target="_blank">← Back to Center</a> •
+  <a href="honning/index.html" target="_blank">Norsk Oppdatering — Honning</a> •
+  <a href="https://illumina.plnt.earth" target="_blank">Illumina Archive</a>
+</div>
 
-  function ensureCtx(){
-    if(!ctx){
-      ctx = new (window.AudioContext||window.webkitAudioContext)({latencyHint:"interactive"});
-      gain = ctx.createGain(); gain.gain.value = parseFloat(vol.value);
-      gain.connect(ctx.destination);
-    }
-    return ctx;
-  }
-  function startTone(f){
-    ensureCtx();
-    stopTone();
-    osc = ctx.createOscillator();
-    osc.type = "sine";
-    osc.frequency.setValueAtTime(f, ctx.currentTime);
-    osc.connect(gain);
-    osc.start();
-  }
-  function stopTone(){
-    if(osc){ try{osc.stop();}catch(_){ } osc.disconnect(); osc=null; }
-  }
-
-  const player = document.getElementById('player');
-  const addVideo = document.getElementById('addVideo');
-  const vol = document.getElementById('vol');
-  const unlockBtn = document.getElementById('unlockAudio');
-  const stopBtn = document.getElementById('stopTone');
-  const chkAudio = document.getElementById('chkAudio');
-  const chkVid = document.getElementById('chkVid');
-  const chkStore = document.getElementById('chkStore');
-
-  function setVideo(id){
-    if(!id){ chkVid.textContent="idle"; chkVid.className="bad"; return; }
-    const src = "https://www.youtube-nocookie.com/embed/"+id+"?autoplay=0&mute=0&playsinline=1&rel=0&modestbranding=1";
-    player.src = src;
-    chkVid.textContent = "ready"; chkVid.className = "ok";
-  }
-
-  function extractYouTubeID(url){
-    try{
-      const u = new URL(url);
-      if(u.hostname.includes("youtu.be")) return u.pathname.slice(1);
-      if(u.searchParams.get("v")) return u.searchParams.get("v");
-      const m = u.pathname.match(/\/embed\/([A-Za-z0-9_-]{5,})/);
-      if(m) return m[1];
-    }catch(_){}
-    if(/^[A-Za-z0-9_-]{5,}$/.test(url)) return url;
-    return null;
-  }
-
-  const saved = localStorage.getItem(stateKey);
-  if(saved){ setVideo(saved); chkStore.textContent="saved"; chkStore.className="ok"; }
-  else { chkStore.textContent="unset"; chkStore.className="bad"; }
-
-  addVideo.addEventListener('click', function(){
-    const v = prompt("Paste official YouTube URL (or ID) for Sabrina:");
-    if(!v) return;
-    const id = extractYouTubeID(v);
-    if(!id){ alert("Could not parse that. Try a full YouTube URL or the video ID."); return; }
-    localStorage.setItem(stateKey, id);
-    setVideo(id);
-    chkStore.textContent="saved"; chkStore.className="ok";
-  });
-
-  unlockBtn.addEventListener('click', async function(){
-    ensureCtx();
-    if(ctx.state === "suspended"){ try{await ctx.resume();}catch(_){ } }
-    chkAudio.textContent = (ctx && ctx.state==="running") ? "running" : ctx.state;
-    chkAudio.className = (ctx && ctx.state==="running") ? "ok" : "bad";
-  });
-
-  vol.addEventListener('input', function(){
-    if(gain){ gain.gain.setValueAtTime(parseFloat(vol.value), ctx.currentTime || 0); }
-  });
-
-  stopBtn.addEventListener('click', stopTone);
-
-  document.querySelectorAll('[data-f]').forEach(b=>{
-    b.addEventListener('click', ()=> startTone(parseFloat(b.getAttribute('data-f'))));
-  });
-
-  if('serviceWorker' in navigator){
-    const swCode = `
-      self.addEventListener('install', e=>{ self.skipWaiting(); e.waitUntil(caches.open('honey-sabrina-v1').then(c=>c.addAll(['./']))); });
-      self.addEventListener('activate', e=> self.clients.claim());
-      self.addEventListener('fetch', e=>{
-        e.respondWith(
-          caches.match(e.request).then(r=> r || fetch(e.request).catch(()=> caches.match('./')))
-        );
-      });
-    `;
-    const blob = new Blob([swCode], {type:'text/javascript'});
-    const swURL = URL.createObjectURL(blob);
-    navigator.serviceWorker.register(swURL).catch(()=>{});
-  }
-})();
-</script>
 </body>
 </html>
