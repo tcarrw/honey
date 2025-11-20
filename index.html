@@ -168,7 +168,10 @@
     <p>• videos may auto-play audio<br>
        • content is for educational/research purposes<br>
        • your consent is stored locally</p>
-    <p style="margin-top:20px;font-size:12px;line-height:1.5;color:#ccc;">
+    <p style="margin-top:16px;font-size:13px;line-height:1.5;color:#b8e6b8;">
+      <strong>Privacy:</strong> This site has no trackers, no external libraries, and no logs. All consent is stored locally in your browser only.
+    </p>
+    <p style="margin-top:16px;font-size:12px;line-height:1.5;color:#ccc;">
       This note records continuity only. I am reviewing the Taylor Store consent agreement for understanding, not participation.
       No purchase intent is implied. No affiliation is claimed. This disclosure exists to maintain clean structure within School:
       clear intent, clear context, clean boundaries.
@@ -178,15 +181,12 @@
 </div>
 
 <script>
-  // Consent modal
+  // Consent modal - always show on load
   window.addEventListener("load", () => {
-    if (!localStorage.getItem("honeyConsent")) {
-      document.getElementById("consentModal").style.display = "flex";
-    }
+    document.getElementById("consentModal").style.display = "flex";
   });
   
   document.getElementById("consentButton").onclick = () => {
-    localStorage.setItem("honeyConsent", "yes");
     document.getElementById("consentModal").style.display = "none";
   };
 
@@ -197,6 +197,50 @@
     if (linkHost === window.location.hostname) {
       link.classList.add('active');
     }
+  });
+
+  // Auto-play videos sequentially
+  window.addEventListener("load", () => {
+    const iframes = document.querySelectorAll('iframe');
+    
+    // Convert YouTube embeds to enable autoplay
+    iframes.forEach((iframe, index) => {
+      const src = iframe.src;
+      if (src.includes('youtube')) {
+        // Add autoplay parameter, but only autoplay the first video initially
+        if (index === 0) {
+          iframe.src = src + (src.includes('?') ? '&' : '?') + 'autoplay=1&enablejsapi=1';
+        } else {
+          iframe.src = src + (src.includes('?') ? '&' : '?') + 'enablejsapi=1';
+        }
+      }
+    });
+
+    // Listen for video end events
+    let currentVideoIndex = 0;
+    
+    window.addEventListener('message', (event) => {
+      // YouTube IFrame API sends messages when video state changes
+      if (event.data && typeof event.data === 'string') {
+        try {
+          const data = JSON.parse(event.data);
+          // event 0 = video ended
+          if (data.event === 'onStateChange' && data.info === 0) {
+            currentVideoIndex++;
+            if (currentVideoIndex < iframes.length) {
+              const nextIframe = iframes[currentVideoIndex];
+              const src = nextIframe.src;
+              // Trigger autoplay on next video
+              if (!src.includes('autoplay=1')) {
+                nextIframe.src = src.replace('enablejsapi=1', 'autoplay=1&enablejsapi=1');
+              }
+            }
+          }
+        } catch (e) {
+          // Ignore parsing errors
+        }
+      }
+    });
   });
 </script>
 </body>
