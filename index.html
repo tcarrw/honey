@@ -62,10 +62,56 @@
     border-radius:12px;
     margin-top:12px;
   }
+
+  /* Consent modal */
+  #consentModal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.55);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:999;
+    backdrop-filter:blur(8px);
+  }
+
+  #consentBox{
+    width:86%;
+    max-width:420px;
+    padding:26px;
+    border-radius:22px;
+    background:rgba(255,255,255,0.10);
+    border:1px solid rgba(255,255,255,0.25);
+    backdrop-filter:blur(20px);
+    text-align:center;
+  }
+
+  #consentBox h2{
+    color:var(--accent);
+    margin-top:0;
+  }
+
+  #consentButton{
+    margin-top:22px;
+    padding:10px 24px;
+    background:var(--accent);
+    border-radius:14px;
+    font-weight:600;
+    border:0;
+    color:#110a0d;
+    cursor:pointer;
+  }
+
+  footer{
+    text-align:center;
+    color:var(--muted);
+    font-size:13px;
+    margin-top:50px;
+    padding-bottom:40px;
+  }
 </style>
 </head>
 <body>
-
 <header>
   <div>🍯 Honey</div>
   <nav>
@@ -79,50 +125,71 @@
     <a href="https://time.plnt.earth/map/index.html">Map</a>
   </nav>
 </header>
-
 <div class="wrap">
-
   <div class="card">
     <h2>Thumbs — Pattern Break</h2>
-    <p>The loop-breaker. Sabrina’s anti-spiral. Where Honey cuts through noise and resets the field.</p>
+    <p>The loop-breaker. Sabrina's anti-spiral. Where Honey cuts through noise and resets the field.</p>
     <iframe src="https://www.youtube-nocookie.com/embed/uAVUl0cAKpo" allowfullscreen></iframe>
   </div>
-
   <div class="card">
     <h2>Eyes Wide Open — First Light</h2>
     <p>Orientation. The moment Honey opens the aperture: soft, awake, and direction-true.</p>
     <iframe src="https://www.youtube-nocookie.com/embed/R4VJyfCcOJc" allowfullscreen></iframe>
   </div>
-
   <div class="card">
     <h2>Nonsense — Ease</h2>
     <p>Effortless presence. The peach-tone version of clarity: disarming, playful, safe.</p>
     <iframe src="https://www.youtube-nocookie.com/embed/YcSP1ZUf1eQ" allowfullscreen></iframe>
   </div>
-
   <div class="card">
     <h2>Tears — Release</h2>
     <p>Soft catharsis. Honey dissolves emotional static through gentle drop-pressure release.</p>
     <iframe src="https://www.youtube-nocookie.com/embed/V9vuCByb6js" allowfullscreen></iframe>
   </div>
-
   <div class="card">
     <h2>Taste — Sweetness Return</h2>
-    <p>The final Honey move: sweetness as signal. Sabrina’s peach-gold clarity loop.</p>
+    <p>The final Honey move: sweetness as signal. Sabrina's peach-gold clarity loop.</p>
     <iframe src="https://www.youtube-nocookie.com/embed/ZhGl8McrOHo" allowfullscreen></iframe>
   </div>
 
-  <!-- School Disclosure Card -->
-  <div class="card">
-    <h2>School — Disclosure</h2>
-    <p>
-      This note records continuity only. I am reviewing the Taylor Store consent agreement for understanding, not participation. No purchase intent is implied. No affiliation is claimed. This disclosure exists to maintain clean structure within School: clear intent, clear context, clean boundaries.
-    </p>
-  </div>
+  <footer>
+    <div style="margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,0.12);font-size:14px;line-height:1.6;">
+      <a href="https://earth.plnt.earth" style="color:var(--accent);text-decoration:none;font-weight:600;">Earth</a> is a grounding page. This one stays. A place to hold joy, music, and motion — untouched by the noise. If the system shifts, Earth remains.
+    </div>
+    © 2025 • Creative Commons BY-NC-SA 4.0
+  </footer>
+</div>
 
+<!-- CONSENT MODAL -->
+<div id="consentModal" style="display:none;">
+  <div id="consentBox">
+    <h2>Honey · Illumina</h2>
+    <p>By entering this page, you acknowledge that:</p>
+    <p>• videos may auto-play audio<br>
+       • content is for educational/research purposes<br>
+       • your consent is stored locally</p>
+    <p style="margin-top:20px;font-size:12px;line-height:1.5;color:#ccc;">
+      This note records continuity only. I am reviewing the Taylor Store consent agreement for understanding, not participation.
+      No purchase intent is implied. No affiliation is claimed. This disclosure exists to maintain clean structure within School:
+      clear intent, clear context, clean boundaries.
+    </p>
+    <button id="consentButton">Enter</button>
+  </div>
 </div>
 
 <script>
+  // Consent modal
+  window.addEventListener("load", () => {
+    if (!localStorage.getItem("honeyConsent")) {
+      document.getElementById("consentModal").style.display = "flex";
+    }
+  });
+  
+  document.getElementById("consentButton").onclick = () => {
+    localStorage.setItem("honeyConsent", "yes");
+    document.getElementById("consentModal").style.display = "none";
+  };
+
   // Highlight active nav based on hostname
   const links = document.querySelectorAll('nav a');
   links.forEach(link => {
@@ -132,6 +199,5 @@
     }
   });
 </script>
-
 </body>
 </html>
